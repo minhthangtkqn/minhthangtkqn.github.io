@@ -5,6 +5,7 @@ import { Home } from 'app/home';
 import { About } from 'app/about';
 
 import './styles/index.css';
+import './styles/index.scss';
 import { AppWrapper } from 'base/component';
 
 export default function RootApplication() {
