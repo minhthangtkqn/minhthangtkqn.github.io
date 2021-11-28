@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
-import style from './index.module.scss';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const TestComp: React.FC = () => {
-    const [isError, setError] = useState<boolean>(false);
-
-    if (isError) {
-        throw new Error('I crashed!');
-    }
-
     return (
-        <div
-            className={style['red']}
-            onClick={() => {
-                setError(true);
-            }}
-        >Hey</div>
+        <div>
+            <div>
+                <Link to="/" key="home">Home</Link>
+            </div>
+
+            <div>
+                <Link to="/about" key="about">About</Link>
+            </div>
+        </div>
     )
 }
