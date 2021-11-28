@@ -11,3 +11,20 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    /* NOT WORK with android for now */
+    height: calc(var(--vh, 1vh) * 100);
+    /* height: -webkit-fill-available; */
+
+    background: var(--main-bg-color);
+}
+@supports (-moz-appearance: none) {
+    .app {
+        height: calc(var(--vh, 1vh) * 100);
+    }
+}
