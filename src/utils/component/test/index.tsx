@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import style from './index.module.scss';
 
 export const TestComp: React.FC = () => {
     const [isError, setError] = useState<boolean>(false);
@@ -9,6 +10,7 @@ export const TestComp: React.FC = () => {
 
     return (
         <div
+            className={style['red']}
             onClick={() => {
                 setError(true);
             }}
