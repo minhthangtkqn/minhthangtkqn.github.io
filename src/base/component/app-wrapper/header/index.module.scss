@@ -1,5 +1,13 @@
 .app-header {
-    .container {
-        height: var(--size-app-header-height);
+    height: var(--size-app-header-height);
+    padding: 0.5rem;
+
+    .home-btn {
+    }
+
+    .nav-menu {
+    }
+
+    .user-menu {
     }
 }
