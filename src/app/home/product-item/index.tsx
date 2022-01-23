@@ -23,7 +23,7 @@ export const ProductItem: React.FC<Props> = ({ productData }) => {
                 </Text>
             </Flex>
             <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
-                {productData?.title}
+                {productData?.name} - {productData?.model}
             </Text>
             <Text mt={2}>$119/night</Text>
             <Flex mt={2} align="center">

@@ -8,8 +8,8 @@ export function Home() {
 
     async function getData() {
         try {
-            const response = await DataProfile.Get('albums');
-            setProductList(Array.isArray(response.data) ? response.data : []);
+            const response = await DataProfile.Get('cars');
+            setProductList(Array.isArray(response.data?.cars) ? response.data?.cars : []);
         } catch (error) {
             console.log('error: ', error);
         }

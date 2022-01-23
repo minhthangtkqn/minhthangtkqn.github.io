@@ -63,4 +63,5 @@ export class NetworkDataAccess {
     }
 }
 
-export const DataProfile = new NetworkDataAccess('data', 'https://jsonplaceholder.typicode.com/');
+export const TestProfile = new NetworkDataAccess('data', 'https://jsonplaceholder.typicode.com/');
+export const DataProfile = new NetworkDataAccess('data', 'http://127.0.0.1:5000/');
