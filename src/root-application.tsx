@@ -8,6 +8,8 @@ import { AppWrapper } from 'base/component';
 
 import { Home } from 'app/modules/home';
 import { About } from 'app/modules/about';
+import { Folder } from 'app/modules/folder';
+import { AppModules } from 'app/constant';
 
 export default function RootApplication() {
     return (
@@ -18,7 +20,8 @@ export default function RootApplication() {
                         <AppWrapper>
                             <Routes>
                                 <Route path="/" element={<Home />} />
-                                <Route path="/about" element={<About />} />
+                                <Route path={`/${AppModules.ABOUT}`} element={<About />} />
+                                <Route path={`/${AppModules.FOLDER}`} element={<Folder />} />
                             </Routes>
                         </AppWrapper>
                     </BrowserRouter>

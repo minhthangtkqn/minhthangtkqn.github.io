@@ -1,3 +1,12 @@
 :root {
     --size-app-header-height: 50px;
+
+    --spacing-xs: 2px;
+    --spacing-sm: 4px;
+    --spacing-md: 8px;
+    --spacing-lg: 12px;
+    --spacing-xl: 16px;
+    --spacing-2xl: 20px;
+    --spacing-3xl: 24px;
+    --spacing: var(--spacing-md);
 }

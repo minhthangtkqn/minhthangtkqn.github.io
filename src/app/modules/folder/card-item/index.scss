@@ -1,0 +1,15 @@
+.card-item {
+    padding: var(--spacing) var(--spacing-lg);
+    border: 1px solid grey;
+    border-radius: 4px;
+    width: 300px;
+
+    .card-item__word {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    &:hover {
+        background-color: beige;
+    }
+}

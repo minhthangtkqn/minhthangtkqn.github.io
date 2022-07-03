@@ -1,0 +1,29 @@
+.folder-page {
+    padding: var(--spacing);
+    height: 100%;
+
+    .folder-page__title {
+        font-size: 2rem;
+        font-weight: 700;
+
+        &.folder-page__title--card-list {
+            cursor: pointer;
+        }
+    }
+
+    .folder-page__sub-title {
+        font-size: 1.4rem;
+    }
+
+    .folder-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-lg) var(--spacing-lg);
+    }
+
+    .folder-item__card-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-lg) var(--spacing-lg);
+    }
+}

@@ -1,0 +1,12 @@
+.folder-item {
+    padding: var(--spacing) var(--spacing-lg);
+    border: 1px solid grey;
+    border-radius: 4px;
+    width: 300px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: beige;
+    }
+}
