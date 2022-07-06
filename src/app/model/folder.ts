@@ -1,11 +1,11 @@
-export type Card = {
+export type FlashCard = {
     id: any;
-    word: string;
+    name: string;
     description: string;
 };
 
 export type Folder = {
     id: any;
     name: string;
-    cards: Card[];
+    cards: FlashCard[];
 };
