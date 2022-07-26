@@ -1,5 +1,5 @@
 export type FlashCard = {
-    id: any;
+    _id: any;
     name: string;
     description: string;
 };

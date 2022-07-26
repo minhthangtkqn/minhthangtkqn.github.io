@@ -17,27 +17,27 @@ export const demoFolderData: Folder[] = [
         name: 'English',
         cards: [
             {
-                id: uniqueId(),
+                _id: uniqueId(),
                 name: 'Lorem',
                 description: 'Lorem ipsum',
             },
             {
-                id: uniqueId(),
+                _id: uniqueId(),
                 name: 'Lorem',
                 description: 'Lorem ipsum',
             },
             {
-                id: uniqueId(),
+                _id: uniqueId(),
                 name: 'Lorem',
                 description: 'Lorem ipsum',
             },
             {
-                id: uniqueId(),
+                _id: uniqueId(),
                 name: 'Lorem',
                 description: 'Lorem ipsum',
             },
             {
-                id: uniqueId(),
+                _id: uniqueId(),
                 name: 'Lorem',
                 description: 'Lorem ipsum',
             },

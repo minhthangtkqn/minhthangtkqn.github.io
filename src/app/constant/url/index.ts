@@ -5,3 +5,10 @@ export const QueryURL = {
         all: `${BASE_API}/flash_cards`
     },
 };
+
+export const CommandURL = {
+    flashCard: {
+        common: `${BASE_API}/flash_cards`,
+        single: (cardId: string) => `${BASE_API}/flash_card/${cardId}`,
+    },
+};
