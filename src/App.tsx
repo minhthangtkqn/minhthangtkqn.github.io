@@ -1,16 +1,14 @@
 import './App.scss';
 import './style/index.scss';
 import React from 'react';
-import logo from './logo.svg';
-import { Button } from 'antd';
+import { NavBar } from '@/component';
 
 const App: React.FC = () => {
     return (
-        <div className="App">
-            <div><img src={logo} className="App-logo" alt="logo" /></div>
-            <div>
-                <Button type="primary">Button</Button>
-            </div>
+        <div className="app-wrapper">
+            <header className="App-header">
+                <NavBar />
+            </header>
         </div>
     );
 };
