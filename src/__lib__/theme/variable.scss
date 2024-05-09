@@ -1,0 +1,90 @@
+:root {
+    --spacing-scale-tight: 0.5;
+    --spacing-scale-normal: 1;
+    --spacing-scale-loose: 1.5;
+
+    // absolute spacing
+    --spacing-0: 0px;
+    --spacing-1: 1px;
+    --spacing-2: 2px;
+    --spacing-5: 5px;
+    --spacing-10: 10px;
+    --spacing-15: 15px;
+    --spacing-20: 20px;
+    --spacing-30: 30px;
+    --spacing-40: 40px;
+    --spacing-50: 50px;
+    --spacing-60: 60px;
+    --spacing-70: 70px;
+    --spacing-80: 80px;
+
+    // relative spacing
+    --spacing-xxs: calc(2px * var(--spacing-scale-normal));
+    --spacing-xs: calc(5px * var(--spacing-scale-normal));
+    --spacing-sm: calc(10px * var(--spacing-scale-normal));
+    --spacing-md: calc(15px * var(--spacing-scale-normal));
+    --spacing-lg: calc(20px * var(--spacing-scale-normal));
+    --spacing-xl: calc(30px * var(--spacing-scale-normal));
+    --spacing-2xl: calc(40px * var(--spacing-scale-normal));
+    --spacing-3xl: calc(50px * var(--spacing-scale-normal));
+    --spacing-4xl: calc(60px * var(--spacing-scale-normal));
+    --spacing-5xl: calc(70px * var(--spacing-scale-normal));
+    --spacing-6xl: calc(80px * var(--spacing-scale-normal));
+    --spacing: var(--spacing-md);
+
+
+
+    --size-1: 1px;
+    --size-2: 2px;
+    --size-3: 3px;
+    --size-4: 4px;
+    --size-5: 5px;
+    --size-6: 6px;
+    --size-7: 7px;
+    --size-8: 8px;
+    --size-9: 9px;
+    --size-10: 10px;
+    --size-none: 0px;
+    --size-px: 1px;
+    --size-xxs: 2px;
+    --size-xs: 5px;
+    --size-sm: 10px;
+    --size-md: 15px;
+    --size-lg: 20px;
+    --size-xl: 30px;
+    --size-2xl: 40px;
+    --size-3xl: 50px;
+    --size-4xl: 60px;
+    --size-5xl: 70px;
+    --size-6xl: 80px;
+    --size: var(--size-1);
+
+
+
+    --bdColor-normal: #e1e1e3;
+
+    --bdColor: var(--bdColor-normal);
+
+    --bd-normal: var(--size-px) solid var(--bdColor-normal);
+    --bd: var(--bd-normal);
+
+
+
+    --border-radius-scale-sharper: 0.5;
+    --border-radius-scale-normal: 1;
+    --border-radius-scale-dull: 2;
+    --border-radius-scale: var(--border-radius-scale-normal);
+
+    --br-0: calc(0 * var(--border-radius-scale));
+    --br-none: calc(0 * var(--border-radius-scale));
+    --br-xs: calc(2px * var(--border-radius-scale));
+    --br-sm: calc(0.25rem * var(--border-radius-scale));
+    --br-md: calc(0.5rem * var(--border-radius-scale));
+    --br-normal: calc(0.5rem * var(--border-radius-scale));
+    --br-lg: calc(1rem * var(--border-radius-scale));
+    --br-xl: calc(2rem * var(--border-radius-scale));
+    --br-max: calc(99999px * var(--border-radius-scale));
+    --br-full: calc(99999px * var(--border-radius-scale));
+    --br: var(--br-md);
+
+}

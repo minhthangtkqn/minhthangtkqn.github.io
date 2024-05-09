@@ -1,0 +1,17 @@
+.layout-base {
+    display: flex;
+    padding: var(--spacing-sm);
+    column-gap: var(--spacing-sm);
+
+    .primary {
+        flex: 3;
+    }
+
+    .secondary {
+        flex: 1;
+    }
+
+    .extension {
+        flex: 1;
+    }
+}
