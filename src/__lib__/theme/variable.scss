@@ -87,4 +87,33 @@
     --br-full: calc(99999px * var(--border-radius-scale));
     --br: var(--br-md);
 
+
+
+    --fs-0: 0;
+    --fs-1: 3px;
+    --fs-2: 7px;
+    --fs-3: 10px;
+    --fs-4: 14px;
+    --fs-5: 17px;
+    --fs-6: 21px;
+    --fs-7: 24px;
+    --fs-8: 28px;
+    --fs-9: 31px;
+    --fs-10: 35px;
+    --fs-px: 5px;
+    --fs-xxs: 7px;
+    --fs-xs: 10px;
+    --fs-sm: 12px;
+    --fs-md: 14px;
+    --fs-base: 14px;
+    --fs-lg: 16px;
+    --fs-xl: 18px;
+    --fs-2xl: 20px;
+    --fs-3xl: 22px;
+    --fs-4xl: 24px;
+    --fs-5xl: 28px;
+    --fs-6xl: 42px;
+    --fs-7xl: 56px;
+    --fs-8xl: 70px;
+    --fs: var(--fs-base);
 }
