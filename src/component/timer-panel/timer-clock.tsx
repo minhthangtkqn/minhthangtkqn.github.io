@@ -2,6 +2,7 @@ import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'rea
 import styled from "styled-components";
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import { Button } from "antd";
 
 const StyledTimerClock = styled.div`
     font-size: var(--fs-8xl);
@@ -14,6 +15,7 @@ const StyledTimerClock = styled.div`
     height: 10rem;
     width: 10rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -21,13 +23,17 @@ const StyledTimerClock = styled.div`
     &:hover {
         filter: brightness(103%);
     }
+
+    .reset-btn {
+        font-size: var(--fs-xl);
+    }
 `;
 
 const simpleTimeNumberFormat = (value: number) => {
     return value >= 10 ? value : '0' + value;
 };
 
-const COUNT_DOWN = 20 * 60;
+const COUNT_DOWN = 0.1 * 60;
 type Props = {};
 export type TimerClockRef = {
     start: () => void;
@@ -55,8 +61,16 @@ export const TimerClock = forwardRef<TimerClockRef, Props>(({ }, ref) => {
         setRunning(false);
     };
 
+    const playAlertSound = () => {
+        (new Audio('http://bruitages.free.fr/horloges/sonnette_reveil.wav')).play();
+    };
+
     useEffect(() => {
         console.log('🚀 ~ TimerClock ~ tempCountdown:', countdownInSeconds);
+        if (countdownInSeconds === 0) {
+            handlePause();
+            playAlertSound();
+        }
     }, [countdownInSeconds]);
 
     const remainingMinutes = Math.floor((countdownInSeconds % (60 * 60)) / 60);
@@ -64,7 +78,16 @@ export const TimerClock = forwardRef<TimerClockRef, Props>(({ }, ref) => {
 
     return (
         <StyledTimerClock onClick={() => isRunning ? handlePause() : handleStart()}>
-            {simpleTimeNumberFormat(remainingMinutes)}:{simpleTimeNumberFormat(remainingSeconds)}
+            <div>{simpleTimeNumberFormat(remainingMinutes)}:{simpleTimeNumberFormat(remainingSeconds)}</div>
+            <Button
+                type="link"
+                className="reset-btn"
+                size="small"
+                onClick={() => {
+                    handlePause();
+                    setCountdownInSeconds(COUNT_DOWN);
+                }}
+            >Reset</Button>
         </StyledTimerClock>
     );
 });

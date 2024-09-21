@@ -27,6 +27,7 @@ const StyledTimerPanel = styled.div`
     .start-btn {
         font-size: var(--fs-4xl);
         line-height: var(--fs-4xl);
+        margin-top: var(--spacing);
     }
 `;
 
