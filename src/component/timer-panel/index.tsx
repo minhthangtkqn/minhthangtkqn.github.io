@@ -32,25 +32,26 @@ const StyledTimerPanel = styled.div`
 `;
 
 export const TimerPanel: React.FC = () => {
-    const [running, setRunning] = useState(false);
+    const [isRunning, setRunning] = useState(false);
     const timerClockRef = useRef<TimerClockRef>(null);
 
-    const handleRunTimer = () => {
-        timerClockRef.current?.start();
-        setRunning(true);
+    const handleClickStart = (is_running: boolean) => {
+        if (is_running) {
+            timerClockRef.current?.pause();
+        } else {
+            timerClockRef.current?.start();
+        }
     };
 
-    const handlePauseTimer = () => {
-        timerClockRef.current?.pause();
-        setRunning(false);
+    const handleChangeTimer = (is_running: boolean) => {
+        setRunning(is_running);
     };
 
     return (
         <StyledTimerPanel>
             {/* title */}
-            <div className="title">Title</div>
+            <div className="title">Timer</div>
 
-            {/* timer type menu */}
             <Menu
                 className="timer-menu"
                 items={[
@@ -70,16 +71,17 @@ export const TimerPanel: React.FC = () => {
                 mode="horizontal"
             />
 
-            {/* timer clock */}
-            <TimerClock ref={timerClockRef} />
+            <TimerClock
+                ref={timerClockRef}
+                onChange={handleChangeTimer}
+            />
 
-            {/* start timer button */}
             <Button
                 size="large"
                 type="primary"
                 className="start-btn"
-                onClick={running ? handlePauseTimer : handleRunTimer}
-            >{running ? 'PAUSE' : 'START'}</Button>
+                onClick={() => handleClickStart(isRunning)}
+            >{isRunning ? 'PAUSE' : 'START'}</Button>
         </StyledTimerPanel>
     );
 };

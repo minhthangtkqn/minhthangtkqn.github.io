@@ -33,14 +33,18 @@ const simpleTimeNumberFormat = (value: number) => {
     return value >= 10 ? value : '0' + value;
 };
 
-const COUNT_DOWN = 0.1 * 60;
-type Props = {};
+const DEFAULT_COUNT_DOWN = 0.05 * 60;
+type TimerClock = {
+    onChange?: (is_running: boolean) => void;
+};
 export type TimerClockRef = {
     start: () => void;
     pause: () => void;
 };
-export const TimerClock = forwardRef<TimerClockRef, Props>(({ }, ref) => {
-    const [countdownInSeconds, setCountdownInSeconds] = useState(COUNT_DOWN);
+export const TimerClock = forwardRef<TimerClockRef, TimerClock>(({
+    onChange,
+}, ref) => {
+    const [countdownInSeconds, setCountdownInSeconds] = useState(DEFAULT_COUNT_DOWN);
     const [isRunning, setRunning] = useState(false);
     const [intervalInstance, setIntervalInstance] = useState<ReturnType<typeof setInterval>>();
 
@@ -51,14 +55,23 @@ export const TimerClock = forwardRef<TimerClockRef, Props>(({ }, ref) => {
 
     const handleStart = () => {
         setRunning(true);
-        console.log('🚀 ~ handleStart ~ handleStart:');
+        if (!countdownInSeconds) {
+            setCountdownInSeconds(DEFAULT_COUNT_DOWN);
+        }
         const interval = setInterval(() => setCountdownInSeconds(prev => prev - 1), 1000);
         setIntervalInstance(interval);
+        onChange?.(true);
     };
 
     const handlePause = () => {
         clearInterval(intervalInstance);
         setRunning(false);
+        onChange?.(false);
+    };
+
+    const handleReset = () => {
+        handlePause();
+        setCountdownInSeconds(DEFAULT_COUNT_DOWN);
     };
 
     const playAlertSound = () => {
@@ -66,7 +79,6 @@ export const TimerClock = forwardRef<TimerClockRef, Props>(({ }, ref) => {
     };
 
     useEffect(() => {
-        console.log('🚀 ~ TimerClock ~ tempCountdown:', countdownInSeconds);
         if (countdownInSeconds === 0) {
             handlePause();
             playAlertSound();
@@ -83,10 +95,7 @@ export const TimerClock = forwardRef<TimerClockRef, Props>(({ }, ref) => {
                 type="link"
                 className="reset-btn"
                 size="small"
-                onClick={() => {
-                    handlePause();
-                    setCountdownInSeconds(COUNT_DOWN);
-                }}
+                onClick={handleReset}
             >Reset</Button>
         </StyledTimerClock>
     );
