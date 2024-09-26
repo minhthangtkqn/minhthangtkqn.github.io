@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Button, Empty, Input } from 'antd';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { Empty, Input } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { addTaskItem, getTaskList, removeTaskItem } from "@/util";
+import { ActionButton } from "../atom";
 
 const StyledTaskPanel = styled.div`
     height: 100%;
@@ -58,20 +58,12 @@ export const TaskPanel: React.FC = () => {
         <StyledTaskPanel>
             <div className="task-list-header">Task</div>
             <div className="task-list">
-                {/* <Button
-                    className="task-item-btn"
-                    icon={<PlusOutlined />}
-                    size="large"
-                    type="dashed"
-                >Add Task</Button> */}
                 <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Input & Enter to add new task"
                     onPressEnter={(e) => {
-                        // console.log('🚀 ~ e:', (e.target as HTMLInputElement)?.value);
                         const value = (e.target as HTMLInputElement)?.value?.trim();
-                        console.log('🚀 ~ onPressEnter ~ value:', value);
                         if (value) {
                             handleAddNewTask(value);
                             setInputValue('');
@@ -81,7 +73,10 @@ export const TaskPanel: React.FC = () => {
 
                 {taskList.map(item => <div key={item._id} className="task-item">
                     {item.title}
-                    <Button type="link" danger icon={<CloseOutlined />} size="small" onClick={() => handleRemoveTask(item._id)} />
+                    <ActionButton.Delete
+                        onClick={() => handleRemoveTask(item._id)}
+                        tooltip="Delete"
+                    />
                 </div>)}
                 {taskList.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> : null}
             </div>
