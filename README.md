@@ -1,3 +1,9 @@
+# Guide
+- Repo này được khởi tạo từ việc tham khảo các tài liệu sau
+    - https://www.robinwieruch.de/react-starter/
+    - https://www.robinwieruch.de/vite-create-react-app/
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
