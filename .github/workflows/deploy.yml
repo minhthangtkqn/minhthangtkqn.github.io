@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: production-files
-          path: ./dist
+          path: ./build
 
   # Deployment job
   deploy:
@@ -59,7 +59,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: production-files
-          path: ./dist
+          path: ./build
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
