@@ -30,13 +30,22 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+      # - name: Build with Jekyll
+      #   uses: actions/jekyll-build-pages@v1
+      #   with:
+      #     source: ./
+      #     destination: ./_site
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+      - name: Build project
+        run: npm run build
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v3
         with:
-          source: ./
-          destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+          name: production-files
+          path: ./dist
 
   # Deployment job
   deploy:
