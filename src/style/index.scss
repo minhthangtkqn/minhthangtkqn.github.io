@@ -9,6 +9,9 @@
 
     .secondary {
         flex: 1;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
     }
 
     .extension {

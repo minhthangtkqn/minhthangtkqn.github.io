@@ -6,7 +6,8 @@ import { addTaskItem, getTaskList, mergeClass, removeTaskItem } from "@/util";
 import { ActionButton } from "../atom";
 
 const StyledTaskPanel = styled.div`
-    height: 100%;
+    /* height: 100%; */
+    flex: 1;
     background-color: white;
     padding: var(--spacing-xs) var(--spacing-sm);
     max-width: 300px;
