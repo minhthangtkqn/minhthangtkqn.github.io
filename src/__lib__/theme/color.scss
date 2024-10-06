@@ -1,11 +1,29 @@
 :root {
-    --main-primary: #4f91ff;
-    --main-primaryLighter: #d8e6ff;
-    --main-primaryDarker: #2264d1;
-    --main-secondary: #76a9ff;
-    --main-secondaryLighter: #cee5ff;
-    --main-secondaryDarker: #2979ff;
-    --main-tertiary: #e1e1e3;
-    --main-tertiaryLighter: #f0f0f1;
-    --main-tertiaryDarker: #b4b4bb;
+    --main-primary: #1890ff;
+    --main-primaryLighter: #e6f7ff;
+    --main-primaryDarker: #0050b3;
+    --main-antd: #1890ff;
+    --main-danger: #f5222d;
+    --main-dangerLighter: #fff1f0;
+    --main-dangerDarker: #a8071a;
+    --main-success: #a0d911;
+    --main-successLighter: #f4ffb8;
+    --main-successDarker: #5b8c00;
+    --main-warning: #fa8c16;
+    --main-warningLighter: #fff7e6;
+    --main-warningDarker: #ad4e00;
+
+    --contrast-primary: #ffffff;
+    --contrast-primaryLighter: #4a4b57;
+    --contrast-primaryDarker: #ffffff;
+    --contrast-antd: #ffffff;
+    --contrast-danger: #ffffff;
+    --contrast-dangerLighter: #4a4b57;
+    --contrast-dangerDarker: #ffffff;
+    --contrast-success: #ffffff;
+    --contrast-successLighter: #4a4b57;
+    --contrast-successDarker: #ffffff;
+    --contrast-warning: #ffffff;
+    --contrast-warningLighter: #4a4b57;
+    --contrast-warningDarker: #ffffff;
 }

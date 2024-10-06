@@ -49,7 +49,6 @@ export const TimerPanel: React.FC = () => {
 
     return (
         <StyledTimerPanel>
-            {/* title */}
             <div className="title">Timer</div>
 
             <Menu
@@ -74,6 +73,7 @@ export const TimerPanel: React.FC = () => {
             <TimerClock
                 ref={timerClockRef}
                 onChange={handleChangeTimer}
+                type="default"
             />
 
             <Button

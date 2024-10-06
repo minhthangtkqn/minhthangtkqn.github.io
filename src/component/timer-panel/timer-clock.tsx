@@ -1,19 +1,33 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import styled from "styled-components";
-import dayjs, { Dayjs } from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { Button } from "antd";
 
-const StyledTimerClock = styled.div`
+const StyledTimerClock = styled.div<{ $type?: 'default' | 'antd' | 'success' | 'warning' | 'danger'; }>`
+    ${props => {
+        if (!props.$type || props.$type === 'default') {
+            return `
+                --type-border-color: var(--main-primary);
+                --type-background-color: var(--main-primaryLighter);
+                --type-color: var(--contrast-primaryLighter);
+            `;
+        }
+
+        return `
+            --type-border-color: var(--main-${props.$type});
+            --type-background-color: var(--main-${props.$type}Lighter);
+            --type-color: var(--contrast-${props.$type}Lighter);
+        `;
+    }}
     font-size: var(--fs-8xl);
     padding: var(--spacing-4xl);
     border: var(--bd);
     border-width: var(--spacing-xs);
     border-radius: var(--br-max);
-    border-color: var(--main-primary);
-    background-color: var(--main-primaryLighter);
-    height: 10rem;
-    width: 10rem;
+    border-color: var(--type-border-color);
+    background-color: var(--type-background-color);
+    color: var(--type-color);
+    height: 16rem;
+    width: 16rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,8 +47,10 @@ const simpleTimeNumberFormat = (value: number) => {
     return value >= 10 ? value : '0' + value;
 };
 
-const DEFAULT_COUNT_DOWN = 0.05 * 60;
+const DEFAULT_COUNTDOWN_IN_MINUTES = 15;
 type TimerClock = {
+    initialCountdownInMinutes?: number;
+    type?: Pick<React.ComponentProps<typeof StyledTimerClock>, '$type'>['$type'];
     onChange?: (is_running: boolean) => void;
 };
 export type TimerClockRef = {
@@ -42,9 +58,13 @@ export type TimerClockRef = {
     pause: () => void;
 };
 export const TimerClock = forwardRef<TimerClockRef, TimerClock>(({
+    initialCountdownInMinutes = DEFAULT_COUNTDOWN_IN_MINUTES,
+    type = 'default',
     onChange,
 }, ref) => {
-    const [countdownInSeconds, setCountdownInSeconds] = useState(DEFAULT_COUNT_DOWN);
+    const initialCountdownInSeconds = initialCountdownInMinutes * 60;
+
+    const [countdownInSeconds, setCountdownInSeconds] = useState(initialCountdownInSeconds);
     const [isRunning, setRunning] = useState(false);
     const [intervalInstance, setIntervalInstance] = useState<ReturnType<typeof setInterval>>();
 
@@ -56,7 +76,7 @@ export const TimerClock = forwardRef<TimerClockRef, TimerClock>(({
     const handleStart = () => {
         setRunning(true);
         if (!countdownInSeconds) {
-            setCountdownInSeconds(DEFAULT_COUNT_DOWN);
+            setCountdownInSeconds(initialCountdownInSeconds);
         }
         const interval = setInterval(() => setCountdownInSeconds(prev => prev - 1), 1000);
         setIntervalInstance(interval);
@@ -71,7 +91,7 @@ export const TimerClock = forwardRef<TimerClockRef, TimerClock>(({
 
     const handleReset = () => {
         handlePause();
-        setCountdownInSeconds(DEFAULT_COUNT_DOWN);
+        setCountdownInSeconds(initialCountdownInSeconds);
     };
 
     const playAlertSound = (playTimes: number = 1) => {
@@ -100,7 +120,10 @@ export const TimerClock = forwardRef<TimerClockRef, TimerClock>(({
     const remainingSeconds = countdownInSeconds % 60;
 
     return (
-        <StyledTimerClock onClick={() => isRunning ? handlePause() : handleStart()}>
+        <StyledTimerClock
+            $type={type}
+            onClick={() => isRunning ? handlePause() : handleStart()}
+        >
             <div>{simpleTimeNumberFormat(remainingMinutes)}:{simpleTimeNumberFormat(remainingSeconds)}</div>
             <Button
                 type="link"
