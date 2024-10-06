@@ -74,14 +74,25 @@ export const TimerClock = forwardRef<TimerClockRef, TimerClock>(({
         setCountdownInSeconds(DEFAULT_COUNT_DOWN);
     };
 
-    const playAlertSound = () => {
-        (new Audio('http://bruitages.free.fr/horloges/sonnette_reveil.wav')).play();
+    const playAlertSound = (playTimes: number = 1) => {
+        if (!playTimes) {
+            return;
+        }
+
+        // const audioUrl = 'http://bruitages.free.fr/horloges/sonnette_reveil.wav';
+        const audioUrl = 'http://cd.textfiles.com/999wavs/WAVS_C/CUCKOO.WAV';
+        const audioInstance = new Audio(audioUrl);
+        audioInstance.addEventListener(
+            'ended',
+            () => playAlertSound(playTimes - 1),
+        );
+        audioInstance.play();
     };
 
     useEffect(() => {
         if (countdownInSeconds === 0) {
             handlePause();
-            playAlertSound();
+            playAlertSound(3);
         }
     }, [countdownInSeconds]);
 
