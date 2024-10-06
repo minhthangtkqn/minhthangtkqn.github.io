@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Empty, Input } from 'antd';
+import { Empty, Input, Checkbox } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import { addTaskItem, getTaskList, removeTaskItem } from "@/util";
+import { addTaskItem, getTaskList, mergeClass, removeTaskItem } from "@/util";
 import { ActionButton } from "../atom";
 
 const StyledTaskPanel = styled.div`
     height: 100%;
     background-color: white;
     padding: var(--spacing-xs) var(--spacing-sm);
+    max-width: 300px;
 
     .task-list-header {
         font-size: 2.5rem;
@@ -31,6 +32,15 @@ const StyledTaskPanel = styled.div`
             display: flex;
             justify-content: space-between;
             align-items: center;
+            column-gap: var(--spacing-sm);
+
+            .task-item-title {
+                flex: 1;
+
+                &.done {
+                    text-decoration: line-through;
+                }
+            }
         }
     }
 `;
@@ -43,6 +53,7 @@ type TaskItem = {
 export const TaskPanel: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [taskList, setTaskList] = useState<TaskItem[]>(getTaskList());
+    const [doneTaskIdList, setDoneTaskIdList] = useState<string[]>([]);
 
     const handleAddNewTask = (value: string) => {
         addTaskItem({ _id: uuidv4(), title: value });
@@ -52,6 +63,16 @@ export const TaskPanel: React.FC = () => {
     const handleRemoveTask = (task_id: string) => {
         removeTaskItem(task_id);
         setTaskList(getTaskList());
+    };
+
+    const handleToggleTask = (task_id: string) => {
+        setDoneTaskIdList(prevIdList => {
+            if (prevIdList.includes(task_id)) {
+                return prevIdList.filter(i => i !== task_id);
+            } else {
+                return [...prevIdList, task_id];
+            }
+        });
     };
 
     return (
@@ -72,7 +93,15 @@ export const TaskPanel: React.FC = () => {
                 />
 
                 {taskList.map(item => <div key={item._id} className="task-item">
-                    {item.title}
+                    <Checkbox onChange={() => handleToggleTask(item._id)} />
+                    <div
+                        className={mergeClass(
+                            'task-item-title',
+                            'truncate',
+                            doneTaskIdList.includes(item._id) ? 'done' : undefined,
+                        )}
+                        title={item.title}
+                    >{item.title}</div>
                     <ActionButton.Delete
                         onClick={() => handleRemoveTask(item._id)}
                         tooltip="Delete"
