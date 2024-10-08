@@ -67,24 +67,40 @@ const TimerKind = {
     LONG_REST: 'LONG_REST' as const,
 };
 type TimerKind = typeof TimerKind[keyof typeof TimerKind];
-const TimerKindSchema: Record<TimerKind, { title: string; className?: string; }> = {
+const TimerKindSchema: Record<
+    TimerKind,
+    {
+        title: string;
+        className?: string;
+        timerType: Exclude<Pick<React.ComponentProps<typeof TimerClock>, 'type'>['type'], undefined>;
+    } & Pick<React.ComponentProps<typeof TimerClock>, 'initialCountdownInMinutes'>
+> = {
     [TimerKind.POMODORO]: {
         title: 'Pomodoro',
         className: 'blue',
+        timerType: 'default',
+        // initialCountdownInMinutes: 15,
     },
     [TimerKind.REST]: {
         title: 'Rest',
         className: 'green',
+        timerType: 'success',
+        initialCountdownInMinutes: 5,
     },
     [TimerKind.LONG_REST]: {
         title: 'Long Rest',
         className: 'green',
+        timerType: 'warning',
+        initialCountdownInMinutes: 10,
     },
 };
 
 export const TimerPanel: React.FC = () => {
     const [isRunning, setRunning] = useState(false);
     const timerClockRef = useRef<TimerClockRef>(null);
+    const [activeMenuKey, setActiveMenuKey] = useState<TimerKind[]>([TimerKind.POMODORO]);
+
+    const selectedTimerKindSchema = TimerKindSchema[activeMenuKey[0]];
 
     const handleClickStart = (is_running: boolean) => {
         if (is_running) {
@@ -104,35 +120,24 @@ export const TimerPanel: React.FC = () => {
 
             <Menu
                 className="timer-menu"
-                // items={[
-                //     {
-                //         key: '1',
-                //         label: 'Pomodoro',
-                //         className: 'blue',
-                //     },
-                //     {
-                //         key: '2',
-                //         label: 'Rest',
-                //         className: 'green',
-                //     },
-                //     {
-                //         key: '3',
-                //         label: 'Long rest',
-                //         className: 'green',
-                //     },
-                // ]}
                 items={Object.entries(TimerKindSchema).map(([key, item]) => ({
                     key: key,
                     label: item.title,
                     className: item.className,
                 }))}
+                onSelect={(e) => {
+                    setActiveMenuKey(e.selectedKeys as TimerKind[]);
+                }}
+                selectedKeys={activeMenuKey}
                 mode="horizontal"
             />
 
             <TimerClock
                 ref={timerClockRef}
+                key={activeMenuKey[0]}
                 onChange={handleChangeTimer}
-                type="default"
+                type={selectedTimerKindSchema.timerType}
+                initialCountdownInMinutes={selectedTimerKindSchema.initialCountdownInMinutes}
             />
 
             <Button
