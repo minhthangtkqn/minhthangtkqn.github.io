@@ -10,7 +10,6 @@ const StyledTaskPanel = styled.div`
     flex: 1;
     background-color: white;
     padding: var(--spacing-xs) var(--spacing-sm);
-    max-width: 300px;
 
     .task-list-header {
         font-size: 2.5rem;

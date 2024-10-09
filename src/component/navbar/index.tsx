@@ -8,12 +8,18 @@ const StyledNavBar = styled.div`
     align-items: center;
     font-size: 2rem;
     color: white;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    /* padding: var(--spacing-xs) var(--spacing-sm); */
+    column-gap: var(--spacing-sm);
+
+    .nav-bar-item {
+        padding: var(--spacing-xs) 0;
+    }
 
     .logo {
         display: flex;
         align-items: center;
         column-gap: var(--spacing-xs);
+        cursor: pointer;
 
         .app-logo-wrapper {
             height: 2rem;
@@ -44,7 +50,7 @@ const StyledNavBar = styled.div`
 export const AppNavBar = () => {
     return (
         <StyledNavBar>
-            <div className="logo">
+            <div className="logo nav-bar-item">
                 <div className="app-logo-wrapper">
                     <img src={logo} className="app-logo" alt="logo" />
                 </div>
