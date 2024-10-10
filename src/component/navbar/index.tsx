@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from '../../asset/logo.svg';
+import { Drawer } from "antd";
 
 const StyledNavBar = styled.div`
     background-color: #282c34;
@@ -14,19 +15,29 @@ const StyledNavBar = styled.div`
     .nav-bar-item {
         padding: var(--spacing-xs) 0;
     }
+`;
 
-    .logo {
-        display: flex;
-        align-items: center;
-        column-gap: var(--spacing-xs);
-        cursor: pointer;
+export const AppNavBar = () => {
+    return (
+        <StyledNavBar>
+            <NavBarLogo
+                className="nav-bar-item"
+            />
+        </StyledNavBar>
+    );
+};
 
-        .app-logo-wrapper {
-            height: 2rem;
+const StyledNavBarLogo = styled.div`
+    display: flex;
+    align-items: center;
+    column-gap: var(--spacing-xs);
+    cursor: pointer;
 
-            .app-logo {
-                height: 100%;
-            }
+    .app-logo-wrapper {
+        height: 2rem;
+
+        .app-logo {
+            height: 100%;
         }
     }
 
@@ -46,16 +57,21 @@ const StyledNavBar = styled.div`
         }
     }
 `;
+const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (props) => {
+    const [isOpenDrawer, setOpenDrawer] = useState(false);
 
-export const AppNavBar = () => {
-    return (
-        <StyledNavBar>
-            <div className="logo nav-bar-item">
-                <div className="app-logo-wrapper">
-                    <img src={logo} className="app-logo" alt="logo" />
-                </div>
-                <div className="logo-label">Focus</div>
+    const handleShowDrawer = () => {
+        setOpenDrawer(true);
+    };
+
+    return (<>
+        <StyledNavBarLogo {...props} onClick={handleShowDrawer}>
+            <div className="app-logo-wrapper">
+                <img src={logo} className="app-logo" alt="logo" />
             </div>
-        </StyledNavBar>
-    );
+            <div className="logo-label">Focus</div>
+        </StyledNavBarLogo>
+
+        {/* <Drawer></Drawer> */}
+    </>);
 };
