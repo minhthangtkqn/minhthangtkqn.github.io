@@ -23,10 +23,17 @@ const StyledDrawer = styled(Drawer)`
         display: none;
     }
     .ant-drawer-body {
-        padding: var(--spacing-sm);
+        padding: 0;
 
         .side-nav-menu {
             border-right: none;
+            font-size: var(--fs-xl);
+
+            .ant-menu-item {
+                .anticon {
+                    font-size: inherit; // override the default css with stronger scpecifity
+                }
+            }
         }
     }
 `;
@@ -34,26 +41,19 @@ const StyledDrawer = styled(Drawer)`
 const MODULE_LIST = [
     {
         key: 'task1',
-        title: 'Demo Item',
+        title: 'Todo',
         icon: <CheckSquareOutlined />,
     },
     {
         key: 'task2',
-        title: 'Demo Item',
-        icon: <CheckSquareOutlined />,
-    },
-    {
-        key: 'task3',
-        title: 'Demo Item',
+        title: 'Flash Card',
         icon: <CheckSquareOutlined />,
     },
 ];
 export const AppNavBar = () => {
     return (
         <StyledNavBar>
-            <NavBarLogo
-                className="nav-bar-item"
-            />
+            <NavBarLogo className="nav-bar-item" />
         </StyledNavBar>
     );
 };
