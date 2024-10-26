@@ -1,13 +1,20 @@
+import { mergeClass } from "@/util";
 import React from 'react';
 
 type Props = {
     primarySlot?: React.ReactNode;
     secondarySlot?: React.ReactNode;
     extensionSlot?: React.ReactNode;
+    className?: string;
 };
-export const BaseLayout: React.FC<Props> = ({ primarySlot, secondarySlot, extensionSlot }) => {
+export const BaseLayout: React.FC<Props> = ({
+    primarySlot,
+    secondarySlot,
+    extensionSlot,
+    className,
+}) => {
     return (
-        <div className="layout-base app-body">
+        <div className={mergeClass('layout-base app-body', className)}>
             {extensionSlot ? <div className="extension">{extensionSlot}</div> : null}
             {primarySlot ? <div className="primary">{primarySlot}</div> : null}
             {secondarySlot ? <div className="secondary">{secondarySlot}</div> : null}
