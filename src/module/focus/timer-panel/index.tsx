@@ -4,12 +4,16 @@ import styled from "styled-components";
 import { TimerClock, TimerClockRef } from "./timer-clock";
 
 const StyledTimerPanel = styled.div`
-    height: 100%;
+    padding: var(--spacing);
+    height: calc(100% - var(--spacing) - var(--spacing));
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: var(--bd);
+    border-radius: var(--br);
+    overflow-y: scroll;
 
     .title {
         font-size: var(--fs-6xl);
@@ -115,7 +119,7 @@ export const TimerPanel: React.FC = () => {
     };
 
     return (
-        <StyledTimerPanel>
+        <StyledTimerPanel className="focus-timer-panel">
             <div className="title">Timer</div>
 
             <Menu

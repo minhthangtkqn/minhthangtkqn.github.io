@@ -6,17 +6,17 @@ import logo from '../../asset/logo.svg';
 import { ModuleInfo } from "@/module";
 import { MODULE_PARAM_KEY } from "@/util";
 
-const StyledNavBar = styled.div`
+const StyledNavBar = styled.div`    
     background-color: #282c34;
     display: flex;
     align-items: center;
     font-size: 2rem;
     color: white;
-    /* padding: var(--spacing-xs) var(--spacing-sm); */
     column-gap: var(--spacing-sm);
+    height: var(--navbar-height);
 
     .nav-bar-item {
-        padding: var(--spacing-xs) 0;
+        height: 100%;
     }
 `;
 
@@ -54,7 +54,7 @@ const MODULE_LIST = [
 ];
 export const AppNavBar = () => {
     return (
-        <StyledNavBar>
+        <StyledNavBar className="app-nav-bar">
             <NavBarLogo className="nav-bar-item" />
         </StyledNavBar>
     );

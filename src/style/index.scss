@@ -1,24 +1,3 @@
-.layout-base {
-    display: flex;
-    padding: var(--spacing-sm);
-    column-gap: var(--spacing-sm);
-
-    .primary {
-        flex: 3;
-    }
-
-    .secondary {
-        flex: 1;
-        overflow: auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .extension {
-        flex: 1;
-    }
-}
-
 .truncate {
     white-space: nowrap;
     overflow: hidden;

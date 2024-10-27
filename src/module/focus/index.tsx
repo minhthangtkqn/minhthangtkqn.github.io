@@ -1,4 +1,4 @@
-import React from 'react';
+import './focus.scss';
 import { TimerPanel } from "./timer-panel";
 import { TaskPanel } from "./task-panel";
 import { BaseLayout } from "@/component";
@@ -12,6 +12,7 @@ export const FocusModule = () => {
         <BaseLayout
             primarySlot={<TimerPanel />}
             secondarySlot={<TaskPanel />}
+            className="focus-module-layout"
         />
     );
 };

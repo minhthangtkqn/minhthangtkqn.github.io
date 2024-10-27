@@ -1,4 +1,8 @@
 .layout-base {
+    display: flex;
+    overflow: hidden;
+    height: calc(100vh - var(--navbar-height));
+
     .primary {
         flex: 3;
     }

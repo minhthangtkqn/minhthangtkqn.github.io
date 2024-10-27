@@ -1,14 +1,13 @@
 @import './__lib__/theme/index.scss';
 
+:root {
+    --navbar-height: 50px;
+}
+
 .app-wrapper {
     font-size: 14px;
     background-color: var(--main-tertiaryLighter);
     height: 100vh;
     display: flex;
     flex-direction: column;
-
-    .app-body {
-        flex: 1;
-        overflow: hidden;
-    }
 }

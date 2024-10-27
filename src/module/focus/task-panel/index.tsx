@@ -9,7 +9,9 @@ const StyledTaskPanel = styled.div`
     /* height: 100%; */
     flex: 1;
     background-color: white;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing);
+    border: var(--bd);
+    border-radius: var(--br);
 
     .task-list-header {
         font-size: 2.5rem;
@@ -76,7 +78,7 @@ export const TaskPanel: React.FC = () => {
     };
 
     return (
-        <StyledTaskPanel>
+        <StyledTaskPanel className="focus-task-panel">
             <div className="task-list-header">Task</div>
             <div className="task-list">
                 <Input
