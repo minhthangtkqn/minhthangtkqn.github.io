@@ -3,3 +3,4 @@
     - [v] top navbar > module menu
     - [ ] (backlog) top navbar > user menu
 - [ ] rest api for flashcard
+    - [ ] use json file as database for now, when familiar to rest api, move to posgregSQL database.
