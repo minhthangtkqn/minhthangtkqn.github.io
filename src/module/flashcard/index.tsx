@@ -10,7 +10,7 @@ export const FlashcardModule = () => {
     return (
         <BaseLayout
             primarySlot={<FlashcardCategoryListPanel />}
-        // secondarySlot={<FlashcardDetailPanel />}
+            secondarySlot={<FlashcardDetailPanel />}
         />
     );
 };

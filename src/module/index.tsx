@@ -1,4 +1,3 @@
-import React from 'react';
 import { FocusModule, FocusModuleInfo } from "./focus";
 import { FlashcardModule, FlashcardModuleInfo } from "./flashcard";
 import { useModuleKey } from "@/util";
