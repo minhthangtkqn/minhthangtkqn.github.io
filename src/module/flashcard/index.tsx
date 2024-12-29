@@ -1,5 +1,5 @@
 import { BaseLayout } from "@/component";
-import { FlashcardCategoryListPanel } from "./category-list-panel";
+import { FlashcardListPanel } from "./list-panel";
 import { FlashcardDetailPanel } from "./detail-panel";
 
 export const FlashcardModuleInfo = {
@@ -9,7 +9,7 @@ export const FlashcardModuleInfo = {
 export const FlashcardModule = () => {
     return (
         <BaseLayout
-            primarySlot={<FlashcardCategoryListPanel />}
+            primarySlot={<FlashcardListPanel />}
             secondarySlot={<FlashcardDetailPanel />}
         />
     );
