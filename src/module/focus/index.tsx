@@ -4,7 +4,7 @@ import { TaskPanel } from "./task-panel";
 import { BaseLayout } from "@/component";
 
 export const FocusModuleInfo = {
-    name: 'focus',
+    name: 'focus' as const,
 };
 
 export const FocusModule = () => {

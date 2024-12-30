@@ -1,0 +1,24 @@
+.layout-detailed {
+    display: flex;
+    overflow: hidden;
+    height: calc(100vh - var(--navbar-height));
+
+    .primary {
+        flex: 1;
+        padding: var(--spacing);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .secondary {
+        flex: 3;
+        padding: var(--spacing);
+        padding-left: 0;
+    }
+
+    .extension {
+        flex: 1;
+        padding: var(--spacing);
+        padding-left: 0;
+    }
+}

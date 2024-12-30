@@ -13,18 +13,23 @@ const updateModuleKey = (newModuleKey: string) => {
 };
 
 export const useModuleKey = () => {
-    const [moduleKey, setModuleKey] = useState<string>();
+    const [moduleKey, setModuleKey] = useState<string | undefined>(getModuleKey() || undefined);
     const [refreshCount, setRefreshCount] = useState(0);
 
     useEffect(() => {
-        setModuleKey(getModuleKey() || undefined);
+        if (refreshCount) {
+            setModuleKey(getModuleKey() || undefined);
+        }
     }, [refreshCount]);
+
+    const internalUpdateModuleKey = (newModuleKey: string) => {
+        updateModuleKey(newModuleKey);
+        setRefreshCount(c => c + 1);
+    };
 
     return {
         moduleKey,
-        updateModuleKey: (newModuleKey: string) => {
-            updateModuleKey(newModuleKey);
-            setRefreshCount(c => c + 1);
-        },
+        refreshCount,
+        updateModuleKey: internalUpdateModuleKey,
     };
 };

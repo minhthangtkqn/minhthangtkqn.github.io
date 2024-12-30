@@ -4,3 +4,4 @@
     - [ ] (backlog) top navbar > user menu
 - [ ] rest api for task list
     - [ ] use json file as database for now, when familiar to rest api, move to posgregSQL database.
+- [ ] modulize paginated component

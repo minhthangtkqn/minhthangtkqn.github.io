@@ -5,10 +5,10 @@ const Requestor = axios.create({
     timeout: 30000,
 });
 
-export const useRequest = (url?: string) => {
+export const useRequest = <Data = any>(url?: string) => {
     const [idling, setIdling] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<any>();
+    const [data, setData] = useState<Data>();
     const [error, setError] = useState<unknown>();
     const [queryCount, refreshQuery] = useState(0);
 
