@@ -1,18 +1,13 @@
 import { FocusModule, FocusModuleInfo } from "./focus";
 import { FlashcardModule, FlashcardModuleInfo } from "./flashcard";
-import { useModuleKey } from "@/util";
+import { Route, Routes } from "react-router-dom";
 
 export const BaseApplication = () => {
-    const { moduleKey = FocusModuleInfo.name } = useModuleKey();
-
-    switch (moduleKey) {
-        case FocusModuleInfo.name:
-            return <FocusModule />;
-        case FlashcardModuleInfo.name:
-            return <FlashcardModule />;
-        default:
-            return <FocusModule />;
-    }
+    return <Routes>
+        <Route path="/" element={<FocusModule />} />
+        <Route path={FocusModuleInfo.name} element={<FocusModule />} />
+        <Route path={FlashcardModuleInfo.name} element={<FlashcardModule />} />
+    </Routes>;
 };
 
 export const ModuleInfo = {

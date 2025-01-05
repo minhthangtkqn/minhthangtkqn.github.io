@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
 import { QueryApi } from "@/access";
 import { useRequest } from "@/util";
 import styled from "styled-components";
+import { FlashcardModuleParam } from "../model";
+import { useSearchParams } from "react-router-dom";
+import { Flashcard } from "@/__lib__/model";
 
 const StyledFlashcardListContainer = styled.div`
     flex: 1;
@@ -25,31 +27,39 @@ const StyledFlashcardItem = styled.div`
     border: var(--bd);
     border-radius: var(--br);
     padding: var(--spacing-sm);
-`;
+    cursor: pointer;
 
-type Flashcard = {
-    _id: string;
-    title: string;
-    description: string;
-};
+    &:hover {
+        background-color: var(--main-primaryLighter);
+    }
+
+    .description {
+        font-size: var(--fs-sm);
+        color: var(--main-tertiary);
+    }
+`;
 
 export const FlashcardListPanel = () => {
     const {
-        data,
-        error,
-        loading,
-        queryCount,
-        refresh,
+        data: flashcardList,
     } = useRequest<Flashcard[]>(QueryApi.Flashcard.list());
-
-    useEffect(() => {
-        console.log('🚀 ~ FlashcardListPanel ~ data:', data);
-    }, [data]);
+    const [, updateSearchParams] = useSearchParams();
 
     return (
         <StyledFlashcardListContainer>
             <StyledFlashcardList>
-                {data?.map(item => <StyledFlashcardItem>{item.title}</StyledFlashcardItem>)}
+                {flashcardList?.map(item => <StyledFlashcardItem
+                    key={item._id}
+                    onClick={() => {
+                        updateSearchParams(prev => {
+                            prev.set(FlashcardModuleParam.flashcardId, item._id);
+                            return prev;
+                        });
+                    }}
+                >
+                    <div className="title">{item.title}</div>
+                    <div className="description truncate">{item.description}</div>
+                </StyledFlashcardItem>)}
             </StyledFlashcardList>
         </StyledFlashcardListContainer>
     );

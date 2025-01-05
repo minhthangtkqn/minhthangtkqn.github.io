@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
-const Requestor = axios.create({
-    timeout: 30000,
-});
+import { CentralRequestor } from "@/__lib__/access";
 
 export const useRequest = <Data = any>(url?: string) => {
     const [idling, setIdling] = useState(true);
@@ -19,7 +15,7 @@ export const useRequest = <Data = any>(url?: string) => {
             (async () => {
                 try {
                     setLoading(true);
-                    const response = await Requestor.get(url);
+                    const response = await CentralRequestor.get(url);
                     if (relevant) {
                         setData(response.data);
                     }
