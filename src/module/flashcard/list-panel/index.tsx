@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { FlashcardModuleParam } from "../model";
 import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
-import { SyncOutlined } from "@ant-design/icons";
+import { PlusOutlined, SyncOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
+import { useRef } from "react";
 
 const StyledFlashcardListContainer = styled.div`
     flex: 1;
@@ -31,8 +34,14 @@ const StyledFlashcardList = styled.div`
         min-height: var(--min-height-header);
         display: flex;
         align-items: center;
-        column-gap: var(--spacing-sm);
-        cursor: pointer;
+        /* column-gap: var(--spacing-sm); */
+        
+        .list-header-title {
+            display: flex;
+            /* align-items: center; */
+            column-gap: var(--spacing-sm);
+            cursor: pointer;
+        }
     }
 
     .list-body {
@@ -69,15 +78,29 @@ export const FlashcardListPanel = () => {
     } = useRequest<Flashcard[]>(QueryApi.Flashcard.list());
     const [, updateSearchParams] = useSearchParams();
 
-    return (
+    const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
+
+    return (<>
+        <FlashcardFormModal
+            ref={flashcardFormModalRef}
+        />
+
         <StyledFlashcardListContainer>
             <StyledFlashcardList>
-                <div className="list-header" onClick={() => refreshFlashcardList()}>
-                    <div>Flashcard</div>
-                    <SyncOutlined
-                        className="reload-icon"
-                        spin={flashcardListLoading}
-                    />
+                <div className="list-header">
+                    <div className="list-header-title" onClick={() => refreshFlashcardList()}>
+                        <div>Flashcard</div>
+                        <SyncOutlined
+                            className="reload-icon"
+                            spin={flashcardListLoading}
+                        />
+                    </div>
+
+                    <Button
+                        size="small"
+                        style={{ marginLeft: 'auto' }}
+                        onClick={() => flashcardFormModalRef.current?.open()}
+                    ><PlusOutlined /> New card</Button>
                 </div>
                 <div className="list-body">
                     {flashcardList?.map(item => <StyledFlashcardItem
@@ -95,5 +118,6 @@ export const FlashcardListPanel = () => {
                 </div>
             </StyledFlashcardList>
         </StyledFlashcardListContainer>
+    </>
     );
 };
