@@ -1,6 +1,6 @@
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Flashcard } from "@/__lib__/model";
-import { Modal } from "antd";
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import { PublicModal } from "@/component";
 
 export type FlashcardFormModalRef = {
     open: (openedFlashcard?: Flashcard) => void;
@@ -26,14 +26,14 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
     };
 
     return (
-        <Modal
+        <PublicModal
             open={visible}
             onCancel={closeModal}
             footer={null}
             maskClosable
+            noPadding
         >
-            <div className="modal-header"></div>
-            <div></div>
-        </Modal>
+            <div>Modal content</div>
+        </PublicModal>
     );
 });

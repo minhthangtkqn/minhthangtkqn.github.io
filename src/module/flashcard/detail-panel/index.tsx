@@ -6,7 +6,6 @@ import { QueryApi } from "@/access";
 import { Flashcard } from "@/__lib__/model";
 import { Spin } from "antd";
 
-
 const StyledFlashcardDetailContainer = styled.div`
     border: var(--bd);
     border-radius: var(--br);
