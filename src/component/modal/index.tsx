@@ -8,10 +8,11 @@ const StyledModal = styled(Modal) <{ $noPadding?: boolean; }>`
         ${props => props.$noPadding ? 'padding: 0;' : ''}
 
         .ant-modal-close {
-            color: var(--main-crimson);
+            color: var(--contrast-primary);
             
             &:hover {
-                color: var(--sub-crimson);
+                color: var(--main-danger);
+                background-color: transparent;
             }
         }
 

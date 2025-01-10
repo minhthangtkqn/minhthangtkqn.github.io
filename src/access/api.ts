@@ -24,6 +24,9 @@ export const CommandApi = {
         addItem: () => {
             return `${apiUrl}/card`;
         },
+        updateItem: (id: string) => {
+            return `${apiUrl}/card/${id}`;
+        },
         removeItem: (id: string) => {
             return `${apiUrl}/card/${id}`;
         },

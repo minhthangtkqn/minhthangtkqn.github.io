@@ -1,6 +1,5 @@
 import { QueryApi } from "@/access";
 import { useRequest } from "@/util";
-import styled from "styled-components";
 import { FlashcardModuleParam } from "../model";
 import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
@@ -8,6 +7,7 @@ import { PlusOutlined, SyncOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
 import { useRef } from "react";
+import styled from "styled-components";
 
 const StyledFlashcardListContainer = styled.div`
     flex: 1;
@@ -83,6 +83,9 @@ export const FlashcardListPanel = () => {
     return (<>
         <FlashcardFormModal
             ref={flashcardFormModalRef}
+            onCloseModal={() => {
+                refreshFlashcardList();
+            }}
         />
 
         <StyledFlashcardListContainer>
