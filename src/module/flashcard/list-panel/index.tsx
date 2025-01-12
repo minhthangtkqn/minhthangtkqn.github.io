@@ -1,13 +1,14 @@
-import { QueryApi } from "@/access";
+import { CommandApi, QueryApi } from "@/access";
 import { useRequest } from "@/util";
 import { FlashcardModuleParam } from "../model";
 import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
-import { PlusOutlined, SyncOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { DeleteOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
+import { Button, Modal, notification } from "antd";
 import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
 import { useRef } from "react";
 import styled from "styled-components";
+import { CentralRequestor } from "@/__lib__/access";
 
 const StyledFlashcardListContainer = styled.div`
     flex: 1;
@@ -59,14 +60,27 @@ const StyledFlashcardItem = styled.div`
     border-radius: var(--br);
     padding: var(--spacing-sm);
     cursor: pointer;
+    display: flex;
 
     &:hover {
         background-color: var(--main-primaryLighter);
     }
 
-    .description {
-        font-size: var(--fs-sm);
-        color: var(--main-tertiaryDarker);
+    &.selected-flashcard {
+        background-color: var(--main-primaryLighter);
+    }
+
+    .left-content {
+        flex: 1;
+
+        .title {
+            font-weight: var(--fw-5);
+        }
+
+        .description {
+            font-size: var(--fs-sm);
+            color: var(--main-tertiaryDarker);
+        }
     }
 `;
 
@@ -76,9 +90,30 @@ export const FlashcardListPanel = () => {
         loading: flashcardListLoading,
         refresh: refreshFlashcardList,
     } = useRequest<Flashcard[]>(QueryApi.Flashcard.list());
-    const [, updateSearchParams] = useSearchParams();
+    const [params, updateSearchParams] = useSearchParams();
+    const currentFlashcardId = params.get(FlashcardModuleParam.flashcardId);
 
     const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
+
+    const deleteItem = async (itemId: string) => {
+        try {
+            await CentralRequestor.delete(CommandApi.Flashcard.removeItem(itemId));
+            if (itemId === currentFlashcardId) {
+                updateSearchParams(prev => {
+                    prev.set(FlashcardModuleParam.flashcardId, '');
+                    return prev;
+                });
+            }
+            notification.success({
+                message: 'Delete successfully!',
+            });
+            refreshFlashcardList();
+        } catch (error) {
+            notification.error({
+                message: 'Delete failed. Try again later!',
+            });
+        }
+    };
 
     return (<>
         <FlashcardFormModal
@@ -108,6 +143,7 @@ export const FlashcardListPanel = () => {
                 <div className="list-body">
                     {flashcardList?.map(item => <StyledFlashcardItem
                         key={item._id}
+                        className={item._id === currentFlashcardId ? 'selected-flashcard' : undefined}
                         onClick={() => {
                             updateSearchParams(prev => {
                                 prev.set(FlashcardModuleParam.flashcardId, item._id);
@@ -115,8 +151,32 @@ export const FlashcardListPanel = () => {
                             });
                         }}
                     >
-                        <div className="title">{item.title}</div>
-                        <div className="description truncate">{item.description}</div>
+                        <div className="left-content truncate">
+                            <div className="title">{item.title}</div>
+                            <div className="description truncate">{item.description}</div>
+                        </div>
+                        <div
+                            className="right-content"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                        >
+                            <Button
+                                type="link"
+                                icon={<EditOutlined />}
+                                onClick={() => flashcardFormModalRef.current?.open(item)}
+                            />
+                            <Button
+                                type="link"
+                                danger
+                                icon={<DeleteOutlined />}
+                                onClick={() => Modal.confirm({
+                                    onOk: () => deleteItem(item._id),
+                                    title: 'Are you sure?',
+                                    content: 'This item will be deleted.'
+                                })}
+                            />
+                        </div>
                     </StyledFlashcardItem>)}
                 </div>
             </StyledFlashcardList>

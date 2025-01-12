@@ -5,7 +5,6 @@ import { Button, Form, FormInstance, FormProps, Input, notification } from "antd
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { CommandApi } from "@/access";
-import { data } from "react-router-dom";
 
 const StyledForm = styled(Form)`
     padding: var(--spacing-sm);
@@ -31,6 +30,14 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
         open: (openedFlashcard?: Flashcard) => {
             setVisible(true);
             setFlashcard(openedFlashcard);
+            if (openedFlashcard) {
+                formRef.current?.setFields(Object.entries(openedFlashcard).map(([key, value]) => ({
+                    name: key,
+                    value: value,
+                })));
+            } else {
+                formRef.current?.resetFields();
+            }
         },
     }));
 
@@ -51,7 +58,6 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                 await CentralRequestor.post<Record<string, unknown>>(
                     CommandApi.Flashcard.updateItem(flashcard._id),
                     { data: values },
-                    { method: 'UPDATE' },
                 );
             } else {
                 await CentralRequestor.post<Record<string, unknown>>(
@@ -59,10 +65,10 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                     { data: values },
                 );
             }
-            closeModal();
             notification.success({
                 message: 'Submit successfully!',
             });
+            closeModal();
         } catch (error) {
             notification.error({
                 message: 'Submit failed. Try again later!',
@@ -77,6 +83,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
             footer={null}
             maskClosable
             noPadding
+            forceRender
         >
             <StyledForm
                 ref={formRef}
@@ -84,7 +91,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                 autoComplete="off"
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 18 }}
-                initialValues={flashcard}
+                // initialValues={flashcard}
                 onFinish={handleSubmit}
             >
                 <Form.Item<Flashcard>

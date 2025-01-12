@@ -6,7 +6,7 @@ export const QueryApi = {
             return `${apiUrl}/name/${name}`;
         },
         list: () => {
-            return `${apiUrl}/name`;
+            return `${apiUrl}/name/`;
         },
     },
     Flashcard: {
@@ -14,7 +14,7 @@ export const QueryApi = {
             return `${apiUrl}/card/${id}`;
         },
         list: () => {
-            return `${apiUrl}/card`;
+            return `${apiUrl}/card/`;
         },
     }
 };
@@ -22,7 +22,7 @@ export const QueryApi = {
 export const CommandApi = {
     Flashcard: {
         addItem: () => {
-            return `${apiUrl}/card`;
+            return `${apiUrl}/card:add-card/`;
         },
         updateItem: (id: string) => {
             return `${apiUrl}/card/${id}`;
