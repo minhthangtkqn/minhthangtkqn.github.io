@@ -3,7 +3,7 @@ import { useRequest } from "@/util";
 import { FlashcardModuleParam } from "../model";
 import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
-import { DeleteOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, ExperimentOutlined, PlusOutlined, SyncOutlined, ToolOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
 import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
 import { useRef } from "react";
@@ -35,7 +35,7 @@ const StyledFlashcardList = styled.div`
         min-height: var(--min-height-header);
         display: flex;
         align-items: center;
-        /* column-gap: var(--spacing-sm); */
+        column-gap: var(--spacing-xs);
         
         .list-header-title {
             display: flex;
@@ -137,8 +137,16 @@ export const FlashcardListPanel = () => {
                     <Button
                         size="small"
                         style={{ marginLeft: 'auto' }}
+                        icon={<PlusOutlined />}
                         onClick={() => flashcardFormModalRef.current?.open()}
-                    ><PlusOutlined /> New card</Button>
+                    >New card</Button>
+
+                    <Button
+                        size="small"
+                        type="primary"
+                        icon={<ExperimentOutlined />}
+                        danger
+                    >Live event</Button>
                 </div>
                 <div className="list-body">
                     {flashcardList?.map(item => <StyledFlashcardItem

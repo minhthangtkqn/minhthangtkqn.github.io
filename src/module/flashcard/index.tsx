@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const StyledFlashcardModuleLayout = styled(DetailedLayout)`
     .primary {
-        max-width: 20%;
+        overflow-x: hidden;
     }
 `;
 
