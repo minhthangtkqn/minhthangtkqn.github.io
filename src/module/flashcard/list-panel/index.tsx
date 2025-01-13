@@ -36,12 +36,12 @@ const StyledFlashcardList = styled.div`
         min-height: var(--min-height-header);
         display: flex;
         align-items: center;
-        column-gap: var(--spacing-xs);
-        
+        column-gap: var(--spacing-sm);
+        overflow-x: hidden;
+
         .list-header-title {
             display: flex;
-            /* align-items: center; */
-            column-gap: var(--spacing-sm);
+            column-gap: var(--spacing-xs);
             cursor: pointer;
         }
     }
@@ -63,11 +63,11 @@ const StyledFlashcardItem = styled.div`
     display: flex;
 
     &:hover {
-        background-color: var(--main-primaryLighter);
+        background-color: var(--main-hovered);
     }
 
     &.selected-flashcard {
-        background-color: var(--main-primaryLighter);
+        background-color: var(--main-activated);
     }
 
     .left-content {
@@ -79,7 +79,7 @@ const StyledFlashcardItem = styled.div`
 
         .description {
             font-size: var(--fs-sm);
-            color: var(--main-tertiaryDarker);
+            color: var(--main-grey);
         }
     }
 `;
