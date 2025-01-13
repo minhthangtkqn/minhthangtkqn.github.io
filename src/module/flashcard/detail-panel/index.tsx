@@ -11,6 +11,7 @@ const StyledFlashcardDetailContainer = styled.div`
     border-radius: var(--br);
     padding: var(--spacing);
     height: 100%;
+    background-color: var(--contrast-primary);
 
     .empty-indicator {
         margin: 0;

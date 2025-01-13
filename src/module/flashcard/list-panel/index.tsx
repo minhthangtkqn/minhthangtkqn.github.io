@@ -15,6 +15,7 @@ const StyledFlashcardListContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    background-color: var(--contrast-primary);
 `;
 
 const StyledFlashcardList = styled.div`
@@ -50,15 +51,14 @@ const StyledFlashcardList = styled.div`
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        row-gap: var(--spacing-sm);
-        padding: var(--spacing-sm);
     }
 `;
 
 const StyledFlashcardItem = styled.div`
-    border: var(--bd);
-    border-radius: var(--br);
-    padding: var(--spacing-sm);
+    border-top: var(--bd);
+    border-bottom: var(--bd);
+    padding: var(--spacing-sm) var(--spacing);
+    margin-bottom: -1px;
     cursor: pointer;
     display: flex;
 
