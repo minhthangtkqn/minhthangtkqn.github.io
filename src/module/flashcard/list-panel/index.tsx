@@ -15,7 +15,6 @@ const StyledFlashcardListContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    background-color: var(--contrast-primary);
 `;
 
 const StyledFlashcardList = styled.div`
@@ -25,6 +24,7 @@ const StyledFlashcardList = styled.div`
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
+    background-color: var(--contrast-primary);
 
     .list-header {
         font-size: var(--fs-xl);
