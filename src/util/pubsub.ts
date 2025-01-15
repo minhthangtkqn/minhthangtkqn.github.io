@@ -8,16 +8,16 @@ type PubsubSubscriber = {
 export var pubsub = {};
 (function (pubsubInstance: any) {
     let interalToken = -1;
-    let topicList: Record<
+    let topicMap: Record<
         string,
         PubsubSubscriber[]
     > = {};
 
     pubsubInstance.unsubscribe = (topicId: string, subscriberToken: string) => {
-        if (topicList[topicId]) {
-            let subscriberIndex = topicList[topicId].findIndex(subscriber => subscriber.token === subscriberToken);
+        if (topicMap[topicId]) {
+            let subscriberIndex = topicMap[topicId].findIndex(subscriber => subscriber.token === subscriberToken);
             if (subscriberIndex >= 0) {
-                topicList[topicId].splice(subscriberIndex, 1);
+                topicMap[topicId].splice(subscriberIndex, 1);
                 return true;
             }
 
@@ -27,26 +27,31 @@ export var pubsub = {};
     };
 
     pubsubInstance.subscribe = (topicId: string, callback: PubsubSubscriberCallback) => {
-        if (!topicList[topicId]) {
-            topicList[topicId] = [];
+        if (!topicMap[topicId]) {
+            topicMap[topicId] = [];
         }
 
         const newToken = (++interalToken).toString();
-        topicList[topicId] = [
-            ...topicList[topicId],
+        topicMap[topicId] = [
+            ...topicMap[topicId],
             {
                 token: newToken,
                 callback: callback,
             },
         ];
 
-        return pubsubInstance.unsubscribe(topicId, newToken);
+        return () => pubsubInstance.unsubscribe(topicId, newToken);
     };
 
     pubsubInstance.publish = (topicId: string, args: unknown) => {
-        if (!topicList[topicId]) {
+        if (!topicMap[topicId]) {
             return false;
         }
-        topicList[topicId].forEach(subscriber => subscriber.callback(topicId, args));
+        // use setTimeout to avoid blocking when callback function may cost time to process
+        setTimeout(() => {
+            topicMap[topicId].forEach(subscriber => subscriber.callback(topicId, args));
+        }, 0);
+
+        return true;
     };
 })(pubsub);
