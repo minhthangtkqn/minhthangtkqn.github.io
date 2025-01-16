@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { FlashcardModuleParam } from "../model";
 import { useSearchParams } from 'react-router-dom';
-import { useRequest } from "@/util";
+import { useRequest, useSubscribe } from "@/util";
 import { QueryApi } from "@/access";
-import { Flashcard } from "@/__lib__/model";
+import { Flashcard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
 import { Empty, Spin } from "antd";
+import { useEffect } from "react";
 
 const StyledFlashcardDetailContainer = styled.div`
     border: var(--bd);
@@ -40,7 +41,9 @@ export const FlashcardDetailPanel = () => {
     const {
         data: flashcardData,
         loading,
+        refresh: refreshFlashcardData,
     } = useRequest<Flashcard>(flashcardId ? QueryApi.Flashcard.item(flashcardId) : undefined);
+    useSubscribe(REFRESH_FLASHCARD_KEY, refreshFlashcardData);
 
     return (
         <StyledFlashcardDetailContainer>

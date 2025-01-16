@@ -1,5 +1,5 @@
 import { CommandApi, QueryApi } from "@/access";
-import { useRequest } from "@/util";
+import { REFRESH_FLASHCARD, useRequest } from "@/util";
 import { FlashcardModuleParam } from "../model";
 import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
@@ -120,6 +120,7 @@ export const FlashcardListPanel = () => {
             ref={flashcardFormModalRef}
             onCloseModal={() => {
                 refreshFlashcardList();
+                REFRESH_FLASHCARD();
             }}
         />
 
