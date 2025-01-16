@@ -5,7 +5,7 @@ type PubsubSubscriber = {
     callback: PubsubSubscriberCallback;
 };
 
-export var pubsub = {};
+export let pubsubInstance = {};
 (function (pubsubInstance: any) {
     let interalToken = -1;
     let topicMap: Record<
@@ -54,4 +54,8 @@ export var pubsub = {};
 
         return true;
     };
-})(pubsub);
+})(pubsubInstance);
+
+export const useSubscribe = () => {
+    // @todo 
+};
