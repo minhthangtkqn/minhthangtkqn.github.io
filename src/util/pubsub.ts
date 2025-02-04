@@ -1,4 +1,4 @@
-import { REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
+import { REFRESH_FLASHCARD_KEY as REFRESH_CURRENT_FLASHCARD_KEY } from "@/__lib__/model";
 import { useEffect, useState } from "react";
 
 type PubsubSubscriberCallback = (topicId: string, args: unknown) => void;
@@ -130,6 +130,6 @@ export const useSubscribe = (topicId: string, callback: PubsubSubscriberCallback
     };
 };
 
-export const REFRESH_FLASHCARD = () => {
-    pubsubInstance.publish(REFRESH_FLASHCARD_KEY);
+export const REFRESH_CURRENT_FLASHCARD = () => {
+    pubsubInstance.publish(REFRESH_CURRENT_FLASHCARD_KEY);
 };

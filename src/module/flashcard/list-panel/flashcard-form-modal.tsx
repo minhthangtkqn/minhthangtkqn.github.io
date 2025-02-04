@@ -91,7 +91,6 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                 autoComplete="off"
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 18 }}
-                // initialValues={flashcard}
                 onFinish={handleSubmit}
             >
                 <Form.Item<Flashcard>
