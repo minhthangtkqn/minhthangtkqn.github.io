@@ -7,3 +7,21 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+::-webkit-scrollbar {
+    width: calc(var(--spacing-sm) * 0.8);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sub-tertiaryLighter);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sub-tertiaryDarker);
+    border-radius: var(--br);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--main-tertiaryDarker);
+    }
+}

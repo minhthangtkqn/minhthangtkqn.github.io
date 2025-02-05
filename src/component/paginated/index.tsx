@@ -2,6 +2,7 @@ import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
 import { ComposeHeader } from "../compose-header";
 import { SyncOutlined } from "@ant-design/icons";
+import { useRequest } from "@/util";
 
 const StyledPaginatedList = styled.div`
     /* flex: 1; */
@@ -12,27 +13,7 @@ const StyledPaginatedList = styled.div`
     overflow-y: auto;
     background-color: var(--contrast-primary);
 
-    .paginated-list-header {
-        font-size: var(--fs-xl);
-        font-weight: bold;
-        text-transform: uppercase;
-        background-color: var(--main-primary);
-        color: var(--contrast-primary);
-        padding: var(--spacing-sm);
-        min-height: var(--min-height-header);
-        display: flex;
-        align-items: center;
-        column-gap: var(--spacing-sm);
-        overflow-x: hidden;
-
-        .paginated-list-header-title {
-            display: flex;
-            column-gap: var(--spacing-xs);
-            cursor: pointer;
-        }
-    }
-
-    .list-body {
+    .paginated-list-body {
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -70,32 +51,44 @@ const StyledFlashcardItem = styled.div`
     }
 `;
 
-type PaginatedListHeader = {};
+type PaginatedListHeader = {
+    refreshData: () => void;
+};
 type PaginatedList<Data extends Record<string, unknown>> = {
     Header?: React.ComponentType<PaginatedListHeader>;
     title?: string;
+    baseUrl?: string;
     keyExtractor?: (data: Data) => string;
 };
-type PaginatedListRef = {};
-export function PaginatedList<Data extends Record<string, unknown>>(
+export type PaginatedListRef = {};
+export const PaginatedList = forwardRef(function BasePaginatedList<Data extends Record<string, unknown>>(
     props: PaginatedList<Data>,
     ref: React.ForwardedRef<PaginatedListRef>,
 ) {
     const {
         Header,
         title,
+        baseUrl,
+        keyExtractor = (data) => data?._id,
     } = props;
 
     useImperativeHandle(ref, () => ({}));
 
+    const {
+        data: itemList,
+        loading: itemListLoading,
+        refresh: refreshItemList,
+    } = useRequest<Data[]>(baseUrl);
+
     return (
         <StyledPaginatedList>
             {Header
-                ? <Header />
-                :
-                <ComposeHeader>
+                ? <Header refreshData={refreshItemList} />
+                : <ComposeHeader>
                 </ComposeHeader>
             }
+            <div className="paginated-list-body">
+            </div>
         </StyledPaginatedList>
     );
-};
+});

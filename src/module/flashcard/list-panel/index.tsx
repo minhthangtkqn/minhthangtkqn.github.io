@@ -10,6 +10,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { ComposeHeader } from "@/component";
+import { PaginatedList, PaginatedListRef } from "@/component/paginated";
 
 const StyledFlashcardList = styled.div`
     flex: 1;
@@ -26,7 +27,7 @@ const StyledFlashcardList = styled.div`
         cursor: pointer;
     }
 
-    .list-body {
+    .paginated-list-body {
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -73,6 +74,7 @@ export const FlashcardListPanel = () => {
     const [params, updateSearchParams] = useSearchParams();
     const currentFlashcardId = params.get(FlashcardModuleParam.flashcardId);
 
+    const paginatedListRef = useRef<PaginatedListRef>(null);
     const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
 
     const deleteItem = async (itemId: string) => {
@@ -104,6 +106,13 @@ export const FlashcardListPanel = () => {
             }}
         />
 
+        <PaginatedList<Flashcard>
+            ref={paginatedListRef}
+            title="Flashcard"
+            baseUrl={QueryApi.Flashcard.list()}
+            Header={({ refreshData }) => <div></div>}
+        />
+
         <StyledFlashcardList>
             <ComposeHeader>
                 <ComposeHeader.HeaderItem span>
@@ -124,7 +133,7 @@ export const FlashcardListPanel = () => {
                     >New card</Button>
                 </ComposeHeader.HeaderItem>
             </ComposeHeader>
-            <div className="list-body">
+            <div className="paginated-list-body">
                 {flashcardList?.map(item => <StyledFlashcardItem
                     key={item._id}
                     className={item._id === currentFlashcardId ? 'selected-flashcard' : undefined}

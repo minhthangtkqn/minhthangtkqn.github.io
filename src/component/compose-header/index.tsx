@@ -46,6 +46,7 @@ const HeaderItem: React.FC<HeaderItem> = ({
     children,
 }) => {
     return <StyledHeaderItem
+        $span={span}
         className={right ? 'header-item-right' : ''}
     >{children}</StyledHeaderItem>;
 };
