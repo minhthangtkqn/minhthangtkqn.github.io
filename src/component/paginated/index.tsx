@@ -4,6 +4,15 @@ import { ComposeHeader } from "../compose-header";
 import { SyncOutlined } from "@ant-design/icons";
 import { useRequest } from "@/util";
 
+/**
+ * Ref override để giúp `forwardRef` nhận generic type
+ */
+declare module 'react' {
+    function forwardRef<T, P = {}>(
+        render: (props: P, ref: ForwardedRef<T>) => React.ReactElement | null,
+    ): (props: P & React.RefAttributes<T>) => React.ReactElement | null;
+}
+
 const StyledPaginatedList = styled.div`
     /* flex: 1; */
     border: var(--bd);
