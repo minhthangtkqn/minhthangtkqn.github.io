@@ -8,7 +8,7 @@ import { useRequest } from "@/util";
  * Ref override để giúp `forwardRef` nhận generic type
  */
 declare module 'react' {
-    function forwardRef<T, P = {}>(
+    function forwardRef<T, P = Record<string, unknown>>(
         render: (props: P, ref: ForwardedRef<T>) => React.ReactElement | null,
     ): (props: P & React.RefAttributes<T>) => React.ReactElement | null;
 }
