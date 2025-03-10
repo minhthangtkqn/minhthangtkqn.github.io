@@ -106,12 +106,11 @@ export const FlashcardListPanel = () => {
             }}
         />
 
-        <PaginatedList<Flashcard>
+        {/* <PaginatedList<Flashcard>
             ref={paginatedListRef}
             title="Flashcard"
             baseUrl={QueryApi.Flashcard.list()}
-            Header={({ refreshData }) => <div></div>}
-        />
+        /> */}
 
         <StyledFlashcardList>
             <ComposeHeader>

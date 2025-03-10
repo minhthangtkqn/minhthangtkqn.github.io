@@ -3,6 +3,7 @@
     - [v] top navbar > module menu
     - [ ] (backlog) top navbar > user menu
 - [ ] rest api for task list
-    - [ ] use json file as database for now, when familiar to rest api, move to posgregSQL database.
+    - [v] database using json file
+    - [ ] database using posgregSQL
 - [ ] modulize paginated component
 - [ ] modulize modal component

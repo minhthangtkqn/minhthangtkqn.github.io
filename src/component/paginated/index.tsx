@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ComposeHeader } from "../compose-header";
 import { SyncOutlined } from "@ant-design/icons";
 import { useRequest } from "@/util";
+import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -60,11 +61,8 @@ const StyledFlashcardItem = styled.div`
     }
 `;
 
-type PaginatedListHeader = {
-    refreshData: () => void;
-};
 type PaginatedList<Data extends Record<string, unknown>> = {
-    Header?: React.ComponentType<PaginatedListHeader>;
+    Header?: React.ComponentType<PaginatedHeader>;
     title?: string;
     baseUrl?: string;
     keyExtractor?: (data: Data) => string;
@@ -75,7 +73,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
     ref: React.ForwardedRef<PaginatedListRef>,
 ) {
     const {
-        Header,
+        Header = DefaultPaginatedHeader,
         title,
         baseUrl,
         keyExtractor = (data) => data?._id,
@@ -91,11 +89,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
 
     return (
         <StyledPaginatedList>
-            {Header
-                ? <Header refreshData={refreshItemList} />
-                : <ComposeHeader>
-                </ComposeHeader>
-            }
+            <Header title={title} refreshData={refreshItemList} />
             <div className="paginated-list-body">
             </div>
         </StyledPaginatedList>
