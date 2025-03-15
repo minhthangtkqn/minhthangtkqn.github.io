@@ -1,7 +1,7 @@
 import { CommandApi, QueryApi } from "@/access";
-import { REFRESH_CURRENT_FLASHCARD, useRequest } from "@/util";
+import { REFRESH_CURRENT_FLASHCARD, useRequest, useSearchParams } from "@/util";
 import { FlashcardModuleParam } from "../model";
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
@@ -71,7 +71,7 @@ export const FlashcardListPanel = () => {
         loading: flashcardListLoading,
         refresh: refreshFlashcardList,
     } = useRequest<Flashcard[]>(QueryApi.Flashcard.list());
-    const [params, updateSearchParams] = useSearchParams();
+    const { params, updateSearchParams } = useSearchParams();
     const currentFlashcardId = params.get(FlashcardModuleParam.flashcardId);
 
     const paginatedListRef = useRef<PaginatedListRef>(null);

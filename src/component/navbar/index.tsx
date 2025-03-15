@@ -4,6 +4,7 @@ import { CheckSquareOutlined, TagsOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import logo from '../../asset/logo.svg';
 import { ModuleInfo } from "@/module";
+import { MODULE_PARAM_KEY } from "@/util";
 
 const StyledNavBar = styled.div`    
     background-color: #282c34;
@@ -42,12 +43,12 @@ const StyledDrawer = styled(Drawer)`
 const MODULE_LIST = [
     {
         key: ModuleInfo.FocusModuleInfo.name,
-        title: <a href={`${window.location.origin}/${ModuleInfo.FocusModuleInfo.name}`}>Focus</a>,
+        title: <a href={`${window.location.origin}?${MODULE_PARAM_KEY}=${ModuleInfo.FocusModuleInfo.name}`}>Focus</a>,
         icon: <CheckSquareOutlined />,
     },
     {
         key: ModuleInfo.FlashcardModuleInfo.name,
-        title: <a href={`${window.location.origin}/${ModuleInfo.FlashcardModuleInfo.name}`}>Flashcard</a>,
+        title: <a href={`${window.location.origin}?${MODULE_PARAM_KEY}=${ModuleInfo.FlashcardModuleInfo.name}`}>Flashcard</a>,
         icon: <TagsOutlined />,
     },
 ];

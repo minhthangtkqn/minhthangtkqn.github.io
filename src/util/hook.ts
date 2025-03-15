@@ -44,3 +44,13 @@ export const useRequest = <Data = any>(url?: string) => {
         refresh: () => refreshQuery(c => c + 1),
     };
 };
+
+export const useSearchParams = () => {
+    return {
+        params: new URLSearchParams(window.location.search),
+        updateSearchParams: (callback: (prevUrlSearchParams: URLSearchParams) => URLSearchParams) => {
+            const nextUrlSearchParam = callback(new URLSearchParams(window.location.search));
+            window.location.search = nextUrlSearchParam.toString();
+        },
+    };
+};
