@@ -7,3 +7,4 @@
     - [ ] database using posgregSQL
 - [ ] modulize paginated component
 - [ ] modulize modal component
+- [ ] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
