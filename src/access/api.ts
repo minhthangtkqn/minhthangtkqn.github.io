@@ -1,4 +1,4 @@
-const apiUrl = 'http://127.0.0.1:5000';
+const apiUrl = 'https://focus-app-api.onrender.com';
 
 export const QueryApi = {
     People: {
