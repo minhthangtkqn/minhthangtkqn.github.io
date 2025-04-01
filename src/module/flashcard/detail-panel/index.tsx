@@ -5,6 +5,7 @@ import { useRequest, useSearchParams, useSubscribe } from "@/util";
 import { QueryApi } from "@/access";
 import { Flashcard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
 import { Empty, Spin } from "antd";
+import { useEffect } from "react";
 
 const StyledFlashcardDetailContainer = styled.div`
     border: var(--bd);

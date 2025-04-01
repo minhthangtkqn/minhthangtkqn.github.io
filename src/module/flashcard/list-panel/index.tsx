@@ -6,7 +6,7 @@ import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
 import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { ComposeHeader } from "@/component";
