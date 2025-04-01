@@ -7,7 +7,7 @@
     - [ ] database using posgregSQL
 - [ ] modulize paginated component
 - [ ] modulize modal component
-- [ ] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
+- [v] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
 - [ ] FEAT: TẠO CATEGORY
 - [ ] FEAT: ADD IMAGE (CÓ THỂ TẬN DỤNG CÁC NGUỒN IMAGE FREE NHƯ SPLASH)
 - [ ] FEAT: HỌC FLASHCARD (detail 1 card, lật card giữa title & desc, đọc card, ...)
