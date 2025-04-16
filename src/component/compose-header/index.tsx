@@ -27,9 +27,7 @@ type HeaderItem = {
     span?: boolean;
     right?: boolean;
 } & React.PropsWithChildren;
-const StyledHeaderItem = styled.div<{
-    $span?: boolean;
-}>`
+const StyledHeaderItem = styled.div<{ $span?: boolean; }>`
     ${({ $span }) => $span ? 'flex: 1;' : ''}
 
     &.header-item-right {
