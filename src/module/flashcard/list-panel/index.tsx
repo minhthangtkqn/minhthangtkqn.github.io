@@ -1,16 +1,15 @@
 import { CommandApi, QueryApi } from "@/access";
 import { REFRESH_CURRENT_FLASHCARD, useRequest, useSearchParams } from "@/util";
 import { FlashcardModuleParam } from "../model";
-// import { useSearchParams } from "react-router-dom";
 import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined, SyncOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
 import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { ComposeHeader } from "@/component";
-import { PaginatedList, PaginatedListRef } from "@/component/paginated";
+import { PaginatedListRef } from "@/component/paginated";
 
 const StyledFlashcardList = styled.div`
     flex: 1;

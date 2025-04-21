@@ -4,7 +4,7 @@
     - [ ] (backlog) top navbar > user menu
 - [ ] rest api for task list
     - [v] database using json file
-    - [ ] database using posgregSQL
+    - [v] database using posgregSQL
 - [ ] modulize paginated component
 - [ ] modulize modal component
 - [v] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
