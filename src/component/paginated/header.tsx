@@ -16,7 +16,7 @@ export const DefaultPaginatedHeader = (props: PaginatedHeader) => {
 
     return <ComposeHeader>
         <ComposeHeader.HeaderItem>
-            {title} <SyncOutlined spin={loading} />
+            {title} <SyncOutlined onClick={refreshData} spin={loading} style={{ cursor: 'pointer' }} />
         </ComposeHeader.HeaderItem>
     </ComposeHeader>;
 };

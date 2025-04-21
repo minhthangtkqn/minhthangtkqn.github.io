@@ -1,9 +1,8 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
-import { ComposeHeader } from "../compose-header";
-import { SyncOutlined } from "@ant-design/icons";
-import { useRequest } from "@/util";
+import { mergeClass, useRequest } from "@/util";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
+import { DefaultPaginatedListRow, PaginatedListRow } from "./list-row";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -31,7 +30,7 @@ const StyledPaginatedList = styled.div`
     }
 `;
 
-const StyledFlashcardItem = styled.div`
+const StyledPaginatedListItem = styled.div`
     border-top: var(--bd);
     border-bottom: var(--bd);
     padding: var(--spacing-sm) var(--spacing);
@@ -43,28 +42,18 @@ const StyledFlashcardItem = styled.div`
         background-color: var(--main-hovered);
     }
 
-    &.selected-flashcard {
+    &.paginated-item-active {
         background-color: var(--main-activated);
-    }
-
-    .left-content {
-        flex: 1;
-
-        .title {
-            font-weight: var(--fw-5);
-        }
-
-        .description {
-            font-size: var(--fs-sm);
-            color: var(--main-grey);
-        }
     }
 `;
 
 type PaginatedList<Data extends Record<string, unknown>> = {
     Header?: React.ComponentType<PaginatedHeader>;
+    Row?: React.ComponentType<PaginatedListRow<Data>>;
     title?: string;
     baseUrl?: string;
+    activeId?: string;
+    onActive?: (id: string) => void;
     keyExtractor?: (data: Data) => string;
 };
 export type PaginatedListRef = {};
@@ -74,9 +63,12 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
 ) {
     const {
         Header = DefaultPaginatedHeader,
+        Row = DefaultPaginatedListRow,
         title,
         baseUrl,
-        keyExtractor = (data) => data?._id,
+        activeId,
+        keyExtractor = (data) => (data?._id ?? '') as string,
+        onActive,
     } = props;
 
     useImperativeHandle(ref, () => ({}));
@@ -91,6 +83,23 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         <StyledPaginatedList>
             <Header title={title} refreshData={refreshItemList} />
             <div className="paginated-list-body">
+                {itemList?.map(item => <Row
+                    key={keyExtractor(item)}
+                    data={item}
+                    keyExtractor={keyExtractor}
+                    activeId={activeId}
+                    onActive={onActive}
+                />)}
+                {/* {itemList?.map(item => <StyledPaginatedListItem
+                    key={keyExtractor(item)}
+                    className={mergeClass(
+                        'paginated-list-item-active',
+                        keyExtractor(item) === activeId ? 'paginated-list-item-active' : undefined,
+                    )}
+                    onClick={() => onActive?.(keyExtractor(item))}
+                >
+                    {keyExtractor(item)}
+                </StyledPaginatedListItem>)} */}
             </div>
         </StyledPaginatedList>
     );
