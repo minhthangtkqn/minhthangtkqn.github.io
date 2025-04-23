@@ -13,6 +13,10 @@ const StyledPaginatedListRow = styled.div`
         background-color: var(--main-hovered);
     }
 
+    &.paginated-list-row {
+        
+    }
+
     &.paginated-list-row-active {
         background-color: var(--main-activated);
     }

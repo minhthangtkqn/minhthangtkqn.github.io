@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
-import { mergeClass, useRequest } from "@/util";
+import { useRequest } from "@/util";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 import { DefaultPaginatedListRow, PaginatedListRow } from "./list-row";
 
@@ -27,23 +27,6 @@ const StyledPaginatedList = styled.div`
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-    }
-`;
-
-const StyledPaginatedListItem = styled.div`
-    border-top: var(--bd);
-    border-bottom: var(--bd);
-    padding: var(--spacing-sm) var(--spacing);
-    margin-bottom: -1px;
-    cursor: pointer;
-    display: flex;
-
-    &:hover {
-        background-color: var(--main-hovered);
-    }
-
-    &.paginated-item-active {
-        background-color: var(--main-activated);
     }
 `;
 
@@ -90,16 +73,6 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
                     activeId={activeId}
                     onActive={onActive}
                 />)}
-                {/* {itemList?.map(item => <StyledPaginatedListItem
-                    key={keyExtractor(item)}
-                    className={mergeClass(
-                        'paginated-list-item-active',
-                        keyExtractor(item) === activeId ? 'paginated-list-item-active' : undefined,
-                    )}
-                    onClick={() => onActive?.(keyExtractor(item))}
-                >
-                    {keyExtractor(item)}
-                </StyledPaginatedListItem>)} */}
             </div>
         </StyledPaginatedList>
     );
