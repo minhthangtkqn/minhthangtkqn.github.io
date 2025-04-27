@@ -2,7 +2,8 @@ import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
 import { useRequest } from "@/util";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
-import { DefaultPaginatedListRow, PaginatedListRow } from "./list-row";
+import { DefaultPaginatedListRowWrapper, PaginatedListRowWrapper } from "./list-row";
+import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -32,7 +33,8 @@ const StyledPaginatedList = styled.div`
 
 type PaginatedList<Data extends Record<string, unknown>> = {
     Header?: React.ComponentType<PaginatedHeader>;
-    Row?: React.ComponentType<PaginatedListRow<Data>>;
+    RowWrapper?: React.ComponentType<PaginatedListRowWrapper<Data>>;
+    RowItem?: React.ComponentType<PaginatedListRowItem<Data>>;
     title?: string;
     baseUrl?: string;
     activeId?: string;
@@ -48,7 +50,8 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
 ) {
     const {
         Header = DefaultPaginatedHeader,
-        Row = DefaultPaginatedListRow,
+        RowWrapper = DefaultPaginatedListRowWrapper,
+        RowItem = DefaultPaginatedListRowItem,
         title,
         baseUrl,
         activeId,
@@ -71,12 +74,13 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         <StyledPaginatedList className={className}>
             <Header title={title} refreshData={refreshItemList} loading={itemListLoading} />
             <div className="paginated-list-body">
-                {itemList?.map(item => <Row
+                {itemList?.map(item => <RowWrapper
                     key={keyExtractor(item)}
                     data={item}
                     keyExtractor={keyExtractor}
                     activeId={activeId}
                     onActive={onActive}
+                    RowItem={RowItem}
                 />)}
             </div>
         </StyledPaginatedList>
@@ -86,7 +90,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
 export { DefaultPaginatedHeader } from './header';
 export { PaginatedHeaderTitle } from './header-title';
 export {
-    DefaultPaginatedListRow,
-    StyledDefaultPaginatedListRow,
-    type PaginatedListRow,
+    DefaultPaginatedListRowWrapper,
+    StyledPaginatedListRowWrapper,
+    type PaginatedListRowWrapper,
 } from './list-row';

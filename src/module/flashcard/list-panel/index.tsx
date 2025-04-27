@@ -1,5 +1,5 @@
 import { CommandApi, QueryApi } from "@/access";
-import { mergeClass, REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
+import { REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
 import { FlashcardModuleParam } from "../model";
 import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
@@ -9,7 +9,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { ComposeHeader } from "@/component";
-import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef, StyledDefaultPaginatedListRow } from "@/component/paginated";
+import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/component/paginated";
 
 const StyledFlashcardList: typeof PaginatedList = styled(PaginatedList)`
     &.flashcard-list {
@@ -82,22 +82,8 @@ export const FlashcardListPanel = () => {
                     </ComposeHeader.HeaderItem>
                 </ComposeHeader>;
             }}
-            Row={(props) => {
-                const {
-                    data,
-                    activeId,
-                    onActive,
-                    keyExtractor,
-                } = props;
-
-                return <StyledDefaultPaginatedListRow
-                    key={keyExtractor(data)}
-                    className={mergeClass(
-                        'paginated-list-row',
-                        keyExtractor(data) === activeId ? 'paginated-list-row-active' : undefined,
-                    )}
-                    onClick={() => onActive?.(keyExtractor(data))}
-                >
+            RowItem={({ data }) => {
+                return <>
                     <div className="left-content truncate">
                         <div className="title">{data.title}</div>
                         <div className="description truncate">{data.description}</div>
@@ -124,7 +110,14 @@ export const FlashcardListPanel = () => {
                             })}
                         />
                     </div>
-                </StyledDefaultPaginatedListRow>;
+                </>;
+            }}
+            activeId={currentFlashcardId ?? ''}
+            onActive={(id) => {
+                updateSearchParams(prev => {
+                    prev.set(FlashcardModuleParam.flashcardId, id);
+                    return prev;
+                });
             }}
         />
     </>);
