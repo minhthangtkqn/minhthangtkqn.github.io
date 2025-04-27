@@ -1,7 +1,7 @@
 import { mergeClass } from "@/util";
 import styled from "styled-components";
 
-const StyledPaginatedListRow = styled.div`
+export const StyledDefaultPaginatedListRow = styled.div`
     border-top: var(--bd);
     border-bottom: var(--bd);
     padding: var(--spacing-sm) var(--spacing);
@@ -37,7 +37,7 @@ export const DefaultPaginatedListRow = <Data extends Record<string, unknown>>(pr
         keyExtractor,
     } = props;
 
-    return <StyledPaginatedListRow
+    return <StyledDefaultPaginatedListRow
         key={keyExtractor(data)}
         className={mergeClass(
             'paginated-list-row',
@@ -46,5 +46,5 @@ export const DefaultPaginatedListRow = <Data extends Record<string, unknown>>(pr
         onClick={() => onActive?.(keyExtractor(data))}
     >
         {keyExtractor(data)}
-    </StyledPaginatedListRow>;
+    </StyledDefaultPaginatedListRow>;
 };

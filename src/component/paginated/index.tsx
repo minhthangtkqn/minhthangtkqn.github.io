@@ -14,7 +14,7 @@ declare module 'react' {
 }
 
 const StyledPaginatedList = styled.div`
-    /* flex: 1; */
+    height: 100%;
     border: var(--bd);
     border-radius: var(--br);
     display: flex;
@@ -38,8 +38,10 @@ type PaginatedList<Data extends Record<string, unknown>> = {
     activeId?: string;
     onActive?: (id: string) => void;
     keyExtractor?: (data: Data) => string;
+} & Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>;
+export type PaginatedListRef = {
+    refresh: () => void;
 };
-export type PaginatedListRef = {};
 export const PaginatedList = forwardRef(function BasePaginatedList<Data extends Record<string, unknown>>(
     props: PaginatedList<Data>,
     ref: React.ForwardedRef<PaginatedListRef>,
@@ -52,9 +54,12 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         activeId,
         keyExtractor = (data) => (data?._id ?? '') as string,
         onActive,
+        className,
     } = props;
 
-    useImperativeHandle(ref, () => ({}));
+    useImperativeHandle(ref, () => ({
+        refresh: () => refreshItemList(),
+    }));
 
     const {
         data: itemList,
@@ -63,8 +68,8 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
     } = useRequest<Data[]>(baseUrl);
 
     return (
-        <StyledPaginatedList>
-            <Header title={title} refreshData={refreshItemList} />
+        <StyledPaginatedList className={className}>
+            <Header title={title} refreshData={refreshItemList} loading={itemListLoading} />
             <div className="paginated-list-body">
                 {itemList?.map(item => <Row
                     key={keyExtractor(item)}
@@ -77,3 +82,11 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         </StyledPaginatedList>
     );
 });
+
+export { DefaultPaginatedHeader } from './header';
+export { PaginatedHeaderTitle } from './header-title';
+export {
+    DefaultPaginatedListRow,
+    StyledDefaultPaginatedListRow,
+    type PaginatedListRow,
+} from './list-row';
