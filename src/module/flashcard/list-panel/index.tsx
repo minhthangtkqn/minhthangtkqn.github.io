@@ -69,19 +69,17 @@ export const FlashcardListPanel = () => {
             title="Flashcard"
             className="flashcard-list"
             baseUrl={QueryApi.Flashcard.list()}
-            Header={(props) => {
-                return <ComposeHeader>
-                    <PaginatedHeaderTitle {...props} />
+            Header={(props) => <ComposeHeader>
+                <PaginatedHeaderTitle {...props} />
 
-                    <ComposeHeader.HeaderItem right>
-                        <Button
-                            size="small"
-                            icon={<PlusOutlined />}
-                            onClick={() => flashcardFormModalRef.current?.open()}
-                        >New card</Button>
-                    </ComposeHeader.HeaderItem>
-                </ComposeHeader>;
-            }}
+                <ComposeHeader.HeaderItem right>
+                    <Button
+                        size="small"
+                        icon={<PlusOutlined />}
+                        onClick={() => flashcardFormModalRef.current?.open()}
+                    >New card</Button>
+                </ComposeHeader.HeaderItem>
+            </ComposeHeader>}
             RowItem={({ data }) => {
                 return <>
                     <div className="left-content truncate">

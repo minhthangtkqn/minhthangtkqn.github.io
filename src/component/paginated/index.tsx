@@ -4,6 +4,7 @@ import { useRequest } from "@/util";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 import { DefaultPaginatedListRowWrapper, PaginatedListRowWrapper } from "./list-row";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
+import { Loading } from "../loading";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -28,6 +29,7 @@ const StyledPaginatedList = styled.div`
         display: flex;
         flex-direction: column;
         overflow-y: auto;
+        position: relative; // for loading positioning
     }
 `;
 
@@ -74,6 +76,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         <StyledPaginatedList className={className}>
             <Header title={title} refreshData={refreshItemList} loading={itemListLoading} />
             <div className="paginated-list-body">
+                {itemListLoading && <Loading />}
                 {itemList?.map(item => <RowWrapper
                     key={keyExtractor(item)}
                     data={item}
