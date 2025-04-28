@@ -5,7 +5,10 @@
 - [ ] rest api for task list
     - [v] database using json file
     - [v] database using posgregSQL
-- [ ] modulize paginated component
+- [-] modulize paginated component
+  - [x] paginated list 
+  - [x] paginated list row 
+  - [ ] paginated list loading 
 - [ ] modulize modal component
 - [v] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
 - [ ] FEAT: TẠO CATEGORY

@@ -1,9 +1,10 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
-import { ComposeHeader } from "../compose-header";
-import { SyncOutlined } from "@ant-design/icons";
 import { useRequest } from "@/util";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
+import { DefaultPaginatedListRowWrapper, PaginatedListRowWrapper } from "./list-row";
+import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
+import { Loading } from "../loading";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -15,7 +16,7 @@ declare module 'react' {
 }
 
 const StyledPaginatedList = styled.div`
-    /* flex: 1; */
+    height: 100%;
     border: var(--bd);
     border-radius: var(--br);
     display: flex;
@@ -28,58 +29,42 @@ const StyledPaginatedList = styled.div`
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-    }
-`;
-
-const StyledFlashcardItem = styled.div`
-    border-top: var(--bd);
-    border-bottom: var(--bd);
-    padding: var(--spacing-sm) var(--spacing);
-    margin-bottom: -1px;
-    cursor: pointer;
-    display: flex;
-
-    &:hover {
-        background-color: var(--main-hovered);
-    }
-
-    &.selected-flashcard {
-        background-color: var(--main-activated);
-    }
-
-    .left-content {
-        flex: 1;
-
-        .title {
-            font-weight: var(--fw-5);
-        }
-
-        .description {
-            font-size: var(--fs-sm);
-            color: var(--main-grey);
-        }
+        position: relative; // for loading positioning
     }
 `;
 
 type PaginatedList<Data extends Record<string, unknown>> = {
     Header?: React.ComponentType<PaginatedHeader>;
+    RowWrapper?: React.ComponentType<PaginatedListRowWrapper<Data>>;
+    RowItem?: React.ComponentType<PaginatedListRowItem<Data>>;
     title?: string;
     baseUrl?: string;
+    activeId?: string;
+    onActive?: (id: string) => void;
     keyExtractor?: (data: Data) => string;
+} & Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>;
+export type PaginatedListRef = {
+    refresh: () => void;
 };
-export type PaginatedListRef = {};
 export const PaginatedList = forwardRef(function BasePaginatedList<Data extends Record<string, unknown>>(
     props: PaginatedList<Data>,
     ref: React.ForwardedRef<PaginatedListRef>,
 ) {
     const {
         Header = DefaultPaginatedHeader,
+        RowWrapper = DefaultPaginatedListRowWrapper,
+        RowItem = DefaultPaginatedListRowItem,
         title,
         baseUrl,
-        keyExtractor = (data) => data?._id,
+        activeId,
+        keyExtractor = (data) => (data?._id ?? '') as string,
+        onActive,
+        className,
     } = props;
 
-    useImperativeHandle(ref, () => ({}));
+    useImperativeHandle(ref, () => ({
+        refresh: () => refreshItemList(),
+    }));
 
     const {
         data: itemList,
@@ -88,10 +73,27 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
     } = useRequest<Data[]>(baseUrl);
 
     return (
-        <StyledPaginatedList>
-            <Header title={title} refreshData={refreshItemList} />
+        <StyledPaginatedList className={className}>
+            <Header title={title} refreshData={refreshItemList} loading={itemListLoading} />
             <div className="paginated-list-body">
+                {itemListLoading && <Loading />}
+                {itemList?.map(item => <RowWrapper
+                    key={keyExtractor(item)}
+                    data={item}
+                    keyExtractor={keyExtractor}
+                    activeId={activeId}
+                    onActive={onActive}
+                    RowItem={RowItem}
+                />)}
             </div>
         </StyledPaginatedList>
     );
 });
+
+export { DefaultPaginatedHeader } from './header';
+export { PaginatedHeaderTitle } from './header-title';
+export {
+    DefaultPaginatedListRowWrapper,
+    StyledPaginatedListRowWrapper,
+    type PaginatedListRowWrapper,
+} from './list-row';

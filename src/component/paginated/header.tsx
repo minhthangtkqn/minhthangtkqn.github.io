@@ -1,5 +1,5 @@
-import { SyncOutlined } from "@ant-design/icons";
 import { ComposeHeader } from "../compose-header";
+import { PaginatedHeaderTitle } from "./header-title";
 
 export type PaginatedHeader = {
     title?: React.ReactNode;
@@ -8,15 +8,7 @@ export type PaginatedHeader = {
 };
 
 export const DefaultPaginatedHeader = (props: PaginatedHeader) => {
-    const {
-        title,
-        loading,
-        refreshData,
-    } = props;
-
     return <ComposeHeader>
-        <ComposeHeader.HeaderItem>
-            {title} <SyncOutlined spin={loading} />
-        </ComposeHeader.HeaderItem>
+        <PaginatedHeaderTitle {...props} />
     </ComposeHeader>;
 };
