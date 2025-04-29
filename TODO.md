@@ -1,16 +1,16 @@
 - [ ] open side drawer when click logo
-    - [v] side drawer module menu
-    - [v] top navbar > module menu
+    - [x] side drawer module menu
+    - [x] top navbar > module menu
     - [ ] (backlog) top navbar > user menu
-- [ ] rest api for task list
-    - [v] database using json file
-    - [v] database using posgregSQL
-- [-] modulize paginated component
+- [x] rest api for task list
+    - [x] database using json file
+    - [x] database using posgregSQL
+- [x] modulize paginated component
   - [x] paginated list 
   - [x] paginated list row 
-  - [ ] paginated list loading 
+  - [x] paginated list loading
 - [ ] modulize modal component
-- [v] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
+- [x] FIX: UPDATING URL PARAM WITHOUT RELOAD THE PAGE
 - [ ] FEAT: TẠO CATEGORY
 - [ ] FEAT: ADD IMAGE (CÓ THỂ TẬN DỤNG CÁC NGUỒN IMAGE FREE NHƯ SPLASH)
 - [ ] FEAT: HỌC FLASHCARD (detail 1 card, lật card giữa title & desc, đọc card, ...)
