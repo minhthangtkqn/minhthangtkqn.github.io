@@ -1,30 +1,26 @@
 import { Spin } from "antd";
 import styled from "styled-components";
 
-const StyledLoadingWrapper = styled.div`
-    &.loading-background {
+const StyledLoadingContainer = styled.div`
+    &.loading-container {
         position: absolute;
         height: 100%;
         width: 100%;
+        top: 0;
+        left: 0;
         z-index: 1;
         opacity: 0.5;
         background-color: white;
-
-        .loading-icon-root {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 `;
 
 type Loading = {};
 export const Loading: React.FC<Loading> = () => {
-    return <StyledLoadingWrapper className="loading-background">
-        <Spin
-            spinning={true}
-            rootClassName="loading-icon-root"
-        />
-    </StyledLoadingWrapper>;
+    return <StyledLoadingContainer className="loading-container">
+        <Spin spinning={true} />
+    </StyledLoadingContainer>;
 };

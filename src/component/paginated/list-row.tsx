@@ -2,7 +2,7 @@ import { mergeClass } from "@/util";
 import styled from "styled-components";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
 
-export const StyledPaginatedListRowWrapper = styled.div`
+export const StyledPaginatedListRowContainer = styled.div`
     border-top: var(--bd);
     border-bottom: var(--bd);
     padding: var(--spacing-sm) var(--spacing);
@@ -23,7 +23,7 @@ export const StyledPaginatedListRowWrapper = styled.div`
     }
 `;
 
-export type PaginatedListRowWrapper<Data extends Record<string, unknown>> = PaginatedListRowItem<Data> & {
+export type PaginatedListRowContainer<Data extends Record<string, unknown>> = PaginatedListRowItem<Data> & {
     RowItem?: React.ComponentType<PaginatedListRowItem<Data>>;
 };
 
@@ -31,7 +31,7 @@ export type PaginatedListRowWrapper<Data extends Record<string, unknown>> = Pagi
  * Component đảm nhiệm các behavior như click, active ... của row.
  * @props `RowItem` Component hiển thị UI của row.
  */
-export const DefaultPaginatedListRowWrapper = <Data extends Record<string, unknown>>(props: PaginatedListRowWrapper<Data>) => {
+export const DefaultPaginatedListRowContainer = <Data extends Record<string, unknown>>(props: PaginatedListRowContainer<Data>) => {
     const {
         data,
         activeId,
@@ -40,7 +40,7 @@ export const DefaultPaginatedListRowWrapper = <Data extends Record<string, unkno
         RowItem = DefaultPaginatedListRowItem,
     } = props;
 
-    return <StyledPaginatedListRowWrapper
+    return <StyledPaginatedListRowContainer
         key={keyExtractor(data)}
         className={mergeClass(
             'paginated-list-row',
@@ -49,5 +49,5 @@ export const DefaultPaginatedListRowWrapper = <Data extends Record<string, unkno
         onClick={() => onActive?.(keyExtractor(data))}
     >
         <RowItem {...props} />
-    </StyledPaginatedListRowWrapper>;
+    </StyledPaginatedListRowContainer>;
 };

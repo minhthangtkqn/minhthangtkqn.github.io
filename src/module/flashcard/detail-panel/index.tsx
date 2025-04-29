@@ -47,7 +47,8 @@ export const FlashcardDetailPanel = () => {
 
     return (
         <StyledFlashcardDetailContainer>
-            {flashcardLoading && <Loading />}
+            {/* {flashcardLoading && <Loading />} */}
+            <Loading />
             {flashcardId && flashcardData
                 ? <StyledFlashcardDetail>
                     <div className="title">{flashcardData.title}</div>

@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
 import { useRequest } from "@/util";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
-import { DefaultPaginatedListRowWrapper, PaginatedListRowWrapper } from "./list-row";
+import { DefaultPaginatedListRowContainer, PaginatedListRowContainer } from "./list-row";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
 import { Loading } from "../loading";
 
@@ -35,7 +35,7 @@ const StyledPaginatedList = styled.div`
 
 type PaginatedList<Data extends Record<string, unknown>> = {
     Header?: React.ComponentType<PaginatedHeader>;
-    RowWrapper?: React.ComponentType<PaginatedListRowWrapper<Data>>;
+    RowContainer?: React.ComponentType<PaginatedListRowContainer<Data>>;
     RowItem?: React.ComponentType<PaginatedListRowItem<Data>>;
     title?: string;
     baseUrl?: string;
@@ -52,7 +52,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
 ) {
     const {
         Header = DefaultPaginatedHeader,
-        RowWrapper = DefaultPaginatedListRowWrapper,
+        RowContainer = DefaultPaginatedListRowContainer,
         RowItem = DefaultPaginatedListRowItem,
         title,
         baseUrl,
@@ -77,7 +77,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
             <Header title={title} refreshData={refreshItemList} loading={itemListLoading} />
             <div className="paginated-list-body">
                 {itemListLoading && <Loading />}
-                {itemList?.map(item => <RowWrapper
+                {itemList?.map(item => <RowContainer
                     key={keyExtractor(item)}
                     data={item}
                     keyExtractor={keyExtractor}
@@ -93,7 +93,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
 export { DefaultPaginatedHeader } from './header';
 export { PaginatedHeaderTitle } from './header-title';
 export {
-    DefaultPaginatedListRowWrapper,
-    StyledPaginatedListRowWrapper,
-    type PaginatedListRowWrapper,
+    DefaultPaginatedListRowContainer,
+    StyledPaginatedListRowContainer,
+    type PaginatedListRowContainer,
 } from './list-row';
