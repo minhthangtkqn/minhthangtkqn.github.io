@@ -19,16 +19,11 @@ const StyledLoadingWrapper = styled.div`
     }
 `;
 
-type Loading = {
-    title?: string;
-};
-export const Loading: React.FC<Loading> = ({
-    title = 'Loading...',
-}) => {
+type Loading = {};
+export const Loading: React.FC<Loading> = () => {
     return <StyledLoadingWrapper className="loading-background">
         <Spin
             spinning={true}
-            tip={title}
             rootClassName="loading-icon-root"
         />
     </StyledLoadingWrapper>;
