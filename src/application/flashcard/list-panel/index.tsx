@@ -1,6 +1,6 @@
 import { CommandApi, QueryApi } from "@/access";
 import { REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
-import { FlashcardModuleParam } from "../model";
+import { FlashcardApplicationParam } from "../model";
 import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
@@ -30,7 +30,7 @@ const StyledFlashcardList: typeof PaginatedList = styled(PaginatedList)`
 
 export const FlashcardListPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
-    const currentFlashcardId = params.get(FlashcardModuleParam.flashcardId);
+    const currentFlashcardId = params.get(FlashcardApplicationParam.flashcardId);
 
     const paginatedListRef = useRef<PaginatedListRef>(null);
     const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
@@ -40,7 +40,7 @@ export const FlashcardListPanel = () => {
             await CentralRequestor.delete(CommandApi.Flashcard.removeItem(itemId));
             if (itemId === currentFlashcardId) {
                 updateSearchParams(prev => {
-                    prev.set(FlashcardModuleParam.flashcardId, '');
+                    prev.set(FlashcardApplicationParam.flashcardId, '');
                     return prev;
                 });
             }
@@ -113,7 +113,7 @@ export const FlashcardListPanel = () => {
             activeId={currentFlashcardId ?? ''}
             onActive={(id) => {
                 updateSearchParams(prev => {
-                    prev.set(FlashcardModuleParam.flashcardId, id);
+                    prev.set(FlashcardApplicationParam.flashcardId, id);
                     return prev;
                 });
             }}

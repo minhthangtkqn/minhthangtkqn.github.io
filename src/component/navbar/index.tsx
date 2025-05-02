@@ -3,8 +3,8 @@ import { Drawer, Menu } from "antd";
 import { CheckSquareOutlined, TagsOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import logo from '../../asset/logo.svg';
-import { ModuleInfo } from "@/module";
-import { MODULE_PARAM_KEY } from "@/util";
+import { ApplicationInfo } from "@/application";
+import { APPLICATION_PARAM_KEY } from "@/util";
 
 const StyledNavBar = styled.div`    
     background-color: #282c34;
@@ -40,15 +40,15 @@ const StyledDrawer = styled(Drawer)`
     }
 `;
 
-const MODULE_LIST = [
+const APPLICATION_LIST = [
     {
-        key: ModuleInfo.FocusModuleInfo.name,
-        title: <a href={`${window.location.origin}?${MODULE_PARAM_KEY}=${ModuleInfo.FocusModuleInfo.name}`}>Focus</a>,
+        key: ApplicationInfo.FocusAppInfo.name,
+        title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FocusAppInfo.name}`}>Focus</a>,
         icon: <CheckSquareOutlined />,
     },
     {
-        key: ModuleInfo.FlashcardModuleInfo.name,
-        title: <a href={`${window.location.origin}?${MODULE_PARAM_KEY}=${ModuleInfo.FlashcardModuleInfo.name}`}>Flashcard</a>,
+        key: ApplicationInfo.FlashcardAppInfo.name,
+        title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FlashcardAppInfo.name}`}>Flashcard</a>,
         icon: <TagsOutlined />,
     },
 ];
@@ -116,7 +116,7 @@ const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (pro
             <Menu
                 className="side-nav-menu"
                 mode="vertical"
-                items={MODULE_LIST.map(item => ({
+                items={APPLICATION_LIST.map(item => ({
                     key: item.key,
                     label: item.title,
                     icon: item.icon,

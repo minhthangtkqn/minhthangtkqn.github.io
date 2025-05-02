@@ -3,16 +3,16 @@ import { TimerPanel } from "./timer-panel";
 import { TaskPanel } from "./task-panel";
 import { BaseLayout } from "@/component";
 
-export const FocusModuleInfo = {
+export const FocusAppInfo = {
     name: 'focus' as const,
 };
 
-export const FocusModule = () => {
+export const FocusApp = () => {
     return (
         <BaseLayout
             primarySlot={<TimerPanel />}
             secondarySlot={<TaskPanel />}
-            className="focus-module-layout"
+            className="focus-app-layout"
         />
     );
 };

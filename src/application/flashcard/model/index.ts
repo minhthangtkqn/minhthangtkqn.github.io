@@ -1,3 +1,3 @@
-export const FlashcardModuleParam = {
+export const FlashcardApplicationParam = {
     flashcardId: 'flashcardId' as const,
 };

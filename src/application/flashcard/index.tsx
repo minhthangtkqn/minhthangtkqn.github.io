@@ -3,19 +3,19 @@ import { FlashcardListPanel } from "./list-panel";
 import { FlashcardDetailPanel } from "./detail-panel";
 import styled from "styled-components";
 
-const StyledFlashcardModuleLayout = styled(DetailedLayout)`
+const StyledFlashcardAppLayout = styled(DetailedLayout)`
     .primary {
         overflow-x: hidden;
     }
 `;
 
-export const FlashcardModuleInfo = {
+export const FlashcardAppInfo = {
     name: 'flashcard' as const,
 };
 
-export const FlashcardModule = () => {
+export const FlashcardApp = () => {
     return (
-        <StyledFlashcardModuleLayout
+        <StyledFlashcardAppLayout
             primarySlot={<FlashcardListPanel />}
             secondarySlot={<FlashcardDetailPanel />}
         />

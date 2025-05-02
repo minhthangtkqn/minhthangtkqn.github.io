@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlashcardModuleParam } from "../model";
+import { FlashcardApplicationParam } from "../model";
 import { useRequest, useSearchParams, useSubscribe } from "@/util";
 import { QueryApi } from "@/access";
 import { Flashcard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
@@ -36,7 +36,7 @@ const StyledFlashcardDetail = styled.div`
 
 export const FlashcardDetailPanel = () => {
     const { params } = useSearchParams();
-    const flashcardId = params.get(FlashcardModuleParam.flashcardId);
+    const flashcardId = params.get(FlashcardApplicationParam.flashcardId);
 
     const {
         data: flashcardData,
