@@ -22,6 +22,9 @@ Ví dụ: layout detailed chia màn hình ra thành 3 panel theo chiều ngang v
   - [x] paginated list 
   - [x] paginated list row 
   - [x] paginated list loading
+- [ ] paginated list
+    - [ ] auto active first item if non-select (props) on mount
+    - [ ] auto active first item if non-select (props) on change (url, params ...)
 - [ ] open side drawer when click logo
     - [x] side drawer application menu
     - [x] top navbar > application menu

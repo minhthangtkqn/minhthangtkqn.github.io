@@ -14,6 +14,13 @@ const StyledFlashcardDetailContainer = styled.div`
     background-color: var(--contrast-primary);
     position: relative; // for loading positioning
 
+    // centralize the empty indicator
+    &:has(.empty-indicator) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .empty-indicator {
         margin: 0;
     }
