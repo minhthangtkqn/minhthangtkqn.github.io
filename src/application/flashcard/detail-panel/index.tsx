@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { FlashcardApplicationParam } from "../model";
-import { useRequest, useSearchParams, useSubscribe } from "@/util";
+import { useSearchParams, useSubscribe } from "@/util";
+import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { Flashcard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
 import { Empty } from "antd";
-import { Loading } from "@/component/loading";
+import { Loading } from "@/__lib__/general-component";
 
 const StyledFlashcardDetailContainer = styled.div`
     border: var(--bd);

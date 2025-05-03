@@ -8,8 +8,8 @@ import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-moda
 import { useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
-import { ComposeHeader } from "@/component";
-import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/component/paginated";
+import { ComposeHeader } from "@/__lib__/general-component";
+import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/__lib__/paginated";
 
 const StyledFlashcardList: typeof PaginatedList = styled(PaginatedList)`
     &.flashcard-list {

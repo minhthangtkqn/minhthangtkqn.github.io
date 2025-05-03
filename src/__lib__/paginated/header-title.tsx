@@ -1,5 +1,5 @@
 import { SyncOutlined } from "@ant-design/icons";
-import { ComposeHeader } from "../compose-header";
+import { ComposeHeader } from "@/__lib__/general-component";
 
 type PaginatedHeaderTitle = {
     title?: React.ReactNode;

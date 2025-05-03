@@ -1,4 +1,4 @@
-import { ComposeHeader } from "../compose-header";
+import { ComposeHeader } from "@/__lib__/general-component";
 import { PaginatedHeaderTitle } from "./header-title";
 
 export type PaginatedHeader = {

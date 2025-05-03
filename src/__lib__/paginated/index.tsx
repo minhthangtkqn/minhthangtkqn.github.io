@@ -1,10 +1,10 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import styled from "styled-components";
-import { useRequest } from "@/util";
+import { useRequest } from "@/__lib__/access";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 import { DefaultPaginatedListRowContainer, PaginatedListRowContainer } from "./list-row";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
-import { Loading } from "../loading";
+import { Loading } from "@/__lib__/general-component";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
