@@ -1,4 +1,4 @@
-import { DetailedLayout } from "@/component";
+import { DetailedLayout } from "@/__lib__/layout";
 import { FlashcardListPanel } from "./list-panel";
 import { FlashcardDetailPanel } from "./detail-panel";
 import styled from "styled-components";
