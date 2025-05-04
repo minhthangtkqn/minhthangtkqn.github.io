@@ -35,18 +35,12 @@ export const FlashcardApp = () => {
         setPrimaryPanel(moduleRegistry?.getPanel(primaryPanelKey));
         setSecondaryPanel(moduleRegistry?.getPanel(secondaryPanelKey));
         setExtensionPanel(moduleRegistry?.getPanel(extensionPanelKey));
-        console.log(
-            '🚀 ~ useEffect ~ Did_Mount:',
-            '\n ~ primaryPanel: ', primaryPanel,
-            '\n ~ secondaryPanel: ', secondaryPanel,
-            '\n ~ extensionPanel: ', extensionPanel,
-        );
     };
 
     // cần đảm bảo các module được setup vào ModuleManager ngay từ đầu để lượt render đầu tiên có thể truy cập danh sách module & panel
     useEffect(() => {
         initiateApp();
-    }, []);
+    }, [moduleKey, primaryPanelKey, secondaryPanelKey, extensionPanelKey]);
 
     if (!moduleKey) {
         // missing module => redirect to default route
@@ -75,8 +69,6 @@ export const FlashcardApp = () => {
 
     return (
         <StyledFlashcardAppLayout
-            // PrimaryComponent={FlashcardListPanel}
-            // SecondaryComponent={FlashcardDetailPanel}
             PrimaryComponent={primaryPanel?.Component}
             SecondaryComponent={secondaryPanel?.Component}
             ExtensionComponent={extensionPanel?.Component}

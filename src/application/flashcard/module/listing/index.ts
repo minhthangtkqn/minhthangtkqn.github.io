@@ -17,4 +17,7 @@ export const setupFlashcardListingModule = () => {
     return newModule;
 };
 
-export * from './panel';
+export {
+    FlashcardListPanelInfo,
+    FlashcardDetailPanelInfo,
+} from './panel';

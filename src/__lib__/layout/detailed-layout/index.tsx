@@ -16,12 +16,6 @@ export class DetailedLayout extends BaseLayout {
             ExtensionComponent,
             className,
         } = this.props;
-        console.log(
-            '🚀 ~ DetailedLayout render:',
-            '\n ~ PrimaryComponent: ', PrimaryComponent,
-            '\n ~ SecondaryComponent: ', SecondaryComponent,
-            '\n ~ ExtensionComponent: ', ExtensionComponent,
-        );
 
         return <div className={mergeClass('layout-detailed', className)}>
             {ExtensionComponent ? <div className="extension"><ExtensionComponent /></div> : null}
