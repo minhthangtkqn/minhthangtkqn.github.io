@@ -1,11 +1,15 @@
 import styled from "styled-components";
-import { FlashcardApplicationParam } from "../model";
+import { FlashcardApplicationParam } from "../../../../model";
 import { useSearchParams, useSubscribe } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { Flashcard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
 import { Empty } from "antd";
 import { Loading } from "@/__lib__/general-component";
+
+export const FlashcardDetailPanelInfo = {
+    name: 'detail' as const,
+};
 
 const StyledFlashcardDetailContainer = styled.div`
     border: var(--bd);

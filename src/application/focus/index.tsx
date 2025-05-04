@@ -10,8 +10,8 @@ export const FocusAppInfo = {
 export const FocusApp = () => {
     return (
         <BaseLayout
-            primarySlot={<TimerPanel />}
-            secondarySlot={<TaskPanel />}
+            PrimaryComponent={TimerPanel}
+            SecondaryComponent={TaskPanel}
             className="focus-app-layout"
         />
     );
