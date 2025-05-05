@@ -25,47 +25,35 @@ export const FlashcardApp = () => {
     const [secondaryPanel, setSecondaryPanel] = useState<PanelRegistry>();
     const [extensionPanel, setExtensionPanel] = useState<PanelRegistry>();
 
-    const initiateApp = () => {
+    // cần đảm bảo các module được setup vào ModuleManager ngay từ đầu để lượt render đầu tiên có thể truy cập danh sách module & panel
+    useEffect(() => {
         const moduleManager = ModuleManager.getModuleManager();
         // import & setup modules & panels
         moduleManager.setupModule(FlashcardListingModuleInfo.name, setupFlashcardListingModule());
 
-        // mapping module & panel key to get Component for displaying
-        const moduleRegistry = moduleManager.getModule(moduleKey);
-        setPrimaryPanel(moduleRegistry?.getPanel(primaryPanelKey));
-        setSecondaryPanel(moduleRegistry?.getPanel(secondaryPanelKey));
-        setExtensionPanel(moduleRegistry?.getPanel(extensionPanelKey));
-    };
+        const hasModuleKey = !!moduleKey;
+        const hasPanelKey = primaryPanelKey || secondaryPanelKey || extensionPanelKey;
 
-    // cần đảm bảo các module được setup vào ModuleManager ngay từ đầu để lượt render đầu tiên có thể truy cập danh sách module & panel
-    useEffect(() => {
-        initiateApp();
+        if (!hasModuleKey || !hasPanelKey) {
+            updateSearchParams(prev => {
+                if (!hasModuleKey) {
+                    prev.set(ModuleParamKey, FlashcardListingModuleInfo.name);
+                }
+                if (!hasPanelKey) {
+                    prev.set(LayoutPanelSlot.PRIMARY, FlashcardListPanelInfo.name);
+                    prev.set(LayoutPanelSlot.SECONDARY, FlashcardDetailPanelInfo.name);
+                    prev.delete(LayoutPanelSlot.EXTENSION);
+                }
+                return prev;
+            });
+        } else {
+            // mapping module & panel key to get Component for displaying
+            const moduleRegistry = moduleManager.getModule(moduleKey);
+            setPrimaryPanel(moduleRegistry?.getPanel(primaryPanelKey));
+            setSecondaryPanel(moduleRegistry?.getPanel(secondaryPanelKey));
+            setExtensionPanel(moduleRegistry?.getPanel(extensionPanelKey));
+        }
     }, [moduleKey, primaryPanelKey, secondaryPanelKey, extensionPanelKey]);
-
-    if (!moduleKey) {
-        // missing module => redirect to default route
-        updateSearchParams(prev => {
-            prev.set(ModuleParamKey, FlashcardListingModuleInfo.name);
-            prev.set(LayoutPanelSlot.PRIMARY, FlashcardListPanelInfo.name);
-            prev.set(LayoutPanelSlot.SECONDARY, FlashcardDetailPanelInfo.name);
-            prev.delete(LayoutPanelSlot.EXTENSION);
-            return prev;
-        });
-    }
-
-    /**
-     * @todo chỉ làm tạm thời để redirect nhằm hiển thị UI phù hợp
-     * Sau này sẽ setup default route riêng cho từng module, đảm bảo không if else phức tạp
-     */
-    if (!primaryPanelKey && !secondaryPanelKey && !extensionPanelKey) {
-        // missing all panel => redirect to default route
-        updateSearchParams(prev => {
-            prev.set(LayoutPanelSlot.PRIMARY, FlashcardListPanelInfo.name);
-            prev.set(LayoutPanelSlot.SECONDARY, FlashcardDetailPanelInfo.name);
-            prev.delete(LayoutPanelSlot.EXTENSION);
-            return prev;
-        });
-    }
 
     return (
         <StyledFlashcardAppLayout
