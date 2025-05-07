@@ -3,9 +3,13 @@ import { Button, Menu } from "antd";
 import styled from "styled-components";
 import { TimerClock, TimerClockRef } from "./timer-clock";
 
+export const TimerPanelInfo = {
+    name: 'timer' as const,
+};
+
 const StyledTimerPanel = styled.div`
     padding: var(--spacing);
-    height: calc(100% - var(--spacing) - var(--spacing));
+    height: 100%;
     background-color: white;
     display: flex;
     flex-direction: column;

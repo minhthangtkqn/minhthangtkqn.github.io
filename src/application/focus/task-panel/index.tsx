@@ -5,6 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { addTaskItem, getTaskList, mergeClass, removeTaskItem } from "@/util";
 import { ActionButton } from "@/component";
 
+export const TaskPanelInfo = {
+    name: 'task' as const,
+};
+
 const StyledTaskPanel = styled.div`
     /* height: 100%; */
     flex: 1;

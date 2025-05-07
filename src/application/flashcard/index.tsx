@@ -1,10 +1,8 @@
-import { DetailedLayout } from "@/__lib__/layout";
-import { FlashcardListPanel } from "./list-panel";
-import { FlashcardDetailPanel } from "./detail-panel";
+import { DetailedLayout, LayoutPanelSlot, ModuleManager, ModuleParamKey, PanelRegistry } from "@/__lib__/layout";
 import styled from "styled-components";
 import { useSearchParams } from "@/util";
-import { CommonUrlParam } from "@/const";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FlashcardListingModuleInfo, setupFlashcardListingModule, FlashcardListPanelInfo, FlashcardDetailPanelInfo } from "./module";
 
 const StyledFlashcardAppLayout = styled(DetailedLayout)`
     .primary {
@@ -17,25 +15,51 @@ export const FlashcardAppInfo = {
 };
 
 export const FlashcardApp = () => {
-    // getModuleList()
-    // => get panel of active module
-    // => => mapping to get active panel for displaying
+    const { params, updateSearchParams } = useSearchParams();
+    const moduleKey = params.get(ModuleParamKey) ?? '';
+    const primaryPanelKey = params.get(LayoutPanelSlot.PRIMARY) ?? '';
+    const secondaryPanelKey = params.get(LayoutPanelSlot.SECONDARY) ?? '';
+    const extensionPanelKey = params.get(LayoutPanelSlot.EXTENSION) ?? '';
 
-    const { params } = useSearchParams();
-    const primaryPanelKey = params.get(CommonUrlParam.primary);
-    const secondaryPanelKey = params.get(CommonUrlParam.secondary);
-    const extensionPanelKey = params.get(CommonUrlParam.extension);
+    const [primaryPanel, setPrimaryPanel] = useState<PanelRegistry>();
+    const [secondaryPanel, setSecondaryPanel] = useState<PanelRegistry>();
+    const [extensionPanel, setExtensionPanel] = useState<PanelRegistry>();
 
+    // cần đảm bảo các module được setup vào ModuleManager ngay từ đầu để lượt render đầu tiên có thể truy cập danh sách module & panel
     useEffect(() => {
-        if (!primaryPanelKey && !secondaryPanelKey && !extensionPanelKey) {
-            // redirect to default route
+        const moduleManager = ModuleManager.getModuleManager();
+        // import & setup modules & panels
+        moduleManager.setupModule(FlashcardListingModuleInfo.name, setupFlashcardListingModule());
+
+        const hasModuleKey = !!moduleKey;
+        const hasPanelKey = primaryPanelKey || secondaryPanelKey || extensionPanelKey;
+
+        if (!hasModuleKey || !hasPanelKey) {
+            updateSearchParams(prev => {
+                if (!hasModuleKey) {
+                    prev.set(ModuleParamKey, FlashcardListingModuleInfo.name);
+                }
+                if (!hasPanelKey) {
+                    prev.set(LayoutPanelSlot.PRIMARY, FlashcardListPanelInfo.name);
+                    prev.set(LayoutPanelSlot.SECONDARY, FlashcardDetailPanelInfo.name);
+                    prev.delete(LayoutPanelSlot.EXTENSION);
+                }
+                return prev;
+            });
+        } else {
+            // mapping module & panel key to get Component for displaying
+            const moduleRegistry = moduleManager.getModule(moduleKey);
+            setPrimaryPanel(moduleRegistry?.getPanel(primaryPanelKey));
+            setSecondaryPanel(moduleRegistry?.getPanel(secondaryPanelKey));
+            setExtensionPanel(moduleRegistry?.getPanel(extensionPanelKey));
         }
-    }, []);
+    }, [moduleKey, primaryPanelKey, secondaryPanelKey, extensionPanelKey]);
 
     return (
         <StyledFlashcardAppLayout
-            primarySlot={<FlashcardListPanel />}
-            secondarySlot={<FlashcardDetailPanel />}
+            PrimaryComponent={primaryPanel?.Component}
+            SecondaryComponent={secondaryPanel?.Component}
+            ExtensionComponent={extensionPanel?.Component}
         />
     );
 };

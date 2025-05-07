@@ -1,6 +1,6 @@
 import { CommandApi, QueryApi } from "@/access";
 import { REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
-import { FlashcardApplicationParam } from "../model";
+import { FlashcardApplicationParam } from "../../../../model";
 import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
@@ -10,6 +10,10 @@ import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { ComposeHeader } from "@/__lib__/general-component";
 import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/__lib__/paginated";
+
+export const FlashcardListPanelInfo = {
+    name: 'list' as const,
+};
 
 const StyledFlashcardList: typeof PaginatedList = styled(PaginatedList)`
     &.flashcard-list {
