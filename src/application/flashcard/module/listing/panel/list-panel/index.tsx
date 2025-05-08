@@ -115,6 +115,7 @@ export const FlashcardListPanel = () => {
                 </>;
             }}
             activeId={currentFlashcardId ?? ''}
+            activeOnMount
             onActive={(id) => {
                 updateSearchParams(prev => {
                     prev.set(FlashcardApplicationParam.flashcardId, id);

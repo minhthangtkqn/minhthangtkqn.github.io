@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import styled from "styled-components";
 import { useRequest } from "@/__lib__/access";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
@@ -40,6 +40,7 @@ type PaginatedList<Data extends Record<string, unknown>> = {
     title?: string;
     baseUrl?: string;
     activeId?: string;
+    activeOnMount?: boolean;
     onActive?: (id: string) => void;
     keyExtractor?: (data: Data) => string;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>;
@@ -57,10 +58,13 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         title,
         baseUrl,
         activeId,
+        activeOnMount = false,
         keyExtractor = (data) => (data?._id ?? '') as string,
         onActive,
         className,
     } = props;
+
+    const [activeOnMountDone, setActiveOnMountDone] = useState(false);
 
     useImperativeHandle(ref, () => ({
         refresh: () => refreshItemList(),
@@ -70,7 +74,19 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         data: itemList,
         loading: itemListLoading,
         refresh: refreshItemList,
-    } = useRequest<Data[]>(baseUrl);
+    } = useRequest<Data[]>(
+        baseUrl,
+        {
+            onSuccess: (data) => {
+                if (activeOnMount && !activeOnMountDone) {
+                    setActiveOnMountDone(true);
+                    if (data.length > 0) {
+                        onActive?.(keyExtractor(data[0]));
+                    }
+                }
+            },
+        },
+    );
 
     return (
         <StyledPaginatedList className={className}>
