@@ -43,6 +43,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
 
     const formRef = useRef<FormInstance<Flashcard>>(null);
     const [flashcard, setFlashcard] = useState<Flashcard>();
+    const [submitting, setSubmitting] = useState(false);
     const [visible, setVisible] = useState(false);
 
     const closeModal = () => {
@@ -54,6 +55,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
 
     const handleSubmit: FormProps<Flashcard>['onFinish'] = async (values) => {
         try {
+            setSubmitting(true);
             if (flashcard) {
                 await CentralRequestor.post<Record<string, unknown>>(
                     CommandApi.Flashcard.updateItem(flashcard._id),
@@ -73,6 +75,8 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
             notification.error({
                 message: 'Submit failed. Try again later!',
             });
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -116,6 +120,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                     <Button
                         type="primary"
                         htmlType="submit"
+                        loading={submitting}
                     >Submit</Button>
                 </Form.Item>
             </StyledForm>

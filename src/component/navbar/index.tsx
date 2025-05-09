@@ -4,7 +4,8 @@ import { CheckSquareOutlined, TagsOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import logo from '../../asset/logo.svg';
 import { ApplicationInfo } from "@/application";
-import { APPLICATION_PARAM_KEY } from "@/util";
+import { APPLICATION_PARAM_KEY, useApplicationKey } from "@/util";
+import { version } from "../../../package.json";
 
 const StyledNavBar = styled.div`    
     background-color: #282c34;
@@ -20,22 +21,32 @@ const StyledNavBar = styled.div`
     }
 `;
 
-const StyledDrawer = styled(Drawer)`
+const StyledDrawerContainer = styled(Drawer)`
     .ant-drawer-header {
         display: none;
     }
+
     .ant-drawer-body {
         padding: 0;
+        display: flex;
+        flex-direction: column;
 
         .side-nav-menu {
             border-right: none;
             font-size: var(--fs-xl);
+            flex: 1;
 
             .ant-menu-item {
+                padding: 0px var(--spacing-sm);
+
                 .anticon {
                     font-size: inherit; // override the default css with stronger scpecifity
                 }
             }
+        }
+
+        .application-version {
+            padding: var(--spacing) var(--spacing);
         }
     }
 `;
@@ -91,6 +102,8 @@ const StyledNavBarLogo = styled.div`
     }
 `;
 const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (props) => {
+    const { applicationKey } = useApplicationKey();
+
     const [isOpenDrawer, setOpenDrawer] = useState(false);
 
     const handleShowDrawer = () => {
@@ -105,7 +118,7 @@ const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (pro
             <div className="logo-label">Focus</div>
         </StyledNavBarLogo>
 
-        <StyledDrawer
+        <StyledDrawerContainer
             closable
             destroyOnClose
             title={null}
@@ -116,12 +129,15 @@ const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (pro
             <Menu
                 className="side-nav-menu"
                 mode="vertical"
+                selectedKeys={[applicationKey ?? '']}
                 items={APPLICATION_LIST.map(item => ({
                     key: item.key,
                     label: item.title,
                     icon: item.icon,
                 }))}
             />
-        </StyledDrawer>
+
+            <div className="application-version">v{version}</div>
+        </StyledDrawerContainer>
     </>);
 };

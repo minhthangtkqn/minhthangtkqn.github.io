@@ -12,7 +12,7 @@ import { ComposeHeader } from "@/__lib__/general-component";
 import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/__lib__/paginated";
 
 export const FlashcardListPanelInfo = {
-    name: 'list' as const,
+    name: 'flashcard-list' as const,
 };
 
 const StyledFlashcardList: typeof PaginatedList = styled(PaginatedList)`

@@ -1,2 +1,2 @@
-export * from './detail-panel';
-export * from './list-panel';
+export * from './flashcard-detail-panel';
+export * from './flashcard-list-panel';

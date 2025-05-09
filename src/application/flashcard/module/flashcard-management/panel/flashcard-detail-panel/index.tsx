@@ -8,7 +8,7 @@ import { Empty } from "antd";
 import { Loading } from "@/__lib__/general-component";
 
 export const FlashcardDetailPanelInfo = {
-    name: 'detail' as const,
+    name: 'flashcard-detail' as const,
 };
 
 const StyledFlashcardDetailContainer = styled.div`
