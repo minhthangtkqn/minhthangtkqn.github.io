@@ -1,11 +1,11 @@
 import { Module } from "@/__lib__/layout";
 import { FlashcardDetailPanel, FlashcardDetailPanelInfo, FlashcardListPanel, FlashcardListPanelInfo } from "./panel";
 
-export const FlashcardListingModuleInfo = {
-    name: 'flashcard-listing' as const,
+export const FlashcardManagementModuleInfo = {
+    name: 'flashcard-management' as const,
 };
 export const setupFlashcardListingModule = () => {
-    const newModule = new Module(FlashcardListingModuleInfo.name);
+    const newModule = new Module(FlashcardManagementModuleInfo.name);
     newModule.setupPanel({
         panelKey: FlashcardListPanelInfo.name,
         PanelComponent: FlashcardListPanel,

@@ -1,1 +1,1 @@
-export * from './listing';
+export * from './flashcard-management';
