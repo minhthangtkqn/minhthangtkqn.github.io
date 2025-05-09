@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Drawer, Menu } from "antd";
-import { CheckSquareOutlined, TagsOutlined } from "@ant-design/icons";
+import { CheckSquareOutlined, TagsOutlined, DashboardOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import logo from '../../asset/logo.svg';
 import { ApplicationInfo } from "@/application";
@@ -61,6 +61,11 @@ const APPLICATION_LIST = [
         key: ApplicationInfo.FlashcardAppInfo.name,
         title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FlashcardAppInfo.name}`}>Flashcard</a>,
         icon: <TagsOutlined />,
+    },
+    {
+        key: ApplicationInfo.CrawlerAppInfo.name,
+        title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.CrawlerAppInfo.name}`}>Crawler</a>,
+        icon: <DashboardOutlined />,
     },
 ];
 export const AppNavBar = () => {

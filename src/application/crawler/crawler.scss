@@ -1,0 +1,21 @@
+.crawler-app-layout {
+    .extension {
+        flex: 1;
+    }
+
+    .primary {
+        flex: 3;
+        padding: var(--spacing-sm);
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .secondary {
+        flex: 1;
+        // padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 0;
+        // overflow: auto;
+        // display: flex;
+        // flex-direction: column;
+    }
+}

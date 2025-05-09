@@ -56,6 +56,7 @@ export const FlashcardListPanel = () => {
             notification.error({
                 message: 'Delete failed. Try again later!',
             });
+            console.error('delete flashcard error', error);
         }
     };
 
