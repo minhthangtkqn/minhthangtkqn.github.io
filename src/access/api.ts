@@ -16,7 +16,12 @@ export const QueryApi = {
         list: () => {
             return `${apiUrl}/card/`;
         },
-    }
+    },
+    GoldPrice: {
+        list: () => {
+            return `${apiUrl}/gold-price/`;
+        },
+    },
 };
 
 export const CommandApi = {

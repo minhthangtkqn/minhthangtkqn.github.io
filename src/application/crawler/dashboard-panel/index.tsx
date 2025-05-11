@@ -1,4 +1,6 @@
-import React from "react";
+import { useRequest } from "@/__lib__/access";
+import { QueryApi } from "@/access";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 export const DashboardPanelInfo = {
@@ -14,6 +16,12 @@ const StyledDashboardPanelContainer = styled.div`
 `;
 
 export const DashboardPanel: React.FC = () => {
+    const { data: goldPriceList } = useRequest(QueryApi.GoldPrice.list());
+
+    useEffect(() => {
+        console.log('🚀 ~ goldPriceList:', goldPriceList);
+    }, [goldPriceList]);
+
     return (
         <StyledDashboardPanelContainer className="crawler-dashboard-panel">
             <div>CRAWLER DASHBOARD PANEL</div>
