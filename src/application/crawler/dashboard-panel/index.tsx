@@ -1,6 +1,9 @@
-import { useRequest } from "@/__lib__/access";
+import { CentralRequestor, useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import React, { useEffect } from "react";
+import { EmptyValue } from "@/component";
+import { currencyFormatter } from "@/util";
+import { Button } from "antd";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export const DashboardPanelInfo = {
@@ -13,6 +16,10 @@ const StyledDashboardPanelContainer = styled.div`
     padding: var(--spacing-sm) var(--spacing);
     border: var(--bd);
     border-radius: var(--br);
+
+    .error-text {
+        color: var(--main-danger);
+    }
 `;
 
 export const DashboardPanel: React.FC = () => {
@@ -22,9 +29,35 @@ export const DashboardPanel: React.FC = () => {
         console.log('🚀 ~ goldPriceList:', goldPriceList);
     }, [goldPriceList]);
 
+    const [currentPrice, setCurrentPrice] = useState<number>();
+    const [loadingCurrentPrice, setLoadingCurrentPrice] = useState(false);
+    const [currentPriceError, setCurrentPriceError] = useState<any>();
+
+    const getCurrentGoldPrice = async () => {
+        try {
+            setLoadingCurrentPrice(true);
+            const response = await CentralRequestor.get(QueryApi.GoldPrice.current());
+            setCurrentPrice(response.data);
+            setCurrentPriceError(undefined);
+        } catch (error) {
+            setCurrentPrice(undefined);
+            setCurrentPriceError(error);
+        } finally {
+            setLoadingCurrentPrice(false);
+        }
+    };
+
     return (
         <StyledDashboardPanelContainer className="crawler-dashboard-panel">
             <div>CRAWLER DASHBOARD PANEL</div>
+            <Button
+                type="primary"
+                size="small"
+                loading={loadingCurrentPrice}
+                onClick={() => getCurrentGoldPrice()}
+            >Get current gold price</Button>
+            <div>Current Price: {currentPrice != null ? <b>{currencyFormatter.format(currentPrice)}</b> : <EmptyValue />}</div>
+            {currentPriceError ? <div className="error-text">{currentPriceError}</div> : null}
         </StyledDashboardPanelContainer>
     );
 };

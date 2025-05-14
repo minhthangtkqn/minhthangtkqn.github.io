@@ -18,8 +18,11 @@ export const QueryApi = {
         },
     },
     GoldPrice: {
-        list: () => {
+        current: () => {
             return `${apiUrl}/gold-price/`;
+        },
+        list: () => {
+            return `${apiUrl}/gold-price-list/`;
         },
     },
 };
