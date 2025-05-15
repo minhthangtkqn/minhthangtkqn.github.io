@@ -5,6 +5,8 @@ import { currencyFormatter } from "@/util";
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { GoldPriceGraph } from "./gold-price-graph";
+import { GoldPrice } from "@/model";
 
 export const DashboardPanelInfo = {
     name: 'dashboard' as const,
@@ -23,7 +25,7 @@ const StyledDashboardPanelContainer = styled.div`
 `;
 
 export const DashboardPanel: React.FC = () => {
-    const { data: goldPriceList } = useRequest(QueryApi.GoldPrice.list());
+    const { data: goldPriceList } = useRequest<GoldPrice[]>(QueryApi.GoldPrice.list());
 
     useEffect(() => {
         console.log('🚀 ~ goldPriceList:', goldPriceList);
@@ -58,6 +60,11 @@ export const DashboardPanel: React.FC = () => {
             >Get current gold price</Button>
             <div>Current Price: {currentPrice != null ? <b>{currencyFormatter.format(currentPrice)}</b> : <EmptyValue />}</div>
             {currentPriceError ? <div className="error-text">{currentPriceError}</div> : null}
+            <div className="gold-price-graph">
+                <GoldPriceGraph
+                    data={goldPriceList ?? []}
+                />
+            </div>
         </StyledDashboardPanelContainer>
     );
 };
