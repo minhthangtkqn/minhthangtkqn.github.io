@@ -63,8 +63,8 @@ const StyledTimerPanel = styled.div`
     }
 
     .start-btn {
-        font-size: var(--fs-4xl);
-        line-height: var(--fs-4xl);
+        font-size: var(--fs-2xl);
+        line-height: var(--fs-2xl);
         margin-top: var(--spacing);
     }
 `;
