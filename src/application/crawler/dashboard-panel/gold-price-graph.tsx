@@ -1,6 +1,6 @@
 import { GoldPrice } from "@/model";
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { currencyFormatter } from "@/util";
@@ -8,6 +8,8 @@ import { currencyFormatter } from "@/util";
 const StyledGoldPriceGraphContainer = styled.div`
     padding: var(--spacing-sm) var(--spacing-sm);
     border: var(--bd);
+    width: 100%;
+    height: 400px;
 `;
 
 const StyledCustomGraphTooltip = styled.div`
@@ -36,46 +38,49 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
         const maxValue = Math.max(...(list.map(item => item.price)));
         const valueOffset = maxValue - minValue;
         const graphEdgeOffsetRate = 0.2;
-        const nearestRoundLimit = 10000;
+        const valueRoundingStep = 10000;
         return [
-            Math.floor((minValue - graphEdgeOffsetRate * valueOffset) / nearestRoundLimit) * nearestRoundLimit,
-            Math.ceil((maxValue + graphEdgeOffsetRate * valueOffset) / nearestRoundLimit) * nearestRoundLimit,
+            Math.floor((minValue - graphEdgeOffsetRate * valueOffset) / valueRoundingStep) * valueRoundingStep,
+            Math.ceil((maxValue + graphEdgeOffsetRate * valueOffset) / valueRoundingStep) * valueRoundingStep,
         ];
     };
 
     return (
         <StyledGoldPriceGraphContainer>
-            <LineChart
-                width={900}
-                height={400}
-                data={standardizeData(data)}
-                margin={{
-                    top: 15,
-                    right: 50,
-                    bottom: 15,
-                    left: 25,
-                }}
-            >
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis
-                    dataKey="date"
-                    height={90}
-                    angle={65}
-                    tickMargin={45}
-                    tickFormatter={(value) => {
-                        return (value as string)?.split(' ')[0];
+            <ResponsiveContainer width="50%" height="100%">
+                <LineChart
+                    // width={900}
+                    // height={400}
+                    data={standardizeData(data)}
+                    margin={{
+                        top: 15,
+                        right: 50,
+                        bottom: 15,
+                        left: 25,
                     }}
-                />
-                <YAxis
-                    width={80}
-                    tickFormatter={(value) => {
-                        return currencyFormatter.format(value);
-                    }}
-                    domain={getYAxisScaleDomain(data)}
-                />
-                <Tooltip content={CustomTooltip} />
-                <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart>
+                >
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis
+                        dataKey="date"
+                        height={90}
+                        angle={65}
+                        tickMargin={45}
+                        tickFormatter={(value) => {
+                            return (value as string)?.split(' ')[0];
+                        }}
+                    />
+                    <YAxis
+                        width={80}
+                        tickFormatter={(value) => {
+                            return currencyFormatter.format(value);
+                        }}
+                        domain={getYAxisScaleDomain(data)}
+                    />
+                    <Tooltip content={CustomTooltip} />
+                    <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Legend verticalAlign="top" height={36} />
+                </LineChart>
+            </ResponsiveContainer>
         </StyledGoldPriceGraphContainer>
     );
 };
