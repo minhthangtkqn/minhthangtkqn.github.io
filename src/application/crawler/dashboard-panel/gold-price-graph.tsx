@@ -24,11 +24,23 @@ type Props = {
     data: GoldPrice[];
 };
 export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
-    const standardizeData = (data: GoldPrice[]) => {
-        return data.map(item => ({
+    const standardizeData = (list: GoldPrice[]) => {
+        return list.map(item => ({
             ...item,
             date: dayjs(new Date(item._created)).format('DD-MM-YYYY (HH:mm:ss)'),
         }));
+    };
+
+    const getYAxisScaleDomain = (list: GoldPrice[]) => {
+        const minValue = Math.min(...(list.map(item => item.price)));
+        const maxValue = Math.max(...(list.map(item => item.price)));
+        const valueOffset = maxValue - minValue;
+        const graphEdgeOffsetRate = 0.2;
+        const nearestRoundLimit = 10000;
+        return [
+            Math.floor((minValue - graphEdgeOffsetRate * valueOffset) / nearestRoundLimit) * nearestRoundLimit,
+            Math.ceil((maxValue + graphEdgeOffsetRate * valueOffset) / nearestRoundLimit) * nearestRoundLimit,
+        ];
     };
 
     return (
@@ -51,7 +63,6 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
                     angle={65}
                     tickMargin={45}
                     tickFormatter={(value) => {
-                        console.log('🚀 ~ value:', value, typeof value);
                         return (value as string)?.split(' ')[0];
                     }}
                 />
@@ -60,6 +71,7 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
                     tickFormatter={(value) => {
                         return currencyFormatter.format(value);
                     }}
+                    domain={getYAxisScaleDomain(data)}
                 />
                 <Tooltip content={CustomTooltip} />
                 <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
