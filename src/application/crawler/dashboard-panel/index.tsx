@@ -19,6 +19,10 @@ const StyledDashboardPanelContainer = styled.div`
     border: var(--bd);
     border-radius: var(--br);
 
+    .panel-title {
+        margin: 0;
+    }
+
     .error-text {
         color: var(--main-danger);
     }
@@ -52,7 +56,7 @@ export const DashboardPanel: React.FC = () => {
 
     return (
         <StyledDashboardPanelContainer className="crawler-dashboard-panel">
-            <div>CRAWLER DASHBOARD PANEL</div>
+            <h1 className="panel-title">GOLD PRICE CRAWLER DASHBOARD PANEL</h1>
             <Button
                 type="primary"
                 size="small"
