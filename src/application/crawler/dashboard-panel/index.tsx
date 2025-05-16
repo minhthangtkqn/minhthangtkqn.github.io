@@ -25,7 +25,7 @@ const StyledDashboardPanelContainer = styled.div`
 `;
 
 export const DashboardPanel: React.FC = () => {
-    const { data: goldPriceList } = useRequest<GoldPrice[]>(QueryApi.GoldPrice.list());
+    const { data: goldPriceList, refresh: refreshGoldPriceList } = useRequest<GoldPrice[]>(QueryApi.GoldPrice.list());
 
     useEffect(() => {
         console.log('🚀 ~ goldPriceList:', goldPriceList);
@@ -41,6 +41,7 @@ export const DashboardPanel: React.FC = () => {
             const response = await CentralRequestor.get(QueryApi.GoldPrice.current());
             setCurrentPrice(response.data);
             setCurrentPriceError(undefined);
+            refreshGoldPriceList();
         } catch (error) {
             setCurrentPrice(undefined);
             setCurrentPriceError(error);

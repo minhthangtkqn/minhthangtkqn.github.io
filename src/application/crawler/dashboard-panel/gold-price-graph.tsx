@@ -20,7 +20,6 @@ const StyledCustomGraphTooltip = styled.div`
         color: var(--sub-purple);
     }
 `;
-
 type Props = {
     data: GoldPrice[];
 };
@@ -34,13 +33,22 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
 
     return (
         <StyledGoldPriceGraphContainer>
-            <LineChart width={900} height={600} data={standardizeData(data)}>
+            <LineChart
+                width={900}
+                height={400}
+                data={standardizeData(data)}
+                margin={{
+                    top: 15,
+                    right: 30,
+                    left: 15,
+                    bottom: 15,
+                }}
+            >
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="date" height={250} angle={90} tickMargin={80} />
-                <YAxis width={100} />
+                <XAxis dataKey="date" height={160} angle={90} tickMargin={80} />
+                <YAxis width={80} />
                 <Tooltip content={CustomTooltip} />
-                {/* <Tooltip /> */}
-                <Line type="monotone" dataKey="price" stroke="#8884d8" />
+                <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
             </LineChart>
         </StyledGoldPriceGraphContainer>
     );
