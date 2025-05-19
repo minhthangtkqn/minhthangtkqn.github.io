@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PreciousMetalPriceGraph } from "./precious-metal-price-graph";
 import { PreciousMetalPrice, PreciousMetalType } from "@/model";
+import { Loading } from "@/__lib__/general-component";
 
 export const DashboardPanelInfo = {
     name: 'dashboard' as const,
@@ -35,10 +36,11 @@ const StyledDashboardPanelContainer = styled.div`
     }
 
     .precious-metal-price-graph-list {
+        position: relative;
         display: grid;
-        column-gap: var(--spacing-sm);
-        row-gap: var(--spacing-sm);
-        grid-template-columns: 50% 50%;
+        column-gap: var(--spacing-lg);
+        row-gap: var(--spacing-lg);
+        grid-template-columns: 1fr 1fr;
     }
 
     .error-text {
@@ -48,13 +50,7 @@ const StyledDashboardPanelContainer = styled.div`
 
 export const DashboardPanel: React.FC = () => {
     const { data: preciousMetalPriceList, refresh: refreshPreciousMetalPriceList } = useRequest<PreciousMetalPrice[]>(QueryApi.PreciousMetal.getHistoryPriceList());
-    const { data: preciousMetalTypeList } = useRequest<PreciousMetalType[]>(QueryApi.PreciousMetal.getTypeList());
-    useEffect(() => {
-        console.log('🚀 ~ goldPriceList:', preciousMetalPriceList);
-    }, [preciousMetalPriceList]);
-    useEffect(() => {
-        console.log('🚀 ~ preciousMetalTypeList:', preciousMetalTypeList);
-    }, [preciousMetalTypeList]);
+    const { data: preciousMetalTypeList, loading: preciousMetalTypeListLoading } = useRequest<PreciousMetalType[]>(QueryApi.PreciousMetal.getTypeList());
 
     const [currentPrice, setCurrentPrice] = useState<PreciousMetalPrice[]>([]);
     const [loadingCurrentPrice, setLoadingCurrentPrice] = useState(false);
@@ -87,23 +83,20 @@ export const DashboardPanel: React.FC = () => {
                 >Get current price</Button>
             </div>
 
-            {/* <div>Current Price: {currentPrice != null ? <b>{currencyFormatter.format(currentPrice)}</b> : <EmptyValue />}</div> */}
-
-            <div className="current-price-section">
+            {/* <div className="current-price-section">
                 {currentPrice?.map(p => <div key={p._id}>
                     {p.type_name}: {p.sell_price != null ? currencyFormatter.format(p.sell_price) : <EmptyValue />}
                 </div>)}
-            </div>
+            </div> */}
             {currentPriceError ? <div className="error-text">{currentPriceError}</div> : null}
             <div className="precious-metal-price-graph-list">
+                {preciousMetalTypeListLoading && <Loading />}
                 {preciousMetalTypeList?.map(type => {
                     const filterPriceList = (preciousMetalPriceList ?? [])?.filter(p => p.type_id === type._id);
                     return filterPriceList.length > 0
                         ? <div key={type._id}>
-                            <div>{filterPriceList[0].type_name}</div>
-                            <PreciousMetalPriceGraph
-                                data={filterPriceList}
-                            />
+                            <div><b>{filterPriceList[0].type_name}</b></div>
+                            <PreciousMetalPriceGraph data={filterPriceList} />
                         </div>
                         : null;
                 })}

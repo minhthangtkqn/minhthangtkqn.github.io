@@ -38,16 +38,21 @@ export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data }: Pr
     };
 
     const getYAxisScaleDomain = (list: PreciousMetalPrice[]) => {
-        const allBuyPrice = list.map(item => item.buy_price);
-        const allSellPrice = list.map(item => item.sell_price);
-        const minValue = Math.min(...allBuyPrice.some(p => typeof p === 'number')
-            ? allBuyPrice
-            : allSellPrice
-        );
-        const maxValue = Math.max(...allSellPrice.some(p => typeof p === 'number')
-            ? allSellPrice
-            : allBuyPrice
-        );
+        const allBuyPrice = list.map(item => item.buy_price).filter(item => typeof item === 'number');
+        const allSellPrice = list.map(item => item.sell_price).filter(item => typeof item === 'number');
+        const { minValue, maxValue } = allBuyPrice.length === 0 && allSellPrice.length === 0
+            ? { minValue: 0, maxValue: 0 }
+            : {
+                minValue: Math.min(...allBuyPrice.length > 0
+                    ? allBuyPrice
+                    : allSellPrice
+                ),
+                maxValue: Math.max(...allSellPrice.length > 0
+                    ? allSellPrice
+                    : allBuyPrice
+                ),
+            };
+
         const valueOffset = maxValue - minValue;
         const graphEdgeOffsetRate = 0.2;
         const valueRoundingStep = 10000;
@@ -97,8 +102,6 @@ export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data }: Pr
 };
 
 const CustomTooltip = ({ active, payload, label }: { active?: any, payload?: any, label?: any; }) => {
-    // console.log('🚀 ~ CustomTooltip ~ active, payload, label, ...rest:', active, payload, label, rest);
-    console.log('🚀 ~ CustomTooltip ~ payload:', payload);
     if (active && payload && payload.length) {
         return (
             <StyledCustomGraphTooltip>
