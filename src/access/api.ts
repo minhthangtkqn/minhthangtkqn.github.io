@@ -25,6 +25,17 @@ export const QueryApi = {
             return `${apiUrl}/gold-price-list/`;
         },
     },
+    PreciousMetal: {
+        getCurrentPrice: () => {
+            return `${apiUrl}/precious-metal-price/`;
+        },
+        getHistoryPriceList: () => {
+            return `${apiUrl}/precious-metal-price-list/`;
+        },
+        getTypeList: () => {
+            return `${apiUrl}/precious-metal-type/`;
+        },
+    },
 };
 
 export const CommandApi = {
@@ -38,5 +49,5 @@ export const CommandApi = {
         removeItem: (id: string) => {
             return `${apiUrl}/card/${id}`;
         },
-    }
+    },
 };

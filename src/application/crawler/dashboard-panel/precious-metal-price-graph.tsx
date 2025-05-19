@@ -1,5 +1,5 @@
-import { GoldPrice } from "@/model";
 import React from 'react';
+import { PreciousMetalPrice } from "@/model";
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -18,24 +18,36 @@ const StyledCustomGraphTooltip = styled.div`
     border-radius: var(--spacing-xxs);
     padding: 0 var(--spacing);
 
-    .value {
+    .value-Buy {
         color: var(--sub-purple);
+    }
+
+    .value-Sell {
+        color: var(--sub-leaf);
     }
 `;
 type Props = {
-    data: GoldPrice[];
+    data: PreciousMetalPrice[];
 };
-export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
-    const standardizeData = (list: GoldPrice[]) => {
+export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
+    const standardizeData = (list: PreciousMetalPrice[]) => {
         return list.map(item => ({
             ...item,
             date: dayjs(new Date(item._created)).format('DD-MM-YYYY (HH:mm:ss)'),
         }));
     };
 
-    const getYAxisScaleDomain = (list: GoldPrice[]) => {
-        const minValue = Math.min(...(list.map(item => item.price)));
-        const maxValue = Math.max(...(list.map(item => item.price)));
+    const getYAxisScaleDomain = (list: PreciousMetalPrice[]) => {
+        const allBuyPrice = list.map(item => item.buy_price);
+        const allSellPrice = list.map(item => item.sell_price);
+        const minValue = Math.min(...allBuyPrice.some(p => typeof p === 'number')
+            ? allBuyPrice
+            : allSellPrice
+        );
+        const maxValue = Math.max(...allSellPrice.some(p => typeof p === 'number')
+            ? allSellPrice
+            : allBuyPrice
+        );
         const valueOffset = maxValue - minValue;
         const graphEdgeOffsetRate = 0.2;
         const valueRoundingStep = 10000;
@@ -47,10 +59,8 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
 
     return (
         <StyledGoldPriceGraphContainer>
-            <ResponsiveContainer width="50%" height="100%">
+            <ResponsiveContainer width="100%" height="100%">
                 <LineChart
-                    // width={900}
-                    // height={400}
                     data={standardizeData(data)}
                     margin={{
                         top: 15,
@@ -77,7 +87,8 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
                         domain={getYAxisScaleDomain(data)}
                     />
                     <Tooltip content={CustomTooltip} />
-                    <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line name="Buy" type="monotone" dataKey="buy_price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line name="Sell" type="monotone" dataKey="sell_price" stroke="#82ca9d" activeDot={{ r: 8 }} />
                     <Legend verticalAlign="top" height={36} />
                 </LineChart>
             </ResponsiveContainer>
@@ -86,11 +97,15 @@ export const GoldPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
 };
 
 const CustomTooltip = ({ active, payload, label }: { active?: any, payload?: any, label?: any; }) => {
+    // console.log('🚀 ~ CustomTooltip ~ active, payload, label, ...rest:', active, payload, label, rest);
+    console.log('🚀 ~ CustomTooltip ~ payload:', payload);
     if (active && payload && payload.length) {
         return (
             <StyledCustomGraphTooltip>
                 <p className="label"><b>{label}</b></p>
-                <p className="value">Price: {currencyFormatter.format(payload[0].value)}</p>
+                {(payload as any[])?.map((p) => <>
+                    <p className={`value-${p?.name}`}>{p?.name}: {currencyFormatter.format(p?.value)}</p>
+                </>)}
             </StyledCustomGraphTooltip>
         );
     }
