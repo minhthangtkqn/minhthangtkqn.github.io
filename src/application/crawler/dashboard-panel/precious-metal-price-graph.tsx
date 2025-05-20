@@ -106,7 +106,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: any, payload?: any
         return (
             <StyledCustomGraphTooltip>
                 <p className="label"><b>{label}</b></p>
-                {(payload as any[])?.map((p) => <>
+                {(payload as any[])?.sort((pA, pB) => pB?.value - pA?.value)?.map((p) => <>
                     <p className={`value-${p?.name}`}>{p?.name}: {currencyFormatter.format(p?.value)}</p>
                 </>)}
             </StyledCustomGraphTooltip>
