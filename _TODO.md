@@ -1,4 +1,4 @@
-#### Technical
+## Technical
 - [x] rest api for task list
     - [x] database using json file
     - [x] database using posgregSQL
@@ -20,7 +20,13 @@
 - [ ] khái quát hóa code quản lý hệ thống layout, panel & module (LayoutManager), áp dụng được cho cả focus chứ không phải copy code LayoutManager hiện tại ở FlashcardApp
 
 
-#### Business
+## Business
+
+### Flashcard
 - [ ] feat: tạo category
 - [ ] feat: add image (có thể tận dụng các nguồn image free như splash)
 - [ ] feat: học flashcard (detail 1 card, lật card giữa title & desc, đọc card, ...)
+
+
+### Crawler
+- [ ] feat: filter by date range

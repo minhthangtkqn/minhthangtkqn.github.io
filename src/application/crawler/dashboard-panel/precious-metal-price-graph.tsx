@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { currencyFormatter } from "@/util";
 
 const StyledGoldPriceGraphContainer = styled.div`
-    padding: var(--spacing-sm) var(--spacing-sm);
+    padding: var(--spacing);
     border: var(--bd);
     border-radius: var(--br);
     width: 100%;
@@ -14,6 +14,7 @@ const StyledGoldPriceGraphContainer = styled.div`
     .graph-title {
         font-size: var(--fs-xl);
         font-weight: bold;
+        text-transform: uppercase;
     }
 `;
 
@@ -75,10 +76,10 @@ export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data, titl
                 <LineChart
                     data={standardizeData(data)}
                     margin={{
-                        top: 15,
-                        right: 50,
-                        bottom: 15,
-                        left: 25,
+                        top: 5,
+                        right: 20,
+                        bottom: 10,
+                        left: 15,
                     }}
                 >
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
