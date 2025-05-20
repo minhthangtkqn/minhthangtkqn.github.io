@@ -8,8 +8,13 @@ import { currencyFormatter } from "@/util";
 const StyledGoldPriceGraphContainer = styled.div`
     padding: var(--spacing-sm) var(--spacing-sm);
     border: var(--bd);
+    border-radius: var(--br);
     width: 100%;
-    height: 400px;
+
+    .graph-title {
+        font-size: var(--fs-xl);
+        font-weight: bold;
+    }
 `;
 
 const StyledCustomGraphTooltip = styled.div`
@@ -28,8 +33,9 @@ const StyledCustomGraphTooltip = styled.div`
 `;
 type Props = {
     data: PreciousMetalPrice[];
+    title?: string;
 };
-export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data }: Props) => {
+export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data, title = 'GRAPH' }: Props) => {
     const standardizeData = (list: PreciousMetalPrice[]) => {
         return list.map(item => ({
             ...item,
@@ -64,7 +70,8 @@ export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data }: Pr
 
     return (
         <StyledGoldPriceGraphContainer>
-            <ResponsiveContainer width="100%" height="100%">
+            <div className="graph-title">{title}</div>
+            <ResponsiveContainer width="100%" height={400}>
                 <LineChart
                     data={standardizeData(data)}
                     margin={{

@@ -1,9 +1,7 @@
 import { CentralRequestor, useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { EmptyValue } from "@/component";
-import { currencyFormatter } from "@/util";
 import { Button } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { PreciousMetalPriceGraph } from "./precious-metal-price-graph";
 import { PreciousMetalPrice, PreciousMetalType } from "@/model";
@@ -38,8 +36,8 @@ const StyledDashboardPanelContainer = styled.div`
     .precious-metal-price-graph-list {
         position: relative;
         display: grid;
-        column-gap: var(--spacing-lg);
-        row-gap: var(--spacing-lg);
+        column-gap: var(--spacing);
+        row-gap: var(--spacing);
         grid-template-columns: 1fr 1fr;
     }
 
@@ -94,10 +92,11 @@ export const DashboardPanel: React.FC = () => {
                 {preciousMetalTypeList?.map(type => {
                     const filterPriceList = (preciousMetalPriceList ?? [])?.filter(p => p.type_id === type._id);
                     return filterPriceList.length > 0
-                        ? <div key={type._id}>
-                            <div><b>{filterPriceList[0].type_name}</b></div>
-                            <PreciousMetalPriceGraph data={filterPriceList} />
-                        </div>
+                        ? <PreciousMetalPriceGraph
+                            key={type._id}
+                            data={filterPriceList}
+                            title={filterPriceList[0].type_name}
+                        />
                         : null;
                 })}
             </div>
