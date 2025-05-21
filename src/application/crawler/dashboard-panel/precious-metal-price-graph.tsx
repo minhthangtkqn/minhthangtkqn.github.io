@@ -72,13 +72,13 @@ export const PreciousMetalPriceGraph: React.ComponentType<Props> = ({ data, titl
     return (
         <StyledGoldPriceGraphContainer>
             <div className="graph-title">{title}</div>
-            <ResponsiveContainer width="100%" height={400}>
+            <ResponsiveContainer width="100%" height={350}>
                 <LineChart
                     data={standardizeData(data)}
                     margin={{
                         top: 5,
                         right: 20,
-                        bottom: 10,
+                        bottom: 5,
                         left: 15,
                     }}
                 >

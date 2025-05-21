@@ -22,6 +22,7 @@ const StyledDashboardPanelContainer = styled.div`
         display: flex;
         column-gap: var(--spacing-sm);
         align-items: center;
+        justify-content: space-between;
 
         .title-content {
             font-size: var(--fs-4xl);
@@ -68,7 +69,7 @@ export const DashboardPanel: React.FC = () => {
     return (
         <StyledDashboardPanelContainer className="crawler-dashboard-panel">
             <div className="panel-title">
-                <div className="title-content">PRECIOUS METAL PRICE CRAWLER DASHBOARD PANEL</div>
+                <div className="title-content truncate">PRECIOUS METAL PRICE CRAWLER DASHBOARD</div>
                 <Button
                     type="primary"
                     size="small"
