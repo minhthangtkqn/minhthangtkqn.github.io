@@ -1,6 +1,6 @@
 import { CentralRequestor, useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { Button } from "antd";
+import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { PreciousMetalPriceGraph } from "./precious-metal-price-graph";
@@ -35,10 +35,6 @@ const StyledDashboardPanelContainer = styled.div`
 
     .precious-metal-price-graph-list {
         position: relative;
-        display: grid;
-        column-gap: var(--spacing);
-        row-gap: var(--spacing);
-        grid-template-columns: 1fr 1fr;
     }
 
     .error-text {
@@ -87,19 +83,21 @@ export const DashboardPanel: React.FC = () => {
                 </div>)}
             </div> */}
             {currentPriceError ? <div className="error-text">{currentPriceError}</div> : null}
-            <div className="precious-metal-price-graph-list">
+            <Row className="precious-metal-price-graph-list" gutter={[15, 15]}>
                 {preciousMetalTypeListLoading && <Loading />}
                 {preciousMetalTypeList?.map(type => {
                     const filterPriceList = (preciousMetalPriceList ?? [])?.filter(p => p.type_id === type._id);
                     return filterPriceList.length > 0
-                        ? <PreciousMetalPriceGraph
-                            key={type._id}
-                            data={filterPriceList}
-                            title={filterPriceList[0].type_name}
-                        />
+                        ? <Col span={12}>
+                            <PreciousMetalPriceGraph
+                                key={type._id}
+                                data={filterPriceList}
+                                title={filterPriceList[0].type_name}
+                            />
+                        </Col>
                         : null;
                 })}
-            </div>
+            </Row>
         </StyledDashboardPanelContainer>
     );
 };
