@@ -89,7 +89,7 @@ export const DashboardPanel: React.FC = () => {
                 {preciousMetalTypeList?.map(type => {
                     const filterPriceList = (preciousMetalPriceList ?? [])?.filter(p => p.type_id === type._id);
                     return filterPriceList.length > 0
-                        ? <Col span={12}>
+                        ? <Col span={24} md={12} xxl={8}>
                             <PreciousMetalPriceGraph
                                 key={type._id}
                                 data={filterPriceList}

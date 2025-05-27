@@ -26,7 +26,7 @@ const StyledTimerClock = styled.div<{ $type?: 'default' | 'antd' | 'success' | '
     border-color: var(--type-border-color);
     background-color: var(--type-background-color);
     color: var(--type-color);
-    min-height: 16rem;
+    height: 16rem;
     width: 16rem;
     display: flex;
     flex-direction: column;
