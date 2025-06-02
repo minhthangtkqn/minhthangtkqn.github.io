@@ -130,6 +130,7 @@ const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (pro
             placement="left"
             open={isOpenDrawer}
             onClose={() => setOpenDrawer(false)}
+            width={320}
         >
             <Menu
                 className="side-nav-menu"
