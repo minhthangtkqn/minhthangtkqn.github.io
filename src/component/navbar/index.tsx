@@ -54,17 +54,20 @@ const StyledDrawerContainer = styled(Drawer)`
 const APPLICATION_LIST = [
     {
         key: ApplicationInfo.FocusAppInfo.name,
-        title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FocusAppInfo.name}`}>Focus</a>,
+        title: 'Focus',
+        label: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FocusAppInfo.name}`}>Focus</a>,
         icon: <CheckSquareOutlined />,
     },
     {
         key: ApplicationInfo.FlashcardAppInfo.name,
-        title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FlashcardAppInfo.name}`}>Flashcard</a>,
+        title: 'Flashcard',
+        label: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.FlashcardAppInfo.name}`}>Flashcard</a>,
         icon: <TagsOutlined />,
     },
     {
         key: ApplicationInfo.CrawlerAppInfo.name,
-        title: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.CrawlerAppInfo.name}`}>Crawler</a>,
+        title: 'Crawler',
+        label: <a href={`${window.location.origin}?${APPLICATION_PARAM_KEY}=${ApplicationInfo.CrawlerAppInfo.name}`}>Crawler</a>,
         icon: <DashboardOutlined />,
     },
 ];
@@ -115,12 +118,14 @@ const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (pro
         setOpenDrawer(true);
     };
 
+    const appTitle = APPLICATION_LIST.find(i => i.key === applicationKey)?.title;
+
     return (<>
         <StyledNavBarLogo {...props} onClick={handleShowDrawer}>
             <div className="app-logo-wrapper">
                 <img src={logo} className="app-logo" alt="logo" />
             </div>
-            <div className="logo-label">Focus</div>
+            <div className="logo-label">{appTitle ?? 'Focus'}</div>
         </StyledNavBarLogo>
 
         <StyledDrawerContainer
@@ -138,7 +143,7 @@ const NavBarLogo: React.FC<React.ComponentProps<typeof StyledNavBarLogo>> = (pro
                 selectedKeys={[applicationKey ?? '']}
                 items={APPLICATION_LIST.map(item => ({
                     key: item.key,
-                    label: item.title,
+                    label: item.label,
                     icon: item.icon,
                 }))}
             />
