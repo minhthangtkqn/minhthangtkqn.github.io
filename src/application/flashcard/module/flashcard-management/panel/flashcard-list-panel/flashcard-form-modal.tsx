@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Flashcard } from "@/__lib__/model";
 import { PublicModal } from "@/component";
-import { Button, Form, FormInstance, FormProps, Input, notification } from "antd";
+import { Button, Form, FormInstance, FormProps, Input, notification, Select } from "antd";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { CommandApi } from "@/access";
@@ -88,6 +88,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
             maskClosable
             noPadding
             forceRender
+            title={flashcard ? 'Update Flashcard' : 'Add Flashcard'}
         >
             <StyledForm
                 ref={formRef}
@@ -109,6 +110,49 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                     name="description"
                     label="Description"
                     rules={[{ required: true, message: 'Please input flashcard description!' }]}
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item<Flashcard>
+                    name="front_type"
+                    label="Front Type"
+                    rules={[{ required: true, message: 'Please input flashcard FRONT type!' }]}
+                >
+                    <Select
+                        allowClear
+                        placeholder="Select type of card side"
+                        options={[
+                            { label: 'Image Url', value: 'IMAGE_URL' },
+                            { label: 'Text', value: 'TEXT' },
+                        ]}
+                    />
+                </Form.Item>
+                <Form.Item<Flashcard>
+                    name="front_value"
+                    label="Front value"
+                    rules={[{ required: true, message: 'Please input flashcard FRONT value!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item<Flashcard>
+                    name="back_type"
+                    label="Back Type"
+                    rules={[{ required: true, message: 'Please input flashcard BACK type!' }]}
+                >
+                    <Select
+                        allowClear
+                        placeholder="Select type of card side"
+                        options={[
+                            { label: 'Image Url', value: 'IMAGE_URL' },
+                            { label: 'Text', value: 'TEXT' },
+                        ]}
+                    />
+                </Form.Item>
+                <Form.Item<Flashcard>
+                    name="back_value"
+                    label="Back Value"
+                    rules={[{ required: true, message: 'Please input flashcard BACK value!' }]}
                 >
                     <Input />
                 </Form.Item>
