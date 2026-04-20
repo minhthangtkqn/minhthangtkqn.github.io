@@ -2,7 +2,11 @@ import { DetailedLayout, LayoutPanelSlot, ModuleManager, ModuleParamKey, PanelRe
 import styled from "styled-components";
 import { useSearchParams } from "@/util";
 import { useEffect, useState } from "react";
-import { FlashcardManagementModuleInfo, setupFlashcardListingModule, FlashcardListPanelInfo, FlashcardDetailPanelInfo } from "./module";
+import {
+    FlashcardManagementModuleInfo,
+    setupFlashcardListingModule,
+    FlashcardCollectionBoardPanelInfo,
+} from "./module";
 
 const StyledFlashcardAppLayout = styled(DetailedLayout)`
     .primary {
@@ -40,8 +44,8 @@ export const FlashcardApp = () => {
                     prev.set(ModuleParamKey, FlashcardManagementModuleInfo.name);
                 }
                 if (!hasPanelKey) {
-                    prev.set(LayoutPanelSlot.PRIMARY, FlashcardListPanelInfo.name);
-                    prev.set(LayoutPanelSlot.SECONDARY, FlashcardDetailPanelInfo.name);
+                    prev.set(LayoutPanelSlot.PRIMARY, FlashcardCollectionBoardPanelInfo.name);
+                    prev.delete(LayoutPanelSlot.SECONDARY);
                     prev.delete(LayoutPanelSlot.EXTENSION);
                 }
                 return prev;

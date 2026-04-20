@@ -1,4 +1,4 @@
-const apiUrl = 'https://focus-app-api.onrender.com';
+const apiUrl = 'http://127.0.0.1:5000';
 
 export const QueryApi = {
     People: {
@@ -15,6 +15,14 @@ export const QueryApi = {
         },
         list: () => {
             return `${apiUrl}/card/`;
+        },
+    },
+    FlashcardCollection: {
+        item: (id: string) => {
+            return `${apiUrl}/card-collection/${id}`;
+        },
+        list: () => {
+            return `${apiUrl}/card-collection/`;
         },
     },
     GoldPrice: {

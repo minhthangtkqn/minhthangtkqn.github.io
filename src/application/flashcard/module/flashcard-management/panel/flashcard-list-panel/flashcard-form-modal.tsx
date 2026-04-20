@@ -165,6 +165,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                         type="primary"
                         htmlType="submit"
                         loading={submitting}
+                        disabled={submitting}
                     >Submit</Button>
                 </Form.Item>
             </StyledForm>
