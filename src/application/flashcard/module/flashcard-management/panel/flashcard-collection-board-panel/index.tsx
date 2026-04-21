@@ -5,7 +5,7 @@ import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { Flashcard } from "@/__lib__/model";
 import { Empty } from "antd";
-import { Loading } from "@/__lib__/general-component";
+import { ComposeHeader, Loading } from "@/__lib__/general-component";
 
 export const FlashcardCollectionBoardPanelInfo = {
     name: 'flashcard-collection-board' as const,
@@ -14,7 +14,8 @@ export const FlashcardCollectionBoardPanelInfo = {
 const StyledFlashcardCollectionBoardContainer = styled.div`
     border: var(--bd);
     border-radius: var(--br);
-    padding: var(--spacing);
+    /* padding: var(--spacing); */
+    overflow: hidden;
     height: 100%;
     background-color: var(--contrast-primary);
     position: relative; // for loading positioning
@@ -57,6 +58,11 @@ export const FlashcardCollectionBoardPanel = () => {
 
     return (
         <StyledFlashcardCollectionBoardContainer>
+            <ComposePanel>
+                <ComposePanel.Header title="Hehe" />
+                <ComposePanel.Body>
+                </ComposePanel.Body>
+            </ComposePanel>
             {collectionLoading && <Loading />}
             {/* {collectionData
                 ? <StyledFlashcardCollectionBoard>
