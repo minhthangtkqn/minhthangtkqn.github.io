@@ -16,3 +16,4 @@ export type FlashcardCollection = {
 };
 
 export const REFRESH_FLASHCARD_KEY = 'REFRESH_FLASHCARD_KEY';
+export const REFRESH_FLASHCARD_COLLECTION_KEY = 'REFRESH_FLASHCARD_COLLECTION_KEY';

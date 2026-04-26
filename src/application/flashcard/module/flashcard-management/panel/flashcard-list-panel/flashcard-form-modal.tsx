@@ -80,6 +80,8 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
         }
     };
 
+    const isUpdateFlashcard = !!flashcard;
+
     return (
         <PublicModal
             open={visible}
@@ -88,7 +90,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
             maskClosable
             noPadding
             forceRender
-            title={flashcard ? 'Update Flashcard' : 'Add Flashcard'}
+            title={isUpdateFlashcard ? 'Update Flashcard' : 'Create Flashcard'}
         >
             <StyledForm
                 ref={formRef}
@@ -166,7 +168,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                         htmlType="submit"
                         loading={submitting}
                         disabled={submitting}
-                    >Submit</Button>
+                    >{isUpdateFlashcard ? 'Save Changes' : 'Create'}</Button>
                 </Form.Item>
             </StyledForm>
         </PublicModal>
