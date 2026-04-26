@@ -5,16 +5,13 @@ import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { FlashcardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
 import { Empty } from "antd";
-import { Loading } from "@/__lib__/general-component";
+import { ComposePanel, Loading } from "@/__lib__/general-component";
 
 export const FlashcardCollectionDetailPanelInfo = {
     name: 'flashcard-collection-detail' as const,
 };
 
 const StyledFlashcardCollectionDetailContainer = styled.div`
-    border: var(--bd);
-    border-radius: var(--br);
-    padding: var(--spacing);
     height: 100%;
     background-color: var(--contrast-primary);
     position: relative; // for loading positioning
@@ -28,21 +25,6 @@ const StyledFlashcardCollectionDetailContainer = styled.div`
 
     .empty-indicator {
         margin: 0;
-    }
-`;
-
-const StyledFlashcardCollectionDetail = styled.div`
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--spacing-sm);
-
-    .title {
-        font-size: var(--fs-xl);
-        font-weight: bold;
-    }
-
-    .description {
-        
     }
 `;
 
@@ -61,10 +43,12 @@ export const FlashcardCollectionDetailPanel = () => {
         <StyledFlashcardCollectionDetailContainer>
             {collectionLoading && <Loading />}
             {(collectionId && collectionData)
-                ? <StyledFlashcardCollectionDetail>
-                    <div className="title">{collectionData.title}</div>
-                    <div className="description">{collectionData.description}</div>
-                </StyledFlashcardCollectionDetail>
+                ? <ComposePanel>
+                    <ComposePanel.Header title={collectionData.title} />
+                    <ComposePanel.Body>
+                        {collectionData.description}
+                    </ComposePanel.Body>
+                </ComposePanel>
                 : <Empty
                     className="empty-indicator"
                     image={Empty.PRESENTED_IMAGE_SIMPLE}

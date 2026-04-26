@@ -19,6 +19,7 @@ const StyledComposePanel = styled.div`
         flex-direction: column;
         overflow-y: auto;
         position: relative; // for loading positioning
+        padding: var(--spacing-sm);
     }
 
     .compose-panel-footer {}
@@ -26,7 +27,7 @@ const StyledComposePanel = styled.div`
 
 const StandardComposePanel = ({ children }: React.PropsWithChildren) => {
     return (
-        <StyledComposePanel>{children}</StyledComposePanel>
+        <StyledComposePanel className="compose-panel">{children}</StyledComposePanel>
     );
 };
 
