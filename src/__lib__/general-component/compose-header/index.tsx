@@ -1,3 +1,4 @@
+import { mergeClass } from "@/util";
 import styled from "styled-components";
 
 const StyledComposeHeader = styled.div`
@@ -32,6 +33,7 @@ const StyledHeaderItem = styled.div<{ $span?: boolean; }>`
 
     &.header-item-right {
         margin-left: auto;
+        min-width: fit-content;
 
         +.header-item-right {
             margin-left: unset;
@@ -45,7 +47,10 @@ const HeaderItem: React.FC<HeaderItem> = ({
 }) => {
     return <StyledHeaderItem
         $span={span}
-        className={right ? 'header-item-right' : ''}
+        className={mergeClass(
+            right ? 'header-item-right' : '',
+            'truncate'
+        )}
     >{children}</StyledHeaderItem>;
 };
 

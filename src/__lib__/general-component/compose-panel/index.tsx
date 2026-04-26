@@ -37,7 +37,7 @@ const Header = ({
     title?: React.ReactNode;
 }) => {
     return (
-        <ComposeHeader className="compose-panel-header">
+        <ComposeHeader className="compose-panel-header truncate">
             <ComposeHeader.HeaderItem>{title}</ComposeHeader.HeaderItem>
         </ComposeHeader>
     );
