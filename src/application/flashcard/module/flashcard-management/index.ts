@@ -4,8 +4,10 @@ import {
     FlashcardDetailPanelInfo,
     FlashcardListPanel,
     FlashcardListPanelInfo,
-    FlashcardCollectionBoardPanel,
-    FlashcardCollectionBoardPanelInfo,
+    FlashcardCollectionListPanel,
+    FlashcardCollectionListPanelInfo,
+    FlashcardCollectionDetailPanel,
+    FlashcardCollectionDetailPanelInfo,
 } from "./panel";
 
 export const FlashcardManagementModuleInfo = {
@@ -22,8 +24,12 @@ export const setupFlashcardListingModule = () => {
         PanelComponent: FlashcardDetailPanel,
     });
     newModule.setupPanel({
-        panelKey: FlashcardCollectionBoardPanelInfo.name,
-        PanelComponent: FlashcardCollectionBoardPanel,
+        panelKey: FlashcardCollectionListPanelInfo.name,
+        PanelComponent: FlashcardCollectionListPanel,
+    });
+    newModule.setupPanel({
+        panelKey: FlashcardCollectionDetailPanelInfo.name,
+        PanelComponent: FlashcardCollectionDetailPanel,
     });
     return newModule;
 };
@@ -31,5 +37,6 @@ export const setupFlashcardListingModule = () => {
 export {
     FlashcardListPanelInfo,
     FlashcardDetailPanelInfo,
-    FlashcardCollectionBoardPanelInfo,
+    FlashcardCollectionListPanelInfo,
+    FlashcardCollectionDetailPanelInfo,
 } from './panel';

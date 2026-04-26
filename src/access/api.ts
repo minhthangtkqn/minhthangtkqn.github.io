@@ -58,4 +58,15 @@ export const CommandApi = {
             return `${apiUrl}/card/${id}`;
         },
     },
+    FlashcardCollection: {
+        addItem: () => {
+            return `${apiUrl}/card-collection:add-collection/`;
+        },
+        updateItem: (id: string) => {
+            return `${apiUrl}/card-collection/${id}`;
+        },
+        removeItem: (id: string) => {
+            return `${apiUrl}/card-collection/${id}`;
+        },
+    },
 };
