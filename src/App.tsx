@@ -4,21 +4,21 @@ import React from 'react';
 import { AppFooter, AppNavBar, ErrorBoundary } from '@/component';
 import { BaseApplication } from "./application";
 import { SearchParamProvider } from "./util";
-// import { BrowserRouter } from "react-router-dom";
+import { ConfigProvider } from "antd";
 
 const App: React.FC = () => {
     return (
         <ErrorBoundary>
-            <SearchParamProvider>
-                <div className="app-wrapper">
-                    <AppNavBar />
-                    <BaseApplication />
-                    <AppFooter />
-                </div>
-            </SearchParamProvider>
+            <ConfigProvider>
+                <SearchParamProvider>
+                    <div className="app-wrapper">
+                        <AppNavBar />
+                        <BaseApplication />
+                        <AppFooter />
+                    </div>
+                </SearchParamProvider>
+            </ConfigProvider>
         </ErrorBoundary>
-        // <BrowserRouter>
-        // </BrowserRouter>
     );
 };
 

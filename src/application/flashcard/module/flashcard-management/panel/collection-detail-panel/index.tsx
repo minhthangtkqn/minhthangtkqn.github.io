@@ -4,8 +4,9 @@ import { useSearchParams, useSubscribe } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { FlashcardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
-import { Empty } from "antd";
-import { ComposePanel, Loading } from "@/__lib__/general-component";
+import { Collapse, Empty } from "antd";
+import { ComposePanel, Loading, TomCollapse } from "@/__lib__/general-component";
+import { FlashCardBoard } from "./flash-card-board";
 
 export const FlashcardCollectionDetailPanelInfo = {
     name: 'flashcard-collection-detail' as const,
@@ -46,7 +47,24 @@ export const FlashcardCollectionDetailPanel = () => {
                 ? <ComposePanel>
                     <ComposePanel.Header title={collectionData.title} />
                     <ComposePanel.Body>
-                        {collectionData.description}
+                        <TomCollapse
+                            items={[
+                                {
+                                    key: 'collection-information',
+                                    label: 'Collection Information',
+                                    children: <div>{collectionData.description}</div>,
+                                },
+                                {
+                                    key: 'flash-card-board',
+                                    label: 'Flash card board',
+                                    children: <FlashCardBoard collectionId={collectionId} />,
+                                },
+                            ]}
+                            defaultActiveKey={[
+                                'collection-information',
+                                'flash-card-board',
+                            ]}
+                        />
                     </ComposePanel.Body>
                 </ComposePanel>
                 : <Empty

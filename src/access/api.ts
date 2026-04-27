@@ -24,6 +24,14 @@ export const QueryApi = {
         list: () => {
             return `${apiUrl}/card-collection/`;
         },
+        flashCard: {
+            item: (collectionId: string, id: string) => {
+                return `${apiUrl}/card-collection/${collectionId}/card/${id}`;
+            },
+            list: (collectionId: string) => {
+                return `${apiUrl}/card-collection/${collectionId}/card`;
+            },
+        },
     },
     GoldPrice: {
         current: () => {
