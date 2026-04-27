@@ -16,12 +16,13 @@ const StyledCollapse: typeof Collapse = styled(Collapse)`
         }
 
         .ant-collapse-item + .ant-collapse-item {
-            margin-top: var(--spacing-sm);
+            margin-top: var(--spacing);
         }
 
         .ant-collapse-content {
             .ant-collapse-content-box {
                 padding: 0;
+                padding-top: var(--spacing-sm);
             }
         }
     }

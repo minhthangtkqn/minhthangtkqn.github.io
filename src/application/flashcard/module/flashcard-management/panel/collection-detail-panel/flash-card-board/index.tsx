@@ -1,11 +1,12 @@
+import { useRef } from 'react';
 import { useRequest } from "@/__lib__/access";
 import { Flashcard } from "@/__lib__/model";
 import { QueryApi } from "@/access";
 import { DeleteOutlined, EditOutlined, RetweetOutlined } from "@ant-design/icons";
-import { Button, Card, Collapse, Modal, Space } from "antd";
-import React, { useRef } from 'react';
+import { Button, Card, Modal, Space } from "antd";
 import styled from "styled-components";
 import { FlashcardFormModalRef } from "../../flashcard-list-panel/flashcard-form-modal";
+import { Loading } from "@/__lib__/general-component";
 
 const FlashCardBoardContainer = styled.div`
     display: grid;
@@ -24,23 +25,24 @@ export const FlashCardBoard = ({
 }: {
     collectionId: string,
 }) => {
-    // const {
-    //     data: flashCardList,
-    //     loading: flashCardListLoading,
-    //     refresh: refreshFlashCardList,
-    // } = useRequest<Flashcard>(collectionId
-    //     ? QueryApi.FlashcardCollection.flashCard.list(collectionId)
-    //     : undefined
-    // );
+    const {
+        data: flashCardList,
+        loading: flashCardListLoading,
+        refresh: refreshFlashCardList,
+    } = useRequest<Flashcard[]>(collectionId
+        ? QueryApi.Flashcard.list(collectionId)
+        : undefined
+    );
 
     const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
 
     return (
         <FlashCardBoardContainer>
-            {/* {flashCardList.map()} */}
-            <Card
+            {flashCardListLoading && <Loading />}
+            {flashCardList?.map(item => <Card
+                key={item._id}
                 size="small"
-                title="Small size card"
+                title={item.title}
                 extra={<Space>
                     <Button
                         type="link"
@@ -60,14 +62,13 @@ export const FlashCardBoard = ({
                         })}
                     />
                 </Space>}
-            // style={{ width: 300 }}
             >
                 <div></div>
                 <Button
                     icon={<RetweetOutlined />}
                     type="dashed"
                 >View { }</Button>
-            </Card>
+            </Card>)}
         </FlashCardBoardContainer>
     );
 };
