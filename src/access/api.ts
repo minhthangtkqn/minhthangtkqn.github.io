@@ -10,27 +10,19 @@ export const QueryApi = {
         },
     },
     Flashcard: {
-        item: (id: string) => {
-            return `${apiUrl}/card/${id}`;
+        item: (collectionId: string, id: string) => {
+            return `${apiUrl}/collection/${collectionId}/card/${id}`;
         },
-        list: () => {
-            return `${apiUrl}/card/`;
+        list: (collectionId: string) => {
+            return `${apiUrl}/collection/${collectionId}/card`;
         },
     },
     FlashcardCollection: {
         item: (id: string) => {
-            return `${apiUrl}/card-collection/${id}`;
+            return `${apiUrl}/collection/${id}`;
         },
         list: () => {
-            return `${apiUrl}/card-collection/`;
-        },
-        flashCard: {
-            item: (collectionId: string, id: string) => {
-                return `${apiUrl}/card-collection/${collectionId}/card/${id}`;
-            },
-            list: (collectionId: string) => {
-                return `${apiUrl}/card-collection/${collectionId}/card`;
-            },
+            return `${apiUrl}/collection/`;
         },
     },
     GoldPrice: {
@@ -68,13 +60,13 @@ export const CommandApi = {
     },
     FlashcardCollection: {
         addItem: () => {
-            return `${apiUrl}/card-collection:add-collection/`;
+            return `${apiUrl}/collection:add-collection/`;
         },
         updateItem: (id: string) => {
-            return `${apiUrl}/card-collection/${id}`;
+            return `${apiUrl}/collection/${id}`;
         },
         removeItem: (id: string) => {
-            return `${apiUrl}/card-collection/${id}`;
+            return `${apiUrl}/collection/${id}`;
         },
     },
 };
