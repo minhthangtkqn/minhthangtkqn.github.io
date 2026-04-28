@@ -13,7 +13,8 @@ export const useRequest = <Data = any>(
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<Data>();
     const [error, setError] = useState<unknown>();
-    const [queryCount, refreshQuery] = useState(0);
+    const [queryCount, setQueryCount] = useState(0);
+    const [refreshQuery, setRefreshQuery] = useState(0);
 
     const {
         onCompleted,
@@ -43,6 +44,7 @@ export const useRequest = <Data = any>(
                     setIdling(false);
                     if (relevant) {
                         onCompleted?.();
+                        setQueryCount(c => c + 1);
                     }
                 }
             })();
@@ -51,7 +53,7 @@ export const useRequest = <Data = any>(
         return () => {
             relevant = false;
         };
-    }, [url, queryCount]);
+    }, [url, refreshQuery]);
 
     return {
         data,
@@ -59,6 +61,6 @@ export const useRequest = <Data = any>(
         idling,
         error,
         queryCount,
-        refresh: () => refreshQuery(c => c + 1),
+        refresh: () => setRefreshQuery(c => c + 1),
     };
 };

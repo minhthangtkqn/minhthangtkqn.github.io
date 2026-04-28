@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const StyledModal = styled(Modal) <{ $noPadding?: boolean; }>`
     .ant-modal-content {
-        border-radius: var(--br-sm);
+        border-radius: var(--br);
         ${props => props.$noPadding ? 'padding: 0;' : ''}
 
         .ant-modal-close {
@@ -20,8 +20,8 @@ const StyledModal = styled(Modal) <{ $noPadding?: boolean; }>`
             height: var(--min-height-header);
             background-color: var(--main-primary);
             color: var(--contrast-primary);
-            border-top-left-radius: var(--br-sm);
-            border-top-right-radius: var(--br-sm);
+            border-top-left-radius: var(--br);
+            border-top-right-radius: var(--br);
             display: flex;
             align-items: center;
             padding: var(--spacing);

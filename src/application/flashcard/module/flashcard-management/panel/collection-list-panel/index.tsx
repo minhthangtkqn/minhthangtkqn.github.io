@@ -79,10 +79,9 @@ export const FlashcardCollectionListPanel = () => {
 
                 <ComposeHeader.HeaderItem right>
                     <Button
-                        size="small"
                         icon={<PlusOutlined />}
                         onClick={() => collectionFormModalRef.current?.open()}
-                    >New collection</Button>
+                    >Add</Button>
                 </ComposeHeader.HeaderItem>
             </ComposeHeader>}
             RowItem={({ data }) => {

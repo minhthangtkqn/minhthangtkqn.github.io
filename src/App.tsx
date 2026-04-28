@@ -9,7 +9,16 @@ import { ConfigProvider } from "antd";
 const App: React.FC = () => {
     return (
         <ErrorBoundary>
-            <ConfigProvider>
+            <ConfigProvider
+                theme={{
+                    components: {
+                        Form: {
+                            itemMarginBottom: 15,
+                            verticalLabelPadding: '0 0 5px',
+                        },
+                    }
+                }}
+            >
                 <SearchParamProvider>
                     <div className="app-wrapper">
                         <AppNavBar />

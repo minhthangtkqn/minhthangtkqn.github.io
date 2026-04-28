@@ -13,6 +13,12 @@ const StyledCollapse: typeof Collapse = styled(Collapse)`
                 color: var(--color-faint);
                 font-weight: bold;
             }
+
+            .ant-collapse-extra {
+                .ant-btn-link {
+                    padding-right: 0;
+                }
+            }
         }
 
         .ant-collapse-item + .ant-collapse-item {

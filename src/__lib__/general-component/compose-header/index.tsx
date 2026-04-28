@@ -1,12 +1,34 @@
 import { mergeClass } from "@/util";
 import styled from "styled-components";
 
-const StyledComposeHeader = styled.div`
+type ComposeHeaderType = 'primary' | 'secondary' | 'tertiary';
+
+const StyledComposeHeader = styled.div<{ $type: ComposeHeaderType; }>`
+    ${({ $type }) => {
+        if ($type === 'secondary') {
+            return `
+                background-color: var(--main-secondary);
+                color: var(--contrast-secondary);
+            `;
+        }
+
+        if ($type === 'tertiary') {
+            return `
+                background-color: var(--main-tertiary);
+                color: var(--contrast-tertiary);
+            `;
+        }
+
+        return `
+            background-color: var(--main-primary);
+            color: var(--contrast-primary);
+        `;
+    }}
+    
+    
     font-size: var(--fs-xl);
     font-weight: bold;
     text-transform: uppercase;
-    background-color: var(--main-primary);
-    color: var(--contrast-primary);
     padding: var(--spacing-sm);
     min-height: var(--min-height-header);
     display: flex;
@@ -15,10 +37,15 @@ const StyledComposeHeader = styled.div`
     overflow-x: hidden;
 `;
 
-type StandardComposeHeader = {} & React.HTMLAttributes<HTMLDivElement>;
-const StandardComposeHeader: React.FC<StandardComposeHeader> = ({ children, ...restProps }) => {
+type StandardComposeHeader = {
+    type?: ComposeHeaderType;
+} & React.HTMLAttributes<HTMLDivElement>;
+const StandardComposeHeader: React.FC<StandardComposeHeader> = ({ children, type, ...restProps }) => {
     return (
-        <StyledComposeHeader {...restProps}>
+        <StyledComposeHeader
+            $type={type ?? 'primary'}
+            {...restProps}
+        >
             {children}
         </StyledComposeHeader>
     );

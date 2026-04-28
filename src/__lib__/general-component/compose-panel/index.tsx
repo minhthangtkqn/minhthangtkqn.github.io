@@ -33,12 +33,16 @@ const StandardComposePanel = ({ children }: React.PropsWithChildren) => {
 
 const Header = ({
     title,
+    extra,
+    ...rest
 }: {
     title?: React.ReactNode;
-}) => {
+    extra?: React.ReactNode;
+} & React.ComponentProps<typeof ComposeHeader>) => {
     return (
-        <ComposeHeader className="compose-panel-header truncate">
+        <ComposeHeader className="compose-panel-header truncate" {...rest}>
             <ComposeHeader.HeaderItem>{title}</ComposeHeader.HeaderItem>
+            {extra && <ComposeHeader.HeaderItem right>{extra}</ComposeHeader.HeaderItem>}
         </ComposeHeader>
     );
 };

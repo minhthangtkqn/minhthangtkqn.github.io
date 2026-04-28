@@ -2,26 +2,20 @@ import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Flashcard } from "@/__lib__/model";
 import { PublicModal } from "@/component";
 import { Button, Form, FormInstance, FormProps, Input, notification, Select } from "antd";
-import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
 import { CommandApi } from "@/access";
-
-const StyledForm = styled(Form)`
-    padding: var(--spacing-sm);
-
-    .ant-form-item:last-child {
-        margin-bottom: 0;
-    }
-`;
+import { BaseForm } from "@/__lib__/form";
 
 export type FlashcardFormModalRef = {
     open: (openedFlashcard?: Flashcard) => void;
 };
 type Props = {
-    onCloseModal?: () => void;
+    collectionId: string,
+    onCloseModal?: (submitted?: boolean) => void;
 };
 export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
     {
+        collectionId,
         onCloseModal,
     },
     ref,
@@ -46,31 +40,35 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
     const [submitting, setSubmitting] = useState(false);
     const [visible, setVisible] = useState(false);
 
-    const closeModal = () => {
+    const closeModal = (submitted?: boolean) => {
         setVisible(false);
         setFlashcard(undefined);
         formRef.current?.resetFields();
-        onCloseModal?.();
+        onCloseModal?.(submitted);
     };
 
     const handleSubmit: FormProps<Flashcard>['onFinish'] = async (values) => {
+        const payload = {
+            ...values,
+            collection_id: collectionId,
+        };
         try {
             setSubmitting(true);
             if (flashcard) {
                 await CentralRequestor.post<Record<string, unknown>>(
                     CommandApi.Flashcard.updateItem(flashcard._id),
-                    { data: values },
+                    { data: payload },
                 );
             } else {
                 await CentralRequestor.post<Record<string, unknown>>(
                     CommandApi.Flashcard.addItem(),
-                    { data: values },
+                    { data: payload },
                 );
             }
             notification.success({
                 message: 'Submit successfully!',
             });
-            closeModal();
+            closeModal(true);
         } catch (error) {
             notification.error({
                 message: 'Submit failed. Try again later!',
@@ -85,37 +83,19 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
     return (
         <PublicModal
             open={visible}
-            onCancel={closeModal}
+            onCancel={() => closeModal()}
             footer={null}
             maskClosable
             noPadding
             forceRender
             title={isUpdateFlashcard ? 'Update Flashcard' : 'Create Flashcard'}
         >
-            <StyledForm
+            <BaseForm
                 ref={formRef}
                 name="flashcard-form"
                 autoComplete="off"
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
                 onFinish={handleSubmit}
             >
-                <Form.Item<Flashcard>
-                    name="title"
-                    label="Title"
-                    rules={[{ required: true, message: 'Please input flashcard title!' }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item<Flashcard>
-                    name="description"
-                    label="Description"
-                    rules={[{ required: true, message: 'Please input flashcard description!' }]}
-                >
-                    <Input />
-                </Form.Item>
-
                 <Form.Item<Flashcard>
                     name="front_type"
                     label="Front Type"
@@ -137,6 +117,7 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                 >
                     <Input />
                 </Form.Item>
+
                 <Form.Item<Flashcard>
                     name="back_type"
                     label="Back Type"
@@ -159,18 +140,18 @@ export const FlashcardFormModal = forwardRef<FlashcardFormModalRef, Props>((
                     <Input />
                 </Form.Item>
 
-                <Form.Item
-                    label={null}
-                    wrapperCol={{ offset: 6, span: 18 }}
-                >
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        loading={submitting}
-                        disabled={submitting}
-                    >{isUpdateFlashcard ? 'Save Changes' : 'Create'}</Button>
-                </Form.Item>
-            </StyledForm>
+                <div className="base-form-footer">
+                    <Button onClick={() => closeModal()}>Dismiss</Button>
+                    <Form.Item label={null}>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            loading={submitting}
+                            disabled={submitting}
+                        >{isUpdateFlashcard ? 'Save Changes' : 'Create'}</Button>
+                    </Form.Item>
+                </div>
+            </BaseForm>
         </PublicModal>
     );
 });

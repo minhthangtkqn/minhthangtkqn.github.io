@@ -5,6 +5,7 @@ import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 import { DefaultPaginatedListRowContainer, PaginatedListRowContainer } from "./list-row";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
 import { Loading } from "@/__lib__/general-component";
+import { Empty } from "antd";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -33,6 +34,11 @@ const StyledPaginatedList = styled.div`
     }
 `;
 
+const DEFAULT_EMPTY_RENDER = <Empty
+    className="empty-indicator"
+    image={Empty.PRESENTED_IMAGE_SIMPLE}
+/>;
+
 type PaginatedList<Data extends Record<string, unknown>> = {
     Header?: React.ComponentType<PaginatedHeader>;
     RowContainer?: React.ComponentType<PaginatedListRowContainer<Data>>;
@@ -41,6 +47,7 @@ type PaginatedList<Data extends Record<string, unknown>> = {
     baseUrl?: string;
     activeId?: string;
     activeOnMount?: boolean;
+    emptyRender?: React.ReactNode;
     onActive?: (id: string) => void;
     keyExtractor?: (data: Data) => string;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>;
@@ -59,6 +66,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         baseUrl,
         activeId,
         activeOnMount = false,
+        emptyRender = DEFAULT_EMPTY_RENDER,
         keyExtractor = (data) => (data?._id ?? '') as string,
         onActive,
         className,
@@ -74,6 +82,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         data: itemList,
         loading: itemListLoading,
         refresh: refreshItemList,
+        queryCount,
     } = useRequest<Data[]>(
         baseUrl,
         {
@@ -93,14 +102,19 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
             <Header title={title} refreshData={refreshItemList} loading={itemListLoading} />
             <div className="paginated-list-body">
                 {itemListLoading && <Loading />}
-                {itemList?.map(item => <RowContainer
-                    key={keyExtractor(item)}
-                    data={item}
-                    keyExtractor={keyExtractor}
-                    activeId={activeId}
-                    onActive={onActive}
-                    RowItem={RowItem}
-                />)}
+                {queryCount == 0
+                    ? emptyRender
+                    : (itemList?.length ?? 0) == 0
+                        ? emptyRender
+                        : itemList?.map(item => <RowContainer
+                            key={keyExtractor(item)}
+                            data={item}
+                            keyExtractor={keyExtractor}
+                            activeId={activeId}
+                            onActive={onActive}
+                            RowItem={RowItem}
+                        />)
+                }
             </div>
         </StyledPaginatedList>
     );

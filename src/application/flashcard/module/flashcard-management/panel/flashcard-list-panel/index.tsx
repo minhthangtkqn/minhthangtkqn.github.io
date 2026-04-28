@@ -4,7 +4,7 @@ import { FlashcardApplicationParam } from "../../../../model";
 import { Flashcard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
-import { FlashcardFormModal, FlashcardFormModalRef } from "./flashcard-form-modal";
+import { FlashcardFormModal, FlashcardFormModalRef } from "../../component";
 import { useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
@@ -73,7 +73,7 @@ export const FlashcardListPanel = () => {
             ref={paginatedListRef}
             title="Flashcard"
             className="flashcard-list"
-            baseUrl={QueryApi.Flashcard.list()}
+            // baseUrl={QueryApi.Flashcard.list()}
             Header={(props) => <ComposeHeader>
                 <PaginatedHeaderTitle {...props} />
 
