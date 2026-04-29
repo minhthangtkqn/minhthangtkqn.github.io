@@ -57,6 +57,9 @@ type HeaderItem = {
 } & React.PropsWithChildren;
 const StyledHeaderItem = styled.div<{ $span?: boolean; }>`
     ${({ $span }) => $span ? 'flex: 1;' : ''}
+    display: flex;
+    column-gap: var(--spacing-sm);
+    align-items: center;
 
     &.header-item-right {
         margin-left: auto;

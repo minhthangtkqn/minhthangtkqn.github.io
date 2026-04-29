@@ -1,7 +1,7 @@
 import { useRequest } from "@/__lib__/access";
-import { ComposePanel, TomButton } from "@/__lib__/general-component";
+import { ComposePanel, Loading, TomButton, TomEmpty } from "@/__lib__/general-component";
 import { LayoutPanelSlot } from "@/__lib__/layout";
-import { FlashCardCollection } from "@/__lib__/model";
+import { FlashCard, FlashCardCollection } from "@/__lib__/model";
 import { QueryApi } from "@/access";
 import { FlashcardApplicationParam } from "@/application/flashcard/model";
 import { useSearchParams } from "@/util";
@@ -21,31 +21,54 @@ export const CollectionStudyPanel = () => {
         : undefined
     );
 
+    const {
+        data: flashCardList,
+        loading: flashCardListLoading,
+    } = useRequest<FlashCard[]>(collectionId
+        ? QueryApi.Flashcard.list(collectionId)
+        : undefined
+    );
+
+    const handleBack = () => {
+        updateSearchParams(prev => {
+            prev.set(LayoutPanelSlot.PRIMARY, CollectionListPanelInfo.name);
+            prev.set(LayoutPanelSlot.SECONDARY, CollectionDetailPanelInfo.name);
+            prev.delete(LayoutPanelSlot.EXTENSION);
+
+            if (collectionId) {
+                prev.set(FlashcardApplicationParam.collectionId, collectionId);
+            }
+
+            return prev;
+        });
+    };
+
     return <ComposePanel>
         <ComposePanel.Header
             title={<>
                 <TomButton
                     icon={<ArrowLeftOutlined />}
-                    onClick={() => {
-                        updateSearchParams(prev => {
-                            prev.set(LayoutPanelSlot.PRIMARY, CollectionListPanelInfo.name);
-                            prev.set(LayoutPanelSlot.SECONDARY, CollectionDetailPanelInfo.name);
-                            prev.delete(LayoutPanelSlot.EXTENSION);
-
-                            if (collectionId) {
-                                prev.set(FlashcardApplicationParam.collectionId, collectionId);
-                            }
-
-                            return prev;
-                        });
-                    }}
+                    onClick={handleBack}
                 >Back</TomButton>
-                <span>&nbsp;TITLE</span>
+                <span>{collectionData?.title}</span>
             </>}
         />
 
         <ComposePanel.Body>
-            <div>BODY</div>
+            {flashCardListLoading && <Loading />}
+            {!flashCardList?.length
+                ? <TomEmpty
+                    description={<>
+                        <div>This collection is empty.</div>
+
+                        <TomButton
+                            icon={<ArrowLeftOutlined />}
+                            type="link"
+                            onClick={handleBack}
+                        >Adding card at collection detail</TomButton>
+                    </>}
+                />
+                : <div>STUDY CARD</div>}
         </ComposePanel.Body>
     </ComposePanel>;
 };

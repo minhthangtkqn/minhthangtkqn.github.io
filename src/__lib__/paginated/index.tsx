@@ -5,7 +5,6 @@ import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 import { DefaultPaginatedListRowContainer, PaginatedListRowContainer } from "./list-row";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
 import { Loading, TomEmpty } from "@/__lib__/general-component";
-import { Empty } from "antd";
 
 /**
  * Ref override để giúp `forwardRef` nhận generic type
@@ -86,7 +85,7 @@ export const PaginatedList = forwardRef(function BasePaginatedList<Data extends 
         baseUrl,
         {
             onSuccess: (data) => {
-                if (activeOnMount && !activeOnMountDone) {
+                if (activeOnMount && !activeOnMountDone && !activeId) {
                     setActiveOnMountDone(true);
                     if (data.length > 0) {
                         onActive?.(keyExtractor(data[0]));

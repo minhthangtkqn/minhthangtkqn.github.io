@@ -110,7 +110,7 @@ export const CollectionListPanel = () => {
                     </div>
                 </>;
             }}
-            activeId={collectionId ?? ''}
+            activeId={collectionId ?? undefined}
             activeOnMount
             onActive={(id) => {
                 updateSearchParams(prev => {
