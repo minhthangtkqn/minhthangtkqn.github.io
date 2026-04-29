@@ -2,7 +2,7 @@ import { CentralRequestor, useRequest } from "@/__lib__/access";
 import { FlashCard } from "@/__lib__/model";
 import { CommandApi, QueryApi } from "@/access";
 import styled from "styled-components";
-import { Loading } from "@/__lib__/general-component";
+import { Loading, TomEmpty } from "@/__lib__/general-component";
 import { FlashCardBoardItem } from "./item";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../../component/flashcard-form-modal";
@@ -72,13 +72,16 @@ export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
 
         <FlashCardBoardContainer>
             {flashCardListLoading && <Loading />}
-            {flashCardList?.map((item, index) => <FlashCardBoardItem
-                key={item._id}
-                data={item}
-                index={index}
-                onChangeCard={() => flashcardFormModalRef.current?.open(item)}
-                onDeleteCard={() => deleteCard(item._id)}
-            />)}
+            {(flashCardList?.length ?? 0) > 0
+                ? flashCardList?.map((item, index) => <FlashCardBoardItem
+                    key={item._id}
+                    data={item}
+                    index={index}
+                    onChangeCard={() => flashcardFormModalRef.current?.open(item)}
+                    onDeleteCard={() => deleteCard(item._id)}
+                />)
+                : <TomEmpty />
+            }
         </FlashCardBoardContainer>
     </>;
 });

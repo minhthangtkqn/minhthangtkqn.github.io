@@ -4,7 +4,7 @@ import { useRequest } from "@/__lib__/access";
 import { DefaultPaginatedHeader, PaginatedHeader } from "./header";
 import { DefaultPaginatedListRowContainer, PaginatedListRowContainer } from "./list-row";
 import { DefaultPaginatedListRowItem, PaginatedListRowItem } from "./list-row-item";
-import { Loading } from "@/__lib__/general-component";
+import { Loading, TomEmpty } from "@/__lib__/general-component";
 import { Empty } from "antd";
 
 /**
@@ -34,9 +34,8 @@ const StyledPaginatedList = styled.div`
     }
 `;
 
-const DEFAULT_EMPTY_RENDER = <Empty
+const DEFAULT_EMPTY_RENDER = <TomEmpty
     className="empty-indicator"
-    image={Empty.PRESENTED_IMAGE_SIMPLE}
 />;
 
 type PaginatedList<Data extends Record<string, unknown>> = {

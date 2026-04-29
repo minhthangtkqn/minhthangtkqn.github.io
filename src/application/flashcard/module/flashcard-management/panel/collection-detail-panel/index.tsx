@@ -5,7 +5,7 @@ import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { FlashCardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
 import { Button, Empty } from "antd";
-import { ComposePanel, Loading, TomCollapse } from "@/__lib__/general-component";
+import { ComposePanel, Loading, TomCollapse, TomEmpty } from "@/__lib__/general-component";
 import { FlashCardBoard, FlashCardBoardRef } from "./flash-card-board";
 import { BookOutlined, PlusOutlined } from "@ant-design/icons";
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../component";
@@ -100,9 +100,8 @@ export const FlashcardCollectionDetailPanel = () => {
                         />
                     </ComposePanel.Body>
                 </ComposePanel>
-                : <Empty
+                : <TomEmpty
                     className="empty-indicator"
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
                 />
             }
         </StyledFlashcardCollectionDetailContainer>

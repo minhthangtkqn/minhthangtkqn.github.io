@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import { FlashcardApplicationParam } from "../../../../model";
-import { useSearchParams } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { FlashCard, FlashCardCollection } from "@/__lib__/model";
-import { Empty } from "antd";
-import { ComposeHeader, ComposePanel, Loading } from "@/__lib__/general-component";
+import { FlashCardCollection } from "@/__lib__/model";
+import { ComposePanel, Loading, TomEmpty } from "@/__lib__/general-component";
 import { SyncOutlined } from "@ant-design/icons";
 
 export const FlashcardCollectionListPanelInfo = {
@@ -72,9 +69,8 @@ export const FlashcardCollectionListPanel = () => {
                     {(collectionList?.length ?? 0) > 0
                         ? <StyledFlashcardCollectionBoard>
                         </StyledFlashcardCollectionBoard>
-                        : <Empty
+                        : <TomEmpty
                             className="empty-indicator"
-                            image={Empty.PRESENTED_IMAGE_SIMPLE}
                         />
                     }
                 </ComposePanel.Body>

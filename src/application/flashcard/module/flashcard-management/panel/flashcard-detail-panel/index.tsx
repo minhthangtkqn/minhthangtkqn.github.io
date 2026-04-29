@@ -5,7 +5,7 @@ import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { FlashCard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
 import { Empty } from "antd";
-import { Loading } from "@/__lib__/general-component";
+import { Loading, TomEmpty } from "@/__lib__/general-component";
 
 export const FlashcardDetailPanelInfo = {
     name: 'flashcard-detail' as const,
@@ -65,9 +65,8 @@ export const FlashcardDetailPanel = () => {
                     <div className="title">{flashcardData.title}</div>
                     <div className="description">{flashcardData.description}</div>
                 </StyledFlashcardDetail>
-                : <Empty
+                : <TomEmpty
                     className="empty-indicator"
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
                 />
             }
         </StyledFlashcardDetailContainer>

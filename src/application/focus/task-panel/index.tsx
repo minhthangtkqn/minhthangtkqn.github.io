@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Empty, Input, Checkbox } from 'antd';
+import { Input, Checkbox } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { addTaskItem, getTaskList, mergeClass, removeTaskItem } from "@/util";
 import { ActionButton } from "@/component";
+import { TomEmpty } from "@/__lib__/general-component";
 
 export const TaskPanelInfo = {
     name: 'task' as const,
@@ -113,7 +114,7 @@ export const TaskPanel: React.FC = () => {
                         tooltip="Delete"
                     />
                 </div>)}
-                {taskList.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> : null}
+                {taskList.length === 0 ? <TomEmpty /> : null}
             </div>
         </StyledTaskPanel>
     );
