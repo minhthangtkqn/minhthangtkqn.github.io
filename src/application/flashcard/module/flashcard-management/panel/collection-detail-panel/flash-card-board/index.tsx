@@ -4,7 +4,7 @@ import { CommandApi, QueryApi } from "@/access";
 import styled from "styled-components";
 import { Loading, TomEmpty } from "@/__lib__/general-component";
 import { FlashCardBoardItem } from "./item";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../../component/flashcard-form-modal";
 import { notification } from "antd";
 
@@ -23,10 +23,12 @@ export type FlashCardBoardRef = {
 };
 type FlashCardBoard = {
     collectionId: string,
+    onQuerySuccess?: (cardAmount: number | undefined) => void,
 };
 export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
     {
         collectionId,
+        onQuerySuccess,
     },
     ref,
 ) => {
@@ -34,15 +36,23 @@ export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
         refreshList: refreshFlashCardList,
     }));
 
+    const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
+
     const {
         data: flashCardList,
         loading: flashCardListLoading,
         refresh: refreshFlashCardList,
+        queryCount,
     } = useRequest<FlashCard[]>(collectionId
         ? QueryApi.Flashcard.list(collectionId)
         : undefined
     );
-    const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
+
+    useEffect(() => {
+        if (queryCount > 0) {
+            onQuerySuccess?.(flashCardList?.length);
+        }
+    }, [queryCount, flashCardList]);
 
     const deleteCard = async (cardId: string) => {
         try {

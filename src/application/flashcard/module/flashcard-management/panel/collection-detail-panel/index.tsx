@@ -8,7 +8,7 @@ import { ComposePanel, Loading, TomButton, TomCollapse, TomDropdown, TomEmpty } 
 import { FlashCardBoard, FlashCardBoardRef } from "./flash-card-board";
 import { BookOutlined, DeleteOutlined, EditOutlined, MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../component";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { LayoutPanelSlot } from "@/__lib__/layout";
 import { CollectionStudyPanelInfo } from "../collection-study-panel";
 import { Space } from "antd";
@@ -37,6 +37,7 @@ const StyledFlashcardCollectionDetailContainer = styled.div`
 export const FlashcardCollectionDetailPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
+    const [cardAmount, setCardAmount] = useState<number>();
 
     const {
         data: collectionData,
@@ -98,10 +99,7 @@ export const FlashcardCollectionDetailPanel = () => {
                                 }}
                                 trigger={['click']}
                             >
-                                <TomButton
-                                    icon={<MoreOutlined />}
-                                    onClick={() => { }}
-                                />
+                                <TomButton icon={<MoreOutlined />} />
                             </TomDropdown>
                         </Space>
                         }
@@ -127,10 +125,11 @@ export const FlashcardCollectionDetailPanel = () => {
                                 },
                                 {
                                     key: 'flash-card-board',
-                                    label: 'Card board',
+                                    label: `Card board ${typeof cardAmount === 'number' ? `(${cardAmount})` : ''}`,
                                     children: <FlashCardBoard
                                         ref={flashCardBoardRef}
                                         collectionId={collectionId}
+                                        onQuerySuccess={(amount) => setCardAmount(amount)}
                                     />,
                                     extra: <TomButton
                                         icon={<PlusOutlined />}
