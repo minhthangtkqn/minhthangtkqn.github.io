@@ -4,7 +4,7 @@ import { useSearchParams, useSubscribe } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
 import { FlashCardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
-import { Button, Empty } from "antd";
+import { Button } from "antd";
 import { ComposePanel, Loading, TomCollapse, TomEmpty } from "@/__lib__/general-component";
 import { FlashCardBoard, FlashCardBoardRef } from "./flash-card-board";
 import { BookOutlined, PlusOutlined } from "@ant-design/icons";

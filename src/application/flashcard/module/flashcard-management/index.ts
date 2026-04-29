@@ -1,9 +1,5 @@
 import { Module } from "@/__lib__/layout";
 import {
-    FlashcardDetailPanel,
-    FlashcardDetailPanelInfo,
-    FlashcardListPanel,
-    FlashcardListPanelInfo,
     FlashcardCollectionListPanel,
     FlashcardCollectionListPanelInfo,
     FlashcardCollectionDetailPanel,
@@ -16,14 +12,6 @@ export const FlashcardManagementModuleInfo = {
 export const setupFlashcardListingModule = () => {
     const newModule = new Module(FlashcardManagementModuleInfo.name);
     newModule.setupPanel({
-        panelKey: FlashcardListPanelInfo.name,
-        PanelComponent: FlashcardListPanel,
-    });
-    newModule.setupPanel({
-        panelKey: FlashcardDetailPanelInfo.name,
-        PanelComponent: FlashcardDetailPanel,
-    });
-    newModule.setupPanel({
         panelKey: FlashcardCollectionListPanelInfo.name,
         PanelComponent: FlashcardCollectionListPanel,
     });
@@ -35,8 +23,6 @@ export const setupFlashcardListingModule = () => {
 };
 
 export {
-    FlashcardListPanelInfo,
-    FlashcardDetailPanelInfo,
     FlashcardCollectionListPanelInfo,
     FlashcardCollectionDetailPanelInfo,
 } from './panel';

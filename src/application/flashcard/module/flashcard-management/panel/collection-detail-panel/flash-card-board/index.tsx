@@ -70,7 +70,7 @@ export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
             }}
         />
 
-        <FlashCardBoardContainer>
+        <FlashCardBoardContainer className="flash-card-board">
             {flashCardListLoading && <Loading />}
             {(flashCardList?.length ?? 0) > 0
                 ? flashCardList?.map((item, index) => <FlashCardBoardItem
