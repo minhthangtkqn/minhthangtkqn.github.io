@@ -10,14 +10,10 @@ import { BookOutlined, DeleteOutlined, EditOutlined, MoreOutlined, PlusOutlined 
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../component";
 import { useRef, useState } from "react";
 import { LayoutPanelSlot } from "@/__lib__/layout";
-import { CollectionStudyPanelInfo } from "../collection-study-panel";
+import { CollectionStudyPanelInfo } from "../info";
 import { Space } from "antd";
 
-export const FlashcardCollectionDetailPanelInfo = {
-    name: 'flashcard-collection-detail' as const,
-};
-
-const StyledFlashcardCollectionDetailContainer = styled.div`
+const StyledCollectionDetailContainer = styled.div`
     height: 100%;
     background-color: var(--contrast-primary);
     position: relative; // for loading positioning
@@ -34,7 +30,7 @@ const StyledFlashcardCollectionDetailContainer = styled.div`
     }
 `;
 
-export const FlashcardCollectionDetailPanel = () => {
+export const CollectionDetailPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
     const [cardAmount, setCardAmount] = useState<number>();
@@ -67,7 +63,7 @@ export const FlashcardCollectionDetailPanel = () => {
     };
 
     return (
-        <StyledFlashcardCollectionDetailContainer>
+        <StyledCollectionDetailContainer>
             {collectionLoading && <Loading />}
             {(collectionId && collectionData)
                 ? <ComposePanel>
@@ -154,6 +150,6 @@ export const FlashcardCollectionDetailPanel = () => {
                     className="empty-indicator"
                 />
             }
-        </StyledFlashcardCollectionDetailContainer>
+        </StyledCollectionDetailContainer>
     );
 };

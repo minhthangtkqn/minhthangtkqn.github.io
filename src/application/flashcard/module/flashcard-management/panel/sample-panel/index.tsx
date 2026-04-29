@@ -1,9 +1,5 @@
 import { ComposePanel } from "@/__lib__/general-component";
 
-export const SamplePanelInfo = {
-    name: 'sample' as const,
-};
-
 export const SamplePanel = () => {
     // const { params } = useSearchParams();
     // const collectionId = params.get(FlashcardApplicationParam.collectionId);

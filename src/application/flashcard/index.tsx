@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import {
     FlashcardManagementModuleInfo,
     setupFlashcardListingModule,
-    FlashcardCollectionListPanelInfo,
-    FlashcardCollectionDetailPanelInfo,
+    CollectionListPanelInfo,
+    CollectionDetailPanelInfo,
 } from "./module";
 
 const StyledFlashcardAppLayout = styled(DetailedLayout)`
@@ -46,8 +46,8 @@ export const FlashcardApp = () => {
                     prev.set(ModuleParamKey, FlashcardManagementModuleInfo.name);
                 }
                 if (!hasPanelKey) {
-                    prev.set(LayoutPanelSlot.PRIMARY, FlashcardCollectionListPanelInfo.name);
-                    prev.set(LayoutPanelSlot.SECONDARY, FlashcardCollectionDetailPanelInfo.name);
+                    prev.set(LayoutPanelSlot.PRIMARY, CollectionListPanelInfo.name);
+                    prev.set(LayoutPanelSlot.SECONDARY, CollectionDetailPanelInfo.name);
                     prev.delete(LayoutPanelSlot.EXTENSION);
                 }
                 return prev;

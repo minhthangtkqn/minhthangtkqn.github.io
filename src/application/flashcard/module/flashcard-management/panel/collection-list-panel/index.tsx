@@ -11,11 +11,7 @@ import { CentralRequestor } from "@/__lib__/access";
 import { ComposeHeader, TomButton } from "@/__lib__/general-component";
 import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/__lib__/paginated";
 
-export const FlashcardCollectionListPanelInfo = {
-    name: 'flashcard-collection-list' as const,
-};
-
-const StyledFlashcardCollectionList: typeof PaginatedList = styled(PaginatedList)`
+const StyledCollectionList: typeof PaginatedList = styled(PaginatedList)`
     &.flashcard-collection {
         .left-content {
             flex: 1;
@@ -32,7 +28,7 @@ const StyledFlashcardCollectionList: typeof PaginatedList = styled(PaginatedList
     }
 `;
 
-export const FlashcardCollectionListPanel = () => {
+export const CollectionListPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
 
@@ -69,7 +65,7 @@ export const FlashcardCollectionListPanel = () => {
             }}
         />
 
-        <StyledFlashcardCollectionList<FlashCardCollection>
+        <StyledCollectionList<FlashCardCollection>
             ref={paginatedListRef}
             title="Collection"
             className="flashcard-collection"
