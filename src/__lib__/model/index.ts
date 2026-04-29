@@ -1,4 +1,4 @@
-export type Flashcard = {
+export type FlashCard = {
     _id: string;
     collection_id: string;
     title: string;
@@ -8,7 +8,7 @@ export type Flashcard = {
     back_type: string;
     back_value: string;
 };
-export type FlashcardCollection = {
+export type FlashCardCollection = {
     _id: string;
     title: string;
     description: string;

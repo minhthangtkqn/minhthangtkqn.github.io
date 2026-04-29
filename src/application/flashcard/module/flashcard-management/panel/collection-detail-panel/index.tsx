@@ -3,7 +3,7 @@ import { FlashcardApplicationParam } from "../../../../model";
 import { useSearchParams, useSubscribe } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { FlashcardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
+import { FlashCardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
 import { Button, Empty } from "antd";
 import { ComposePanel, Loading, TomCollapse } from "@/__lib__/general-component";
 import { FlashCardBoard, FlashCardBoardRef } from "./flash-card-board";
@@ -40,7 +40,7 @@ export const FlashcardCollectionDetailPanel = () => {
         data: collectionData,
         loading: collectionLoading,
         refresh: refreshFlashcardCollection,
-    } = useRequest<FlashcardCollection>(collectionId ? QueryApi.FlashcardCollection.item(collectionId) : undefined);
+    } = useRequest<FlashCardCollection>(collectionId ? QueryApi.FlashcardCollection.item(collectionId) : undefined);
     useSubscribe(REFRESH_FLASHCARD_COLLECTION_KEY, refreshFlashcardCollection);
 
     const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);

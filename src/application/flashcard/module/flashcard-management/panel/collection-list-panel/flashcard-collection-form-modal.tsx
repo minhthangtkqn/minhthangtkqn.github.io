@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { FlashcardCollection } from "@/__lib__/model";
+import { FlashCardCollection } from "@/__lib__/model";
 import { PublicModal } from "@/component";
 import { Button, Form, FormInstance, FormProps, Input, notification } from "antd";
 import styled from "styled-components";
@@ -15,7 +15,7 @@ const StyledForm = styled(Form)`
 `;
 
 export type FlashcardCollectionFormModalRef = {
-    open: (openedCollection?: FlashcardCollection) => void;
+    open: (openedCollection?: FlashCardCollection) => void;
 };
 type Props = {
     onCloseModal?: () => void;
@@ -27,7 +27,7 @@ export const FlashcardCollectionFormModal = forwardRef<FlashcardCollectionFormMo
     ref,
 ) => {
     useImperativeHandle(ref, () => ({
-        open: (openedCollection?: FlashcardCollection) => {
+        open: (openedCollection?: FlashCardCollection) => {
             setVisible(true);
             setCollection(openedCollection);
             if (openedCollection) {
@@ -41,8 +41,8 @@ export const FlashcardCollectionFormModal = forwardRef<FlashcardCollectionFormMo
         },
     }));
 
-    const formRef = useRef<FormInstance<FlashcardCollection>>(null);
-    const [collection, setCollection] = useState<FlashcardCollection>();
+    const formRef = useRef<FormInstance<FlashCardCollection>>(null);
+    const [collection, setCollection] = useState<FlashCardCollection>();
     const [submitting, setSubmitting] = useState(false);
     const [visible, setVisible] = useState(false);
 
@@ -53,7 +53,7 @@ export const FlashcardCollectionFormModal = forwardRef<FlashcardCollectionFormMo
         onCloseModal?.();
     };
 
-    const handleSubmit: FormProps<FlashcardCollection>['onFinish'] = async (values) => {
+    const handleSubmit: FormProps<FlashCardCollection>['onFinish'] = async (values) => {
         try {
             setSubmitting(true);
             if (collection) {
@@ -100,7 +100,7 @@ export const FlashcardCollectionFormModal = forwardRef<FlashcardCollectionFormMo
                 wrapperCol={{ span: 18 }}
                 onFinish={handleSubmit}
             >
-                <Form.Item<FlashcardCollection>
+                <Form.Item<FlashCardCollection>
                     name="title"
                     label="Title"
                     rules={[{ required: true, message: 'Please input flashcard title!' }]}
@@ -108,7 +108,7 @@ export const FlashcardCollectionFormModal = forwardRef<FlashcardCollectionFormMo
                     <Input />
                 </Form.Item>
 
-                <Form.Item<FlashcardCollection>
+                <Form.Item<FlashCardCollection>
                     name="description"
                     label="Description"
                     rules={[{ required: true, message: 'Please input flashcard description!' }]}

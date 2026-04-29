@@ -1,7 +1,7 @@
 import { CommandApi, QueryApi } from "@/access";
 import { REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
 import { FlashcardApplicationParam } from "../../../../model";
-import { Flashcard } from "@/__lib__/model";
+import { FlashCard } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../component";
@@ -69,7 +69,7 @@ export const FlashcardListPanel = () => {
             }}
         />
 
-        <StyledFlashcardList<Flashcard>
+        <StyledFlashcardList<FlashCard>
             ref={paginatedListRef}
             title="Flashcard"
             className="flashcard-list"

@@ -1,8 +1,6 @@
-import { useRef } from 'react';
-import { Flashcard, FlashCardSideType } from "@/__lib__/model";
+import { FlashCard, FlashCardSideType } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Card, Image, Modal, Space } from "antd";
-import { FlashcardFormModalRef } from "../../../component";
 import styled from "styled-components";
 
 const StyledFlashCardSideContent = styled.div<{ $noPadding?: boolean; }>`
@@ -36,50 +34,54 @@ const StyledFlashCardBoardItem: typeof Card = styled(Card)`
 export const FlashCardBoardItem = ({
     data,
     index,
+    onChangeCard,
+    onDeleteCard,
 }: {
-    data: Flashcard,
+    data: FlashCard,
     index: number,
+    onChangeCard?: () => void,
+    onDeleteCard?: () => void,
 }) => {
-    const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
-
-    return <StyledFlashCardBoardItem
-        size="small"
-        title={`Card #${index + 1}`}
-        extra={<Space>
-            <Button
-                type="link"
-                size="small"
-                icon={<EditOutlined />}
-            // onClick={() => flashcardFormModalRef.current?.open(data)}
-            />
-            <Button
-                type="link"
-                danger
-                size="small"
-                icon={<DeleteOutlined />}
-                onClick={() => Modal.confirm({
-                    // onOk: () => deleteItem(data._id),
-                    title: 'Are you sure?',
-                    content: 'This item will be deleted.'
-                })}
-            />
-        </Space>}
-    >
-        <div className="card-side front-card">
-            <div className="card-side-name">FRONT</div>
-            <FlashCardSideContent
-                type={data.front_type}
-                value={data.front_value}
-            />
-        </div>
-        <div className="card-side back-card">
-            <div className="card-side-name">BACK</div>
-            <FlashCardSideContent
-                type={data.back_type}
-                value={data.back_value}
-            />
-        </div>
-    </StyledFlashCardBoardItem>;
+    return <>
+        <StyledFlashCardBoardItem
+            size="small"
+            title={`Card #${index + 1}`}
+            extra={<Space>
+                <Button
+                    type="link"
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={onChangeCard}
+                />
+                <Button
+                    type="link"
+                    danger
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    onClick={() => Modal.confirm({
+                        onOk: onDeleteCard,
+                        title: 'Are you sure?',
+                        content: 'This item will be deleted.'
+                    })}
+                />
+            </Space>}
+        >
+            <div className="card-side front-card">
+                <div className="card-side-name">FRONT</div>
+                <FlashCardSideContent
+                    type={data.front_type}
+                    value={data.front_value}
+                />
+            </div>
+            <div className="card-side back-card">
+                <div className="card-side-name">BACK</div>
+                <FlashCardSideContent
+                    type={data.back_type}
+                    value={data.back_value}
+                />
+            </div>
+        </StyledFlashCardBoardItem>
+    </>;
 };
 
 const FlashCardSideContent = ({

@@ -1,10 +1,12 @@
-import { useRequest } from "@/__lib__/access";
-import { Flashcard } from "@/__lib__/model";
-import { QueryApi } from "@/access";
+import { CentralRequestor, useRequest } from "@/__lib__/access";
+import { FlashCard } from "@/__lib__/model";
+import { CommandApi, QueryApi } from "@/access";
 import styled from "styled-components";
 import { Loading } from "@/__lib__/general-component";
 import { FlashCardBoardItem } from "./item";
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import { FlashcardFormModal, FlashcardFormModalRef } from "../../../component/flashcard-form-modal";
+import { notification } from "antd";
 
 const FlashCardBoardContainer = styled.div`
     display: flex;
@@ -19,12 +21,10 @@ const FlashCardBoardContainer = styled.div`
 export type FlashCardBoardRef = {
     refreshList: () => void;
 };
-export const FlashCardBoard = forwardRef<
-    FlashCardBoardRef,
-    {
-        collectionId: string,
-    }
->((
+type FlashCardBoard = {
+    collectionId: string,
+};
+export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
     {
         collectionId,
     },
@@ -38,19 +38,47 @@ export const FlashCardBoard = forwardRef<
         data: flashCardList,
         loading: flashCardListLoading,
         refresh: refreshFlashCardList,
-    } = useRequest<Flashcard[]>(collectionId
+    } = useRequest<FlashCard[]>(collectionId
         ? QueryApi.Flashcard.list(collectionId)
         : undefined
     );
+    const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
 
-    return (
+    const deleteCard = async (cardId: string) => {
+        try {
+            await CentralRequestor.delete(CommandApi.Flashcard.removeItem(cardId));
+            notification.success({
+                message: 'Delete successfully!',
+            });
+            refreshFlashCardList();
+        } catch (error) {
+            notification.error({
+                message: 'Delete failed. Try again later!',
+            });
+            console.error('delete flash card error', error);
+        }
+    };
+
+    return <>
+        <FlashcardFormModal
+            ref={flashcardFormModalRef}
+            collectionId={collectionId}
+            onCloseModal={(submitted) => {
+                if (submitted) {
+                    refreshFlashCardList();
+                }
+            }}
+        />
+
         <FlashCardBoardContainer>
             {flashCardListLoading && <Loading />}
             {flashCardList?.map((item, index) => <FlashCardBoardItem
                 key={item._id}
                 data={item}
                 index={index}
+                onChangeCard={() => flashcardFormModalRef.current?.open(item)}
+                onDeleteCard={() => deleteCard(item._id)}
             />)}
         </FlashCardBoardContainer>
-    );
+    </>;
 });

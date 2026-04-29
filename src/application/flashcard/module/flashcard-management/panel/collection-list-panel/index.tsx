@@ -1,7 +1,7 @@
 import { CommandApi, QueryApi } from "@/access";
 import { REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
 import { FlashcardApplicationParam } from "../../../../model";
-import { FlashcardCollection } from "@/__lib__/model";
+import { FlashCardCollection } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
 import { FlashcardCollectionFormModal, FlashcardCollectionFormModalRef } from "./flashcard-collection-form-modal";
@@ -69,7 +69,7 @@ export const FlashcardCollectionListPanel = () => {
             }}
         />
 
-        <StyledFlashcardCollectionList<FlashcardCollection>
+        <StyledFlashcardCollectionList<FlashCardCollection>
             ref={paginatedListRef}
             title="Collection"
             className="flashcard-collection"

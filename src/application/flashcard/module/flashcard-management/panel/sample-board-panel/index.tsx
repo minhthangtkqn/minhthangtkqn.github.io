@@ -3,7 +3,7 @@ import { FlashcardApplicationParam } from "../../../../model";
 import { useSearchParams } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { Flashcard, FlashcardCollection } from "@/__lib__/model";
+import { FlashCard, FlashCardCollection } from "@/__lib__/model";
 import { Empty } from "antd";
 import { ComposeHeader, ComposePanel, Loading } from "@/__lib__/general-component";
 import { SyncOutlined } from "@ant-design/icons";
@@ -56,7 +56,7 @@ export const FlashcardCollectionListPanel = () => {
         data: collectionList,
         refresh: refreshCollectionList,
         loading: collectionLoading,
-    } = useRequest<FlashcardCollection[]>(QueryApi.FlashcardCollection.list());
+    } = useRequest<FlashCardCollection[]>(QueryApi.FlashcardCollection.list());
     console.log('🚀 ~ FlashcardCollectionBoardPanel ~ collectionList:', collectionList);
 
     return (

@@ -3,7 +3,7 @@ import { FlashcardApplicationParam } from "../../../../model";
 import { useSearchParams, useSubscribe } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { Flashcard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
+import { FlashCard, REFRESH_FLASHCARD_KEY } from "@/__lib__/model";
 import { Empty } from "antd";
 import { Loading } from "@/__lib__/general-component";
 
@@ -54,7 +54,7 @@ export const FlashcardDetailPanel = () => {
         data: flashcardData,
         loading: flashcardLoading,
         refresh: refreshFlashcardData,
-    } = useRequest<Flashcard>(flashcardId ? QueryApi.Flashcard.item(flashcardId) : undefined);
+    } = useRequest<FlashCard>(flashcardId ? QueryApi.Flashcard.item(flashcardId) : undefined);
     useSubscribe(REFRESH_FLASHCARD_KEY, refreshFlashcardData);
 
     return (
