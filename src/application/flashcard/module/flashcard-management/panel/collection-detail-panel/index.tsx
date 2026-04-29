@@ -3,13 +3,15 @@ import { FlashcardApplicationParam } from "../../../../model";
 import { useSearchParams, useSubscribe } from "@/util";
 import { useRequest } from "@/__lib__/access";
 import { QueryApi } from "@/access";
-import { FlashCardCollection, REFRESH_FLASHCARD_COLLECTION_KEY } from "@/__lib__/model";
-import { Button } from "antd";
-import { ComposePanel, Loading, TomCollapse, TomEmpty } from "@/__lib__/general-component";
+import { FlashCardCollection, REFRESH_CURRENT_COLLECTION_KEY } from "@/__lib__/model";
+import { ComposePanel, Loading, TomButton, TomCollapse, TomDropdown, TomEmpty } from "@/__lib__/general-component";
 import { FlashCardBoard, FlashCardBoardRef } from "./flash-card-board";
-import { BookOutlined, PlusOutlined } from "@ant-design/icons";
+import { BookOutlined, DeleteOutlined, EditOutlined, MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { FlashcardFormModal, FlashcardFormModalRef } from "../../component";
 import { useRef } from "react";
+import { LayoutPanelSlot } from "@/__lib__/layout";
+import { CollectionStudyPanelInfo } from "../collection-study-panel";
+import { Space } from "antd";
 
 export const FlashcardCollectionDetailPanelInfo = {
     name: 'flashcard-collection-detail' as const,
@@ -33,18 +35,35 @@ const StyledFlashcardCollectionDetailContainer = styled.div`
 `;
 
 export const FlashcardCollectionDetailPanel = () => {
-    const { params } = useSearchParams();
+    const { params, updateSearchParams } = useSearchParams();
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
 
     const {
         data: collectionData,
         loading: collectionLoading,
-        refresh: refreshFlashcardCollection,
-    } = useRequest<FlashCardCollection>(collectionId ? QueryApi.FlashcardCollection.item(collectionId) : undefined);
-    useSubscribe(REFRESH_FLASHCARD_COLLECTION_KEY, refreshFlashcardCollection);
+        refresh: refreshCollection,
+    } = useRequest<FlashCardCollection>(collectionId
+        ? QueryApi.FlashcardCollection.item(collectionId)
+        : undefined
+    );
+    useSubscribe(REFRESH_CURRENT_COLLECTION_KEY, refreshCollection);
 
     const flashcardFormModalRef = useRef<FlashcardFormModalRef>(null);
     const flashCardBoardRef = useRef<FlashCardBoardRef>(null);
+
+    const studyCard = () => {
+        if (collectionId) {
+            updateSearchParams(prev => {
+                prev.set(LayoutPanelSlot.PRIMARY, CollectionStudyPanelInfo.name);
+                prev.delete(LayoutPanelSlot.SECONDARY);
+                prev.delete(LayoutPanelSlot.EXTENSION);
+
+                prev.set(FlashcardApplicationParam.collectionId, collectionId);
+
+                return prev;
+            });
+        }
+    };
 
     return (
         <StyledFlashcardCollectionDetailContainer>
@@ -53,7 +72,39 @@ export const FlashcardCollectionDetailPanel = () => {
                 ? <ComposePanel>
                     <ComposePanel.Header
                         title={collectionData.title}
-                        extra={<Button icon={<BookOutlined />}>Learn</Button>}
+                        extra={<Space>
+                            <TomButton
+                                icon={<BookOutlined />}
+                                onClick={studyCard}
+                            >Study</TomButton>
+
+                            <TomDropdown
+                                menu={{
+                                    items: [
+                                        {
+                                            key: 'edit',
+                                            label: 'Edit',
+                                            icon: <EditOutlined />,
+                                            onClick: () => { },
+                                        },
+                                        {
+                                            key: 'delete',
+                                            label: 'Delete',
+                                            icon: <DeleteOutlined />,
+                                            danger: true,
+                                            onClick: () => { },
+                                        },
+                                    ],
+                                }}
+                                trigger={['click']}
+                            >
+                                <TomButton
+                                    icon={<MoreOutlined />}
+                                    onClick={() => { }}
+                                />
+                            </TomDropdown>
+                        </Space>
+                        }
                         type="secondary"
                     />
                     <ComposePanel.Body>
@@ -76,12 +127,12 @@ export const FlashcardCollectionDetailPanel = () => {
                                 },
                                 {
                                     key: 'flash-card-board',
-                                    label: 'Flash card board',
+                                    label: 'Card board',
                                     children: <FlashCardBoard
                                         ref={flashCardBoardRef}
                                         collectionId={collectionId}
                                     />,
-                                    extra: <Button
+                                    extra: <TomButton
                                         icon={<PlusOutlined />}
                                         size="small"
                                         type="link"
@@ -89,7 +140,7 @@ export const FlashcardCollectionDetailPanel = () => {
                                             flashcardFormModalRef.current?.open();
                                             e.stopPropagation();
                                         }}
-                                    >Add card</Button>,
+                                    >Add card</TomButton>,
                                     showArrow: false,
                                 },
                             ]}

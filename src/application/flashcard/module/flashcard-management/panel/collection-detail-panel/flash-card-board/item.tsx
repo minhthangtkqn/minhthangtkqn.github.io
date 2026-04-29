@@ -9,6 +9,7 @@ const StyledFlashCardSideContent = styled.div<{ $noPadding?: boolean; }>`
 
 const StyledFlashCardBoardItem: typeof Card = styled(Card)`
     border: var(--bd);
+    border-width: var(--spacing-xxs);
 
     .ant-card-body {
         padding: 0;

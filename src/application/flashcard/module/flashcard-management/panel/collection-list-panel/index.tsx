@@ -3,12 +3,12 @@ import { REFRESH_CURRENT_FLASHCARD, useSearchParams } from "@/util";
 import { FlashcardApplicationParam } from "../../../../model";
 import { FlashCardCollection } from "@/__lib__/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Modal, notification } from "antd";
-import { FlashcardCollectionFormModal, FlashcardCollectionFormModalRef } from "./flashcard-collection-form-modal";
+import { Modal, notification } from "antd";
+import { CollectionFormModal, CollectionFormModalRef } from "../../component";
 import { useRef } from "react";
 import styled from "styled-components";
 import { CentralRequestor } from "@/__lib__/access";
-import { ComposeHeader } from "@/__lib__/general-component";
+import { ComposeHeader, TomButton } from "@/__lib__/general-component";
 import { PaginatedHeaderTitle, PaginatedList, PaginatedListRef } from "@/__lib__/paginated";
 
 export const FlashcardCollectionListPanelInfo = {
@@ -37,7 +37,7 @@ export const FlashcardCollectionListPanel = () => {
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
 
     const paginatedListRef = useRef<PaginatedListRef>(null);
-    const collectionFormModalRef = useRef<FlashcardCollectionFormModalRef>(null);
+    const collectionFormModalRef = useRef<CollectionFormModalRef>(null);
 
     const deleteItem = async (itemId: string) => {
         try {
@@ -56,12 +56,12 @@ export const FlashcardCollectionListPanel = () => {
             notification.error({
                 message: 'Delete failed. Try again later!',
             });
-            console.error('delete flashcard error', error);
+            console.error('Delete error', error);
         }
     };
 
     return (<>
-        <FlashcardCollectionFormModal
+        <CollectionFormModal
             ref={collectionFormModalRef}
             onCloseModal={() => {
                 paginatedListRef.current?.refresh();
@@ -78,10 +78,10 @@ export const FlashcardCollectionListPanel = () => {
                 <PaginatedHeaderTitle {...props} />
 
                 <ComposeHeader.HeaderItem right>
-                    <Button
+                    <TomButton
                         icon={<PlusOutlined />}
                         onClick={() => collectionFormModalRef.current?.open()}
-                    >Add</Button>
+                    >Add</TomButton>
                 </ComposeHeader.HeaderItem>
             </ComposeHeader>}
             RowItem={({ data }) => {
@@ -96,12 +96,12 @@ export const FlashcardCollectionListPanel = () => {
                             e.stopPropagation();
                         }}
                     >
-                        <Button
+                        <TomButton
                             type="link"
                             icon={<EditOutlined />}
                             onClick={() => collectionFormModalRef.current?.open(data)}
                         />
-                        <Button
+                        <TomButton
                             type="link"
                             danger
                             icon={<DeleteOutlined />}

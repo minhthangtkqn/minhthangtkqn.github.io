@@ -11,7 +11,7 @@ import { notification } from "antd";
 const FlashCardBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
-    row-gap: var(--spacing-sm);
+    row-gap: var(--spacing);
 
     .flash-card-item {
         width: 100%;
@@ -55,7 +55,7 @@ export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
             notification.error({
                 message: 'Delete failed. Try again later!',
             });
-            console.error('delete flash card error', error);
+            console.error('delete error', error);
         }
     };
 

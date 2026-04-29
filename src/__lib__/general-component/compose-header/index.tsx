@@ -39,7 +39,7 @@ const StyledComposeHeader = styled.div<{ $type: ComposeHeaderType; }>`
 
 type StandardComposeHeader = {
     type?: ComposeHeaderType;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & Omit<React.HTMLAttributes<HTMLDivElement>, 'title'>;
 const StandardComposeHeader: React.FC<StandardComposeHeader> = ({ children, type, ...restProps }) => {
     return (
         <StyledComposeHeader

@@ -1,4 +1,4 @@
-import { REFRESH_FLASHCARD_KEY as REFRESH_CURRENT_FLASHCARD_KEY } from "@/__lib__/model";
+import { REFRESH_CURRENT_FLASHCARD_KEY } from "@/__lib__/model";
 import { useEffect, useState } from "react";
 
 type PubsubSubscriberCallback = (topicId: string, args: unknown) => void;
@@ -19,7 +19,7 @@ class Pubsub {
 
     unsubscribe(topicId: string, subscriberToken: string) {
         if (this.topicMap[topicId]) {
-            let subscriberIndex = this.topicMap[topicId].findIndex(subscriber => subscriber.token === subscriberToken);
+            const subscriberIndex = this.topicMap[topicId].findIndex(subscriber => subscriber.token === subscriberToken);
             if (subscriberIndex >= 0) {
                 this.topicMap[topicId].splice(subscriberIndex, 1);
                 return true;

@@ -15,8 +15,8 @@ export type FlashCardCollection = {
     total_card: number;
 };
 
-export const REFRESH_FLASHCARD_KEY = 'REFRESH_FLASHCARD_KEY';
-export const REFRESH_FLASHCARD_COLLECTION_KEY = 'REFRESH_FLASHCARD_COLLECTION_KEY';
+export const REFRESH_CURRENT_FLASHCARD_KEY = 'REFRESH_CURRENT_FLASHCARD_KEY';
+export const REFRESH_CURRENT_COLLECTION_KEY = 'REFRESH_CURRENT_COLLECTION_KEY';
 
 export const FlashCardSideType = {
     IMAGE_URL: 'IMAGE_URL' as const,

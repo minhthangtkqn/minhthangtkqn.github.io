@@ -26,9 +26,7 @@ const StyledComposePanel = styled.div`
 `;
 
 const StandardComposePanel = ({ children }: React.PropsWithChildren) => {
-    return (
-        <StyledComposePanel className="compose-panel">{children}</StyledComposePanel>
-    );
+    return <StyledComposePanel className="compose-panel">{children}</StyledComposePanel>;
 };
 
 const Header = ({

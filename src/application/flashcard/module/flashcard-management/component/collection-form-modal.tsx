@@ -14,13 +14,13 @@ const StyledForm = styled(Form)`
     }
 `;
 
-export type FlashcardCollectionFormModalRef = {
+export type CollectionFormModalRef = {
     open: (openedCollection?: FlashCardCollection) => void;
 };
 type Props = {
     onCloseModal?: () => void;
 };
-export const FlashcardCollectionFormModal = forwardRef<FlashcardCollectionFormModalRef, Props>((
+export const CollectionFormModal = forwardRef<CollectionFormModalRef, Props>((
     {
         onCloseModal,
     },

@@ -59,15 +59,34 @@
     --size-6xl: 80px;
     --size: var(--size-1);
 
-
-
+    --bdColor-none: transparent;
+    --bdColor-contrast: #ffffff;
+    --bdColor-faint: #f8f8f8;
+    --bdColor-subtle: #f0f0f1;
     --bdColor-normal: #e1e1e3;
-
+    --bdColor-blunt: #d2d2d6;
+    --bdColor-extreme: #9696a0;
+    --bdColor-separator: #aaaaaa;
+    --bdColor-success: var(--main-success);
+    --bdColor-info: var(--main-info);
+    --bdColor-danger: var(--main-danger);
+    --bdColor-warning: var(--main-warning);
+    --bdColor-antd: var(--main-antd);
     --bdColor: var(--bdColor-normal);
 
+    --bd-none: 0 solid var(--bdColor-none);
+    --bd-contrast: var(--size-px) solid var(--bdColor-contrast);
+    --bd-faint: var(--size-px) solid var(--bdColor-faint);
+    --bd-subtle: var(--size-px) solid var(--bdColor-subtle);
     --bd-normal: var(--size-px) solid var(--bdColor-normal);
+    --bd-blunt: var(--size-px) solid var(--bdColor-blunt);
+    --bd-extreme: var(--size-px) solid var(--bdColor-extreme);
+    --bd-separator: var(--size-3) solid var(--bdColor-separator);
+    --bd-success: var(--size-px) solid var(--bdColor-success);
+    --bd-info: var(--size-px) solid var(--bdColor-info);
+    --bd-danger: var(--size-px) solid var(--bdColor-danger);
+    --bd-warning: var(--size-px) solid var(--bdColor-warning);
     --bd: var(--bd-normal);
-
 
 
     --border-radius-scale-sharper: 0.5;
