@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Loading, TomEmpty } from "@/__lib__/general-component";
 import { FlashCardBoardItem } from "./item";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
-import { FlashcardFormModal, FlashcardFormModalRef } from "../../../component/flashcard-form-modal";
+import { FlashcardFormModal, FlashcardFormModalRef } from "../flashcard-form-modal";
 import { notification } from "antd";
 
 const FlashCardBoardContainer = styled.div`
@@ -95,3 +95,5 @@ export const FlashCardBoard = forwardRef<FlashCardBoardRef, FlashCardBoard>((
         </FlashCardBoardContainer>
     </>;
 });
+
+export { FlashCardSideContent } from './item';

@@ -24,8 +24,7 @@ const StyledComposeHeader = styled.div<{ $type: ComposeHeaderType; }>`
             color: var(--contrast-primary);
         `;
     }}
-    
-    
+
     font-size: var(--fs-xl);
     font-weight: bold;
     text-transform: uppercase;

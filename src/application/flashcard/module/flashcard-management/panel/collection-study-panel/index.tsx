@@ -7,11 +7,27 @@ import { FlashcardApplicationParam } from "@/application/flashcard/model";
 import { useSearchParams } from "@/util";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CollectionListPanelInfo, CollectionDetailPanelInfo } from "../info";
-import { pluralizeData } from "@/__lib__/format";
+import styled from "styled-components";
+import { CardStudyContent } from "./card-study-content";
+import { useState } from "react";
+import { Checkbox } from "antd";
+
+const StyledCollectionStudyPanel = styled(ComposePanel)`
+    .compose-panel-header {
+        .ant-checkbox-wrapper {
+            color: inherit;
+        }
+    }
+
+    .compose-panel-body {
+        padding: 0;
+    }
+`;
 
 export const CollectionStudyPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
+    const [random, setRandom] = useState(false);
 
     const {
         data: collectionData,
@@ -44,7 +60,7 @@ export const CollectionStudyPanel = () => {
         });
     };
 
-    return <ComposePanel>
+    return <StyledCollectionStudyPanel>
         <ComposePanel.Header
             title={<>
                 <TomButton
@@ -55,6 +71,10 @@ export const CollectionStudyPanel = () => {
                     ? `(${flashCardList.length})`
                     : ''}</span>
             </>}
+            extra={<Checkbox
+                checked={random}
+                onChange={(e) => setRandom(e.target.checked)}
+            >Random</Checkbox>}
         />
 
         <ComposePanel.Body>
@@ -71,7 +91,10 @@ export const CollectionStudyPanel = () => {
                         >Adding card at collection detail</TomButton>
                     </>}
                 />
-                : <div>STUDY CARD</div>}
+                : <CardStudyContent
+                    cardList={flashCardList}
+                    random={random}
+                />}
         </ComposePanel.Body>
-    </ComposePanel>;
+    </StyledCollectionStudyPanel>;
 };

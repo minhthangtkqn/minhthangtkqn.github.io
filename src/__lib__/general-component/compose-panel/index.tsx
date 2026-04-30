@@ -1,6 +1,7 @@
 import React from "react";
 import { ComposeHeader } from "../compose-header";
 import styled from "styled-components";
+import { mergeClass } from "@/util";
 
 const StyledComposePanel = styled.div`
     height: 100%;
@@ -25,8 +26,16 @@ const StyledComposePanel = styled.div`
     .compose-panel-footer {}
 `;
 
-const StandardComposePanel = ({ children }: React.PropsWithChildren) => {
-    return <StyledComposePanel className="compose-panel">{children}</StyledComposePanel>;
+export type ComposePanel = React.HTMLAttributes<HTMLDivElement>;
+export const ComposePanel = function ({
+    children,
+    className,
+    ...rest
+}: React.PropsWithChildren<ComposePanel>) {
+    return <StyledComposePanel
+        className={mergeClass('compose-panel', className)}
+        {...rest}
+    >{children}</StyledComposePanel>;
 };
 
 const Header = ({
@@ -56,12 +65,6 @@ const Footer = ({ children }: React.PropsWithChildren) => {
     );
 };
 
-
-export const ComposePanel = Object.assign(
-    StandardComposePanel,
-    {
-        Header,
-        Body,
-        Footer,
-    }
-);
+ComposePanel.Header = Header;
+ComposePanel.Body = Body;
+ComposePanel.Footer = Footer;
