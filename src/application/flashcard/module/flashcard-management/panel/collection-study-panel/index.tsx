@@ -7,6 +7,7 @@ import { FlashcardApplicationParam } from "@/application/flashcard/model";
 import { useSearchParams } from "@/util";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CollectionListPanelInfo, CollectionDetailPanelInfo } from "../info";
+import { pluralizeData } from "@/__lib__/format";
 
 export const CollectionStudyPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
@@ -50,7 +51,9 @@ export const CollectionStudyPanel = () => {
                     icon={<ArrowLeftOutlined />}
                     onClick={handleBack}
                 >Back</TomButton>
-                <span>{collectionData?.title}</span>
+                <span>{collectionData?.title} {typeof flashCardList?.length === 'number'
+                    ? `(${flashCardList.length})`
+                    : ''}</span>
             </>}
         />
 
