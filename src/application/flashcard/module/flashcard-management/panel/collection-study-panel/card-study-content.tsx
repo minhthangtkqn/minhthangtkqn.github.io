@@ -7,19 +7,16 @@ import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 const StyledCardStudyContent = styled.div`
     height: 100%;
     display: flex;
-    flex-direction: column;
     position: relative;
 
     .card-side-content {
-        height: 100%;
         cursor: pointer;
+        flex: 1;
     }
 
     .float-button {
         cursor: pointer;
-        position: absolute;
-        top: 0;
-        width: var(--spacing-5xl);
+        width: var(--spacing-4xl);
         height: 100%;
         background-color: #00000020;
         color: var(--contrast-primary);
@@ -27,8 +24,7 @@ const StyledCardStudyContent = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-size: var(--fs-6xl);
-        z-index: 1;
+        font-size: var(--fs-5xl);
 
         &:hover {
             background-color: #00000040;

@@ -94,7 +94,8 @@ export const CollectionStudyPanel = () => {
                 : <CardStudyContent
                     cardList={flashCardList}
                     random={random}
-                />}
+                />
+            }
         </ComposePanel.Body>
     </StyledCollectionStudyPanel>;
 };
