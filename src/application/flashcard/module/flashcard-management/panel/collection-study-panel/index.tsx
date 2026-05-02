@@ -4,13 +4,13 @@ import { LayoutPanelSlot } from "@/__lib__/layout";
 import { FlashCard, FlashCardCollection } from "@/__lib__/model";
 import { QueryApi } from "@/access";
 import { FlashcardApplicationParam } from "@/application/flashcard/model";
-import { useSearchParams } from "@/util";
+import { shuffle, useSearchParams } from "@/util";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CollectionListPanelInfo, CollectionDetailPanelInfo } from "../info";
 import styled from "styled-components";
 import { CardStudyContent } from "./card-study-content";
-import { useState } from "react";
-import { Checkbox } from "antd";
+import { useEffect, useState } from "react";
+import { Checkbox, Modal } from "antd";
 
 const StyledCollectionStudyPanel = styled(ComposePanel)`
     .compose-panel-header {
@@ -28,6 +28,11 @@ export const CollectionStudyPanel = () => {
     const { params, updateSearchParams } = useSearchParams();
     const collectionId = params.get(FlashcardApplicationParam.collectionId);
     const [random, setRandom] = useState(false);
+    const [pointer, setPointer] = useState(0);
+    /**
+     * List index của card được sắp xếp tùy theo mục đích học
+     */
+    const [organizedCardIndexList, setOrganizedCardIndexList] = useState<number[]>([]);
 
     const {
         data: collectionData,
@@ -46,6 +51,19 @@ export const CollectionStudyPanel = () => {
         : undefined
     );
 
+    useEffect(() => {
+        if (!flashCardList || flashCardList.length === 0) {
+            setOrganizedCardIndexList([]);
+        } else {
+            const indices = Array.from(flashCardList, (i, idx) => idx);
+            setOrganizedCardIndexList(random
+                ? shuffle(indices)
+                : indices
+            );
+            setPointer(0);
+        }
+    }, [flashCardList, random]);
+
     const handleBack = () => {
         updateSearchParams(prev => {
             prev.set(LayoutPanelSlot.PRIMARY, CollectionListPanelInfo.name);
@@ -60,6 +78,9 @@ export const CollectionStudyPanel = () => {
         });
     };
 
+    // Lấy Index thực tế dựa trên pointer
+    const currentCardIndex = organizedCardIndexList[pointer] ?? 0;
+
     return <StyledCollectionStudyPanel>
         <ComposePanel.Header
             title={<>
@@ -67,13 +88,18 @@ export const CollectionStudyPanel = () => {
                     icon={<ArrowLeftOutlined />}
                     onClick={handleBack}
                 >Back</TomButton>
-                <span>{collectionData?.title} {typeof flashCardList?.length === 'number'
-                    ? `(${flashCardList.length})`
+                <span>{collectionData?.title} {typeof flashCardList?.length === 'number' && flashCardList.length > 0
+                    ? `(${pointer + 1}/${flashCardList.length})`
                     : ''}</span>
             </>}
             extra={<Checkbox
                 checked={random}
-                onChange={(e) => setRandom(e.target.checked)}
+                onChange={(e) => {
+                    Modal.confirm({
+                        title: 'Progress will be reset?',
+                        onOk: () => setRandom(e.target.checked),
+                    });
+                }}
             >Random</Checkbox>}
         />
 
@@ -93,7 +119,13 @@ export const CollectionStudyPanel = () => {
                 />
                 : <CardStudyContent
                     cardList={flashCardList}
-                    random={random}
+                    currentIndex={currentCardIndex}
+                    onPrevCard={() => {
+                        setPointer(p => (p - 1 + organizedCardIndexList.length) % organizedCardIndexList.length); // Quay ngược về cuối
+                    }}
+                    onNextCard={() => {
+                        setPointer(p => (p + 1) % organizedCardIndexList.length); // Tự động quay vòng về 0
+                    }}
                 />
             }
         </ComposePanel.Body>

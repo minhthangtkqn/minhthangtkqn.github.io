@@ -42,12 +42,15 @@ const StyledCardStudyContent = styled.div`
 
 export const CardStudyContent = ({
     cardList,
-    random,
+    currentIndex,
+    onPrevCard,
+    onNextCard,
 }: {
     cardList: FlashCard[];
-    random?: boolean;
+    currentIndex: number;
+    onPrevCard?: () => void;
+    onNextCard?: () => void;
 }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [isFront, setFront] = useState(true);
 
     const getRandomIndex = (avoidIndex: number) => {
@@ -60,20 +63,22 @@ export const CardStudyContent = ({
     };
 
     const prevCard = () => {
-        const lastIndex = cardList.length - 1; // just help easier to read
-        setCurrentIndex(i => random
-            ? getRandomIndex(i)
-            : i === 0 ? lastIndex : i - 1
-        );
+        // const lastIndex = cardList.length - 1; // just help easier to read
+        // setCurrentIndex(i => random
+        //     ? getRandomIndex(i)
+        //     : i === 0 ? lastIndex : i - 1
+        // );
+        onPrevCard?.();
         setFront(true);
     };
 
     const nextCard = () => {
-        const lastIndex = cardList.length - 1; // just help easier to read
-        setCurrentIndex(i => random
-            ? getRandomIndex(i)
-            : i === lastIndex ? 0 : i + 1
-        );
+        // const lastIndex = cardList.length - 1; // just help easier to read
+        // setCurrentIndex(i => random
+        //     ? getRandomIndex(i)
+        //     : i === lastIndex ? 0 : i + 1
+        // );
+        onNextCard?.();
         setFront(true);
     };
 
